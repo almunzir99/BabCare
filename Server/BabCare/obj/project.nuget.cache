@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "JwNDb/17w+MvIU2bHVaZLBeja58t/JIui7M0TPqxd1lzTYb95/PoRL7SUYh8VOfI8OwsNCFec7CKhJIj4VL5fg==",
+  "success": true,
+  "projectFilePath": "D:\\Projects\\BabCare\\Server\\BabCare\\BabCare.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Almunzir\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\Almunzir\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}
