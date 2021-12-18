@@ -9,7 +9,6 @@ import 'package:babcare/views/pages/product_detail.dart';
 import 'package:babcare/views/pages/search.dart';
 import 'package:babcare/views/pages/signup.dart';
 import 'package:babcare/views/pages/splash_screen.dart';
-import 'package:babcare/views/pages/tabbar.dart';
 import 'package:get/get.dart';
 
 final routes = [
@@ -17,7 +16,6 @@ final routes = [
   GetPage(name: "/splash_screen", page: () => const SplashScreenPage()),
   GetPage(name: "/login", page: () => const LoginPage()),
   GetPage(name: "/signup", page: () => const SignupPage()),
-  GetPage(name: "/tabbar", page: () => const TabBar()),
   GetPage(name: "/home", page: () => const HomePage()),
   GetPage(name: "/account", page: () => const AccountPage()),
   GetPage(name: "/orders", page: () => const OrdersPage()),

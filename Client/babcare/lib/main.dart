@@ -1,4 +1,5 @@
-import 'package:babcare/views/pages/login.dart';
+import 'package:babcare/theme/main_theme.dart';
+import 'package:babcare/views/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -13,11 +14,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const LoginPage(),
+      title: 'تطبيق بابكير لطلب الطعام',
+      theme: mainTheme,
+      home: const HomePage(),
     );
   }
 }
