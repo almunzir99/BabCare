@@ -3,5 +3,5 @@ import 'package:flutter/material.dart';
 
 final mainTheme = ThemeData(
     primaryColor: primaryColor,
-    backgroundColor: Colors.white,
+    backgroundColor: backgroundColor,
     fontFamily: "RB");

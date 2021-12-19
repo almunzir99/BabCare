@@ -1,7 +1,7 @@
+import 'package:babcare/views/pages/home.dart';
 import 'package:babcare/views/pages/account.dart';
 import 'package:babcare/views/pages/cart.dart';
 import 'package:babcare/views/pages/categories.dart';
-import 'package:babcare/views/pages/home.dart';
 import 'package:babcare/views/pages/intro.dart';
 import 'package:babcare/views/pages/login.dart';
 import 'package:babcare/views/pages/orders.dart';

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 
-class OrdersPage extends StatelessWidget {
-  const OrdersPage({Key? key}) : super(key: key);
+class PoliciesPage extends StatelessWidget {
+  const PoliciesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
