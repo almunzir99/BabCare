@@ -12,14 +12,15 @@ class HomePage extends GetView<CustomDrawerController> {
     return GetBuilder<CustomDrawerController>(
         builder: (_) => ZoomDrawer(
               controller: _.zoomDrawerController,
-              menuScreen: Menu(),
+              menuScreen: const Menu(),
               mainScreen: _.currentPage,
               borderRadius: 40.0,
               showShadow: true,
-              angle: -12.0,
+              angle: 0,
               isRtl: true,
-              backgroundColor: Colors.grey.shade100,
-              slideWidth: MediaQuery.of(context).size.width * 0.58,
+              style: DrawerStyle.Style1,
+              backgroundColor: Colors.white.withOpacity(0.3),
+              slideWidth: MediaQuery.of(context).size.width * 0.6,
             ));
   }
 }

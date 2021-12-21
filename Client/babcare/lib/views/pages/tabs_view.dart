@@ -32,6 +32,37 @@ class _TabsViewState extends State<TabsView> {
             color: Colors.black,
           ),
         ),
+        actions: [
+          Container(
+              height: 25.0,
+              width: 30.0,
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
+              child: Stack(
+                children: [
+                  //icon
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        LineIcons.bell,
+                        color: Colors.black,
+                        size: 28.0,
+                      )),
+                  //badge
+                  Positioned(
+                    top: 10.0,
+                    left: 10.0,
+                    child: Container(
+                      height: 10.0,
+                      width: 10.0,
+                      decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(5.0)),
+                    ),
+                  ),
+                ],
+              ))
+        ],
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
