@@ -67,54 +67,67 @@ class DiscoverPage extends StatelessWidget {
                     height: 35.0,
                   ),
                   // Search bar
-                  Row(
-                    children: [
-                      //filter
-                      Container(
-                        height: 45.0,
-                        width: 45.0,
-                        decoration: BoxDecoration(
-                            color: primaryColor,
-                            borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(10.0),
-                                bottomRight: Radius.circular(15.0))),
-                        child: const Center(
-                          child: Icon(
-                            LineIcons.filter,
-                            color: Colors.white,
-                          ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed("/search");
+                    },
+                    child: Hero(
+                      tag: "search_bar",
+                      child: Material(
+                        child: Row(
+                          children: [
+                            //filter
+                            Container(
+                              height: 45.0,
+                              width: 45.0,
+                              decoration: BoxDecoration(
+                                  color: primaryColor,
+                                  borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(10.0),
+                                      bottomRight: Radius.circular(15.0))),
+                              child: const Center(
+                                child: Icon(
+                                  LineIcons.filter,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            // form Field
+                            Expanded(
+                              child: TextFormField(
+                                onTap: () {
+                                  Get.toNamed("/search");
+                                },
+                                cursorColor: primaryColor,
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 3.0, horizontal: 15.0),
+                                  fillColor: Colors.grey.withOpacity(0.2),
+                                  filled: true,
+                                  hintText: "بفتش عن شنو ؟",
+                                  enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 0,
+                                        style: BorderStyle.none,
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10.0),
+                                          bottomLeft: Radius.circular(15.0))),
+                                  focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 0,
+                                        style: BorderStyle.none,
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10.0),
+                                          bottomLeft: Radius.circular(15.0))),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                       ),
-                      // form Field
-                      Expanded(
-                        child: TextFormField(
-                          cursorColor: primaryColor,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 3.0, horizontal: 15.0),
-                            fillColor: Colors.grey.withOpacity(0.2),
-                            filled: true,
-                            hintText: "بفتش عن شنو ؟",
-                            enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 0,
-                                  style: BorderStyle.none,
-                                ),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10.0),
-                                    bottomLeft: Radius.circular(15.0))),
-                            focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 0,
-                                  style: BorderStyle.none,
-                                ),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10.0),
-                                    bottomLeft: Radius.circular(15.0))),
-                          ),
-                        ),
-                      )
-                    ],
+                    ),
                   ),
                   const SizedBox(
                     height: 50.0,

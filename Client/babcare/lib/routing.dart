@@ -12,11 +12,11 @@ import 'package:babcare/views/pages/splash_screen.dart';
 import 'package:get/get.dart';
 
 final routes = [
+  GetPage(name: "/home", page: () => const HomePage()),
   GetPage(name: "/intro", page: () => const IntroPage()),
   GetPage(name: "/splash_screen", page: () => const SplashScreenPage()),
   GetPage(name: "/login", page: () => const LoginPage()),
   GetPage(name: "/signup", page: () => const SignupPage()),
-  GetPage(name: "/home", page: () => const HomePage()),
   GetPage(name: "/account", page: () => const AccountPage()),
   GetPage(name: "/orders", page: () => const OrdersPage()),
   GetPage(name: "/categories", page: () => const CategoriesPage()),

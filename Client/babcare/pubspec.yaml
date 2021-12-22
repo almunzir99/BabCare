@@ -44,6 +44,7 @@ dependencies:
   auto_size_text: ^3.0.0
   carousel_slider: ^4.0.0
   smooth_page_indicator: ^1.0.0+2
+  responsive_grid: ^2.0.0
 
 dev_dependencies:
   flutter_test:

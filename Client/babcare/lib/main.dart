@@ -1,4 +1,5 @@
 import 'package:babcare/controllers/custom_drawer_controller.dart';
+import 'package:babcare/routing.dart';
 import 'package:babcare/theme/main_theme.dart';
 import 'package:babcare/views/pages/home.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'تطبيق بابكير لطلب الطعام',
       theme: mainTheme,
+      getPages: routes,
+      initialRoute: "/home",
       textDirection: TextDirection.rtl,
       home: const HomePage(),
     );
