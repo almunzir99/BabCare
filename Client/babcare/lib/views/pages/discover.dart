@@ -270,7 +270,14 @@ class DiscoverPage extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemCount: 5,
                           itemBuilder: (context, index) {
-                            return const ProductCard();
+                            return Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed("/product_details");
+                                  },
+                                  child: const ProductCard()),
+                            );
                           })),
 
                   const SizedBox(
