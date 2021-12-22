@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:babcare/controllers/discover_controller.dart';
 import 'package:babcare/models/category.dart';
 import 'package:babcare/theme/style.dart';
+import 'package:babcare/views/components/horizontal_product_card.dart';
+import 'package:babcare/views/components/product_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -177,7 +179,8 @@ class DiscoverPage extends StatelessWidget {
                                 controller.selectCategory(index);
                               },
                               child: Obx(
-                                () => Container(
+                                () => AnimatedContainer(
+                                  duration: const Duration(milliseconds: 300),
                                   height: 100.0,
                                   padding: const EdgeInsets.all(10.0),
                                   margin: const EdgeInsets.symmetric(
@@ -254,145 +257,7 @@ class DiscoverPage extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemCount: 5,
                           itemBuilder: (context, index) {
-                            return Container(
-                              width: 180.0,
-                              height: 250.0,
-                              margin: const EdgeInsets.only(left: 20.0),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    height: 250.0,
-                                    width: 180.0,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                        color: Colors.white),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0,
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        //product image
-                                        Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 10.0),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(30.0),
-                                            child: const Image(
-                                              height: 130.0,
-                                              width: 160.0,
-                                              image: AssetImage(
-                                                "assets/temp/food/image-4.png",
-                                              ),
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                        ),
-
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            //Product title
-                                            const AutoSizeText(
-                                              "بيتزا بالخضار",
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-
-                                            const AutoSizeText(
-                                              "بيتزا ",
-                                              style: TextStyle(
-                                                  fontSize: 13.0,
-                                                  color: Colors.grey),
-                                            ),
-                                            //Prices
-                                            Column(
-                                              children: [
-                                                //Current Price
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    const AutoSizeText(
-                                                      "1800",
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 3.0,
-                                                    ),
-                                                    AutoSizeText(
-                                                      "ج.س",
-                                                      style: TextStyle(
-                                                        fontSize: 16.0,
-                                                        color: primaryColor,
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                                AutoSizeText(
-                                                  "2200 ج.س",
-                                                  style: TextStyle(
-                                                      decoration: TextDecoration
-                                                          .lineThrough,
-                                                      color:
-                                                          Colors.grey.shade500,
-                                                      fontSize: 11.0),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  //Discount Padge
-                                  Positioned(
-                                    top: 20.0,
-                                    right: 20.0,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(7.0),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                          color: accentColor),
-                                      child: const Center(
-                                        child: Text(
-                                          "20%",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  // Favourite
-                                  Positioned(
-                                    bottom: 10.0,
-                                    left: 10.0,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(7.0),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                          color: primaryColor),
-                                      child: const Center(
-                                        child: Icon(
-                                          LineIcons.heart,
-                                          color: Colors.white,
-                                          size: 18.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
+                            return const ProductCard();
                           })),
 
                   const SizedBox(
@@ -420,134 +285,7 @@ class DiscoverPage extends StatelessWidget {
                   ),
                   Column(
                     children: [1, 2, 3, 4].map((e) {
-                      return Container(
-                        height: 130.0,
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        margin: const EdgeInsets.symmetric(vertical: 10.0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.0),
-                            color: Colors.white),
-                        child: Stack(
-                          children: [
-                            Container(
-                              height: 130.0,
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      child: const Image(
-                                        height: 110.0,
-                                        width: 110.0,
-                                        image: AssetImage(
-                                          "assets/temp/food/image-9.png",
-                                        ),
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 20.0,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      //Product title
-                                      const AutoSizeText(
-                                        "بيتزا بالخضار",
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-
-                                      const AutoSizeText(
-                                        "بيتزا ",
-                                        style: TextStyle(
-                                            fontSize: 13.0, color: Colors.grey),
-                                      ),
-                                      //Prices
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          //Current Price
-                                          Row(
-                                            children: [
-                                              const AutoSizeText(
-                                                "1800",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 3.0,
-                                              ),
-                                              AutoSizeText(
-                                                "ج.س",
-                                                style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  color: primaryColor,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          AutoSizeText(
-                                            "2200 ج.س",
-                                            style: TextStyle(
-                                                decoration:
-                                                    TextDecoration.lineThrough,
-                                                color: Colors.grey.shade500,
-                                                fontSize: 11.0),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Positioned(
-                              top: 20.0,
-                              right: 20.0,
-                              child: Container(
-                                padding: const EdgeInsets.all(7.0),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    color: accentColor),
-                                child: const Center(
-                                  child: Text(
-                                    "20%",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // Favourite
-                            Positioned(
-                              bottom: 10.0,
-                              left: 10.0,
-                              child: Container(
-                                padding: const EdgeInsets.all(7.0),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    color: primaryColor),
-                                child: const Center(
-                                  child: Icon(
-                                    LineIcons.heart,
-                                    color: Colors.white,
-                                    size: 18.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
+                      return const HorizontalProductCard();
                     }).toList(),
                   )
                 ],
