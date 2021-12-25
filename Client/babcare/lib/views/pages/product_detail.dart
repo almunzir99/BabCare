@@ -86,6 +86,26 @@ class ProductDetailPage extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                //Arrow Back
+                                InkWell(
+                                  onTap: () {
+                                    Get.back();
+                                  },
+                                  child: Container(
+                                    height: 40.0,
+                                    width: 40.0,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.3),
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    child: const Center(
+                                      child: Icon(
+                                        LineIcons.angleRight,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 //Basket
                                 InkWell(
                                   onTap: () {
@@ -106,26 +126,6 @@ class ProductDetailPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                //Arrow Back
-                                InkWell(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    height: 40.0,
-                                    width: 40.0,
-                                    decoration: BoxDecoration(
-                                      color: Colors.black.withOpacity(0.3),
-                                      borderRadius: BorderRadius.circular(15.0),
-                                    ),
-                                    child: const Center(
-                                      child: Icon(
-                                        LineIcons.angleLeft,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                )
                               ],
                             ),
                           ),

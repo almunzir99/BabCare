@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:babcare/views/components/product_card.dart';
 import 'package:flutter/material.dart';
