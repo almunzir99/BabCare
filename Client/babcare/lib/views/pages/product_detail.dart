@@ -1,14 +1,18 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:babcare/controllers/products_controller.dart';
+import 'package:babcare/models/options.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ProductDetailPage extends StatelessWidget {
   const ProductDetailPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(ProductsController());
     const selectedSized = "كبير";
     return Scaffold(
       body: SafeArea(
@@ -25,23 +29,51 @@ class ProductDetailPage extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: Stack(
                     children: [
-                      CarouselSlider(
-                        items: [
-                          1,
-                          2,
-                          3,
-                        ].map((e) {
-                          return Image(
-                            image: AssetImage("assets/temp/food/Image-$e.png"),
-                            fit: BoxFit.cover,
-                          );
-                        }).toList(),
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          height: MediaQuery.of(context).size.height * 0.4,
-                          enlargeCenterPage: true,
-                          viewportFraction: 1.0,
-                          aspectRatio: 2.0,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.35,
+                        child: Stack(
+                          children: [
+                            CarouselSlider(
+                              items: [
+                                1,
+                                2,
+                                3,
+                              ].map((e) {
+                                return Image(
+                                  image: AssetImage(
+                                      "assets/temp/food/Image-$e.png"),
+                                  fit: BoxFit.cover,
+                                );
+                              }).toList(),
+                              options: CarouselOptions(
+                                  autoPlay: true,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.35,
+                                  enlargeCenterPage: true,
+                                  viewportFraction: 1.0,
+                                  aspectRatio: 2.0,
+                                  onPageChanged: (value, reason) =>
+                                      controller.currentCarouselIndex = value),
+                            ),
+                            Positioned(
+                              bottom: 70.0,
+                              left: 20.0,
+                              child: Obx(() {
+                                return Center(
+                                  child: AnimatedSmoothIndicator(
+                                    activeIndex:
+                                        controller.currentCarouselIndex,
+                                    count: 3,
+                                    effect: WormEffect(
+                                        dotColor: Colors.grey.shade200,
+                                        activeDotColor: primaryColor,
+                                        dotHeight: 10.0,
+                                        dotWidth: 10.0),
+                                  ),
+                                );
+                              }),
+                            ),
+                          ],
                         ),
                       ),
                       // Navigation Bar
@@ -55,17 +87,22 @@ class ProductDetailPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 //Basket
-                                Container(
-                                  height: 40.0,
-                                  width: 40.0,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.3),
-                                    borderRadius: BorderRadius.circular(15.0),
-                                  ),
-                                  child: const Center(
-                                    child: Icon(
-                                      LineIcons.shoppingBasket,
-                                      color: Colors.white,
+                                InkWell(
+                                  onTap: () {
+                                    Get.toNamed("/cart");
+                                  },
+                                  child: Container(
+                                    height: 40.0,
+                                    width: 40.0,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.3),
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    child: const Center(
+                                      child: Icon(
+                                        LineIcons.shoppingBasket,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -101,7 +138,7 @@ class ProductDetailPage extends StatelessWidget {
               Positioned(
                 bottom: 0,
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.62 + 30.0,
+                  height: MediaQuery.of(context).size.height * 0.66 + 30.0,
                   width: MediaQuery.of(context).size.width,
                   child: Stack(
                     children: [
@@ -109,7 +146,7 @@ class ProductDetailPage extends StatelessWidget {
                         bottom: 0,
                         child: Container(
                           padding: const EdgeInsets.all(30.0),
-                          height: MediaQuery.of(context).size.height * 0.62,
+                          height: MediaQuery.of(context).size.height * 0.66,
                           width: MediaQuery.of(context).size.width,
                           decoration: const BoxDecoration(
                               color: Colors.white,
@@ -119,14 +156,11 @@ class ProductDetailPage extends StatelessWidget {
                           child: ListView(
                             children: [
                               //Title
-                              const Padding(
-                                padding: EdgeInsets.only(top: 20.0),
-                                child: Text(
-                                  "بيتزا خضار",
-                                  style: TextStyle(
-                                      fontSize: 26.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                              const Text(
+                                "بيتزا خضار",
+                                style: TextStyle(
+                                    fontSize: 26.0,
+                                    fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
                                 height: 10.0,
@@ -197,7 +231,7 @@ class ProductDetailPage extends StatelessWidget {
                                 height: 20.0,
                               ),
                               Text(
-                                "الاجحام",
+                                "الخيارات",
                                 style: TextStyle(
                                   fontSize: 17.0,
                                   fontWeight: FontWeight.bold,
@@ -216,10 +250,10 @@ class ProductDetailPage extends StatelessWidget {
                                           horizontal: 25.0),
                                       decoration: BoxDecoration(
                                           color: (selectedSized == e)
-                                              ? accentColor
+                                              ? primaryColor
                                               : Colors.white,
                                           border: Border.all(
-                                            color: accentColor,
+                                            color: primaryColor,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(20.0)),
@@ -229,10 +263,105 @@ class ProductDetailPage extends StatelessWidget {
                                           style: TextStyle(
                                               color: (selectedSized == e)
                                                   ? Colors.white
-                                                  : accentColor,
+                                                  : primaryColor,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20.0,
+                              ),
+                              Text(
+                                "الاضافات",
+                                style: TextStyle(
+                                  fontSize: 17.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: primaryColor,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20.0,
+                              ),
+                              Container(
+                                height: 50.0,
+                                margin: const EdgeInsets.only(bottom: 50.0),
+                                child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  children: options.map((e) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        if (controller.containsOption(e.id!)) {
+                                          controller.removeOption(e.id!);
+                                        } else {
+                                          controller.addOption(e.id!);
+                                        }
+                                      },
+                                      child: Obx(() {
+                                        return AnimatedContainer(
+                                          duration:
+                                              const Duration(milliseconds: 300),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12.0, vertical: 7.0),
+                                          margin:
+                                              const EdgeInsets.only(left: 15.0),
+                                          decoration: BoxDecoration(
+                                              color: (controller
+                                                      .containsOption(e.id!))
+                                                  ? accentColor
+                                                  : Colors.grey.shade100,
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0)),
+                                          child: Row(
+                                            children: [
+                                              (controller.containsOption(e.id!))
+                                                  ? const Icon(
+                                                      LineIcons.checkCircle,
+                                                      size: 18.0,
+                                                      color: Colors.white,
+                                                    )
+                                                  : const Icon(
+                                                      LineIcons.circle,
+                                                      size: 18.0,
+                                                    ),
+                                              const SizedBox(
+                                                width: 7.0,
+                                              ),
+                                              Text(
+                                                "${e.name}",
+                                                style: TextStyle(
+                                                    color: controller
+                                                            .containsOption(
+                                                                e.id!)
+                                                        ? Colors.white
+                                                        : Colors.black),
+                                              ),
+                                              Container(
+                                                height: 10.0,
+                                                width: 2.0,
+                                                color: controller
+                                                        .containsOption(e.id!)
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                                margin:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 7.0),
+                                              ),
+                                              Text(
+                                                "${e.price} ج.س",
+                                                style: TextStyle(
+                                                    color: controller
+                                                            .containsOption(
+                                                                e.id!)
+                                                        ? Colors.white
+                                                        : Colors.black),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }),
                                     );
                                   }).toList(),
                                 ),
