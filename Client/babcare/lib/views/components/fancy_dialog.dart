@@ -7,14 +7,16 @@ class FancyDialog extends StatelessWidget {
   final double? height;
   final double? width;
   final double iconSize;
-  const FancyDialog(
-      {Key? key,
-      @required this.child,
-      @required this.icon,
-      this.iconSize = 32.0,
-      this.width = 250.0,
-      this.height = 330.0})
-      : super(key: key);
+  final Color? iconColor;
+  const FancyDialog({
+    Key? key,
+    @required this.child,
+    @required this.icon,
+    this.iconSize = 32.0,
+    this.width = 250.0,
+    this.height = 330.0,
+    this.iconColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,7 @@ class FancyDialog extends StatelessWidget {
                 height: iconSize * 2.3,
                 width: iconSize * 2.3,
                 decoration: BoxDecoration(
-                    color: primaryColor,
+                    color: iconColor ?? primaryColor,
                     border: Border.all(color: Colors.white, width: 5.0),
                     borderRadius: BorderRadius.circular((iconSize * 2.3) / 2)),
                 child: Center(
