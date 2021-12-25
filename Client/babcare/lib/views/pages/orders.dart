@@ -6,38 +6,41 @@ import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 
 class OrdersPage extends StatelessWidget {
-  const OrdersPage({Key? key}) : super(key: key);
+  final bool hideAppBar;
+  const OrdersPage({Key? key, this.hideAppBar = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var drawerController = Get.put(CustomDrawerController());
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              drawerController.toggleDrawer();
-            },
-            icon: const Icon(
-              LineIcons.bars,
-              color: Colors.black,
-            ),
-          ),
-          title: const Center(
-            child: Text(
-              "طلباتي",
-            ),
-          ),
-          backgroundColor: Colors.transparent,
-          foregroundColor: Colors.black,
-          elevation: 0,
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Get.to("/cart");
-                },
-                icon: const Icon(LineIcons.shoppingBasket))
-          ],
-        ),
+        appBar: hideAppBar
+            ? null
+            : AppBar(
+                leading: IconButton(
+                  onPressed: () {
+                    drawerController.toggleDrawer();
+                  },
+                  icon: const Icon(
+                    LineIcons.bars,
+                    color: Colors.black,
+                  ),
+                ),
+                title: const Center(
+                  child: Text(
+                    "طلباتي",
+                  ),
+                ),
+                backgroundColor: Colors.transparent,
+                foregroundColor: Colors.black,
+                elevation: 0,
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        Get.to("/cart");
+                      },
+                      icon: const Icon(LineIcons.shoppingBasket))
+                ],
+              ),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
           child: ListView(
@@ -109,7 +112,7 @@ class OrdersPage extends StatelessWidget {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              Container(
+                              SizedBox(
                                 height: 40.0,
                                 width: MediaQuery.of(context).size.width * 0.62,
                                 child: Stack(

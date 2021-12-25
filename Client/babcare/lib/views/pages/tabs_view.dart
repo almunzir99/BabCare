@@ -1,9 +1,9 @@
 import 'package:babcare/controllers/custom_drawer_controller.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:babcare/views/pages/account.dart';
-import 'package:babcare/views/pages/cart.dart';
 import 'package:babcare/views/pages/discover.dart';
 import 'package:babcare/views/pages/favourite.dart';
+import 'package:babcare/views/pages/orders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -71,7 +71,9 @@ class _TabsViewState extends State<TabsView> {
         children: const [
           DiscoverPage(),
           FavouritesPage(),
-          CartPage(),
+          OrdersPage(
+            hideAppBar: true,
+          ),
           AccountPage()
         ],
       ),
@@ -108,8 +110,8 @@ class _TabsViewState extends State<TabsView> {
                   text: 'المفضلة',
                 ),
                 GButton(
-                  icon: LineIcons.shoppingCart,
-                  text: 'السلة',
+                  icon: LineIcons.clipboardList,
+                  text: 'طلباتي',
                 ),
                 GButton(
                   icon: LineIcons.user,
