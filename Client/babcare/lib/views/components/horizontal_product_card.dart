@@ -18,7 +18,7 @@ class HorizontalProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(30.0), color: Colors.white),
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             height: 130.0,
             width: MediaQuery.of(context).size.width * 0.9,
             child: Row(

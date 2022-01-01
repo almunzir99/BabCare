@@ -5,6 +5,8 @@ import 'package:babcare/views/pages/cart.dart';
 import 'package:babcare/views/pages/categories.dart';
 import 'package:babcare/views/pages/intro.dart';
 import 'package:babcare/views/pages/login.dart';
+import 'package:babcare/views/pages/order_detail.dart';
+import 'package:babcare/views/pages/order_tracking.dart';
 import 'package:babcare/views/pages/orders.dart';
 import 'package:babcare/views/pages/product_detail.dart';
 import 'package:babcare/views/pages/search.dart';
@@ -25,4 +27,6 @@ final routes = [
   GetPage(name: "/search", page: () => const SearchPage()),
   GetPage(name: "/cart", page: () => const CartPage()),
   GetPage(name: "/banks", page: () => const BankAccountsPage()),
+  GetPage(name: "/order_detail", page: () => const OrderDetailPage()),
+  GetPage(name: "/order_tracking", page: () => const OrderTrackingPage()),
 ];
