@@ -218,7 +218,7 @@ class OrderDetailPage extends StatelessWidget {
                           style: TextStyle(color: Colors.grey)),
                       TextSpan(
                           text: " قيد التوصيل ",
-                          style: TextStyle(color: primaryColor)),
+                          style: TextStyle(color: accentColor)),
                     ])),
                     trailing: GestureDetector(
                       onTap: () {
@@ -228,7 +228,7 @@ class OrderDetailPage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(
                             horizontal: 15.0, vertical: 5.0),
                         decoration: BoxDecoration(
-                            color: primaryColor,
+                            color: accentColor,
                             borderRadius: BorderRadius.circular(20.0)),
                         child: Text(
                           "تابع طلبك",

@@ -45,6 +45,7 @@ dependencies:
   carousel_slider: ^4.0.0
   smooth_page_indicator: ^1.0.0+2
   responsive_grid: ^2.0.0
+  flutter_secure_storage: ^5.0.2
 
 dev_dependencies:
   flutter_test:
