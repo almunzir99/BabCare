@@ -1,6 +1,7 @@
 import 'package:babcare/models/options.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 
 class CartPage extends StatelessWidget {
@@ -315,28 +316,33 @@ class CartPage extends StatelessWidget {
                       ),
                       Expanded(
                         flex: 1,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 10.0,
-                            horizontal: 15.0,
-                          ),
-                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
-                            color: primaryColor,
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text(
-                                "متابعة",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              SizedBox(
-                                width: 5.0,
-                              ),
-                              Icon(LineIcons.arrowLeft, color: Colors.white),
-                            ],
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.toNamed("/checkout");
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10.0,
+                              horizontal: 15.0,
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: BoxDecoration(
+                              color: primaryColor,
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  "متابعة",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                SizedBox(
+                                  width: 5.0,
+                                ),
+                                Icon(LineIcons.arrowLeft, color: Colors.white),
+                              ],
+                            ),
                           ),
                         ),
                       )
