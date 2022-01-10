@@ -5,7 +5,11 @@
 
         </div>
         <div>
-            <div class="group-title">HOME <span><i class="eva eva-arrow-forward"></i></span> {{group}}</div>
+            <div class="group-title">الرئيسية <span>
+                <i *ngIf="direction == 'ltr'" class="eva eva-arrow-forward"></i>
+                <i *ngIf="direction == 'rtl'" class="eva eva-arrow-back"></i>
+
+                </span> {{group}}</div>
             <div class="page-title">{{page}}</div>
 
         </div>

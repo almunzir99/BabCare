@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
             value: this.currentUser ? this.currentUser.id : undefined
           },
           {
-            title: "username",
+            title: "الاسم",
             name: "username",
             icon: "user tie icon",
             controlType: ControlTypes.TextInput,
@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
             ]
           },
           {
-            title: "phone",
+            title: "رقم الهاتف",
             name: "phone",
             icon: "phone icon",
             controlType: ControlTypes.NumberInput,
@@ -63,7 +63,7 @@ export class ProfileComponent implements OnInit {
 
           },
           {
-            title: "email",
+            title: "البريد الالكتروني",
             name: "email",
             icon: "mail icon",
             controlType: ControlTypes.TextInput,
@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit {
           },
           
           {
-            title: "image",
+            title: "الصورة",
             name: "image",
             controlType: ControlTypes.LocalFilePicker,
             width: "100%",
@@ -103,8 +103,8 @@ export class ProfileComponent implements OnInit {
     this.loading = true;
     this.userService.put(this.currentUser).subscribe(res => {
       this.modalService.open(new MessageModal({
-        title: "Success",
-        content: "Item Updated Successfully, please logout to save changes", isConfirm: false, messageType: MessageTypes.Success
+        title: "نجاح",
+        content: "تم تحديث البيانات بنجاح , الرجاء اعادة تسجيل الدخول للتأكيد", isConfirm: false, messageType: MessageTypes.Success
       }))
       this.loading = false;
 

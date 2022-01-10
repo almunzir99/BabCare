@@ -26,7 +26,7 @@ export class ChangePasswordComponent implements OnInit {
         title: undefined,
         controls: [
           {
-            title: "old password",
+            title: "كلمة المرور القديمة",
             name: "oldPassword",
             icon: "key icon",
 
@@ -38,7 +38,7 @@ export class ChangePasswordComponent implements OnInit {
 
           },
           {
-            title: "new password",
+            title: "كلمة المرور الجديد",
             name: "newPassword",
             icon: "key icon",
 
@@ -50,7 +50,7 @@ export class ChangePasswordComponent implements OnInit {
 
           },
           {
-            title: "re-enter the password",
+            title: "اعد ادخال كلمة المرور",
             name: "repassword",
             icon: "key icon",
             validators: [
@@ -69,8 +69,8 @@ export class ChangePasswordComponent implements OnInit {
     this.loading = true;
     this.userService.changePassword(event.oldPassword,event.newPassword).subscribe(res => {
       this.modalService.open(new MessageModal({
-        title: "Success",
-        content: "Password Changed Successfully, please logout to save changes", isConfirm: false, messageType: MessageTypes.Success
+        title: "نجاح",
+        content: "تم تحديث البيانات بنجاح , الرجاء اعادة تسجيل الدخول للتأكيد", isConfirm: false, messageType: MessageTypes.Success
       }))
       this.loading = false;
 

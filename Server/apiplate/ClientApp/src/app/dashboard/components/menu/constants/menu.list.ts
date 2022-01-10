@@ -2,21 +2,21 @@ import { MenuGroup } from "../models/menu.group";
 
 export const MenuList: MenuGroup[] = [
     {
-        title: "General",
+        title: "عام",
         children: [
             {
-                title: "Home",
+                title: "الصفحة الرئيسية",
                 icon: "las la-home",
                 route: "/dashboard/home"
 
             },
             {
-                title: "Users",
+                title: "ادارة المشرفين",
                 icon: "las la-user-friends",
                 route: "/dashboard/users"
             },
             {
-                title: "Roles",
+                title: "ادارة الصلاحيات",
                 icon: "las la-users-cog",
                 route: "/dashboard/roles"
 
@@ -24,11 +24,11 @@ export const MenuList: MenuGroup[] = [
         ]
     },
     {
-        title: "Pages",
+        title: "الصفحات",
         children: [
 
             {
-                title: "Messages",
+                title: "الرسائل",
                 icon: "las la-envelope",
                 route: "/dashboard/messages"
 
@@ -36,34 +36,27 @@ export const MenuList: MenuGroup[] = [
         ]
     },
     {
-        title: "More",
+        title: "المزيد",
         children: [
 
             {
-                title: "Files Manager",
+                title: "ادارة الملفات",
                 icon: "las la-folder-open",
                 route: "/dashboard/files-manager"
 
             },
-            {
-                title: "Website Content",
-                icon: "las la-globe-europe",
-                route: "/dashboard/cms"
-
-            },
-
 
             {
-                title: "Profile",
+                title: "الحساب  الشخصي",
                 icon: "las la-user-cog",
                 children:[
                     {
-                        title:"Basic Information",
+                        title:"المعلومات الاساسية",
                         route: "/dashboard/profile/edit",
                         icon:"las la-user-edit"
                     },
                     {
-                        title:"change Password",
+                        title:"تغيير كلمة المرور",
                         route: "/dashboard/profile/password",
                         icon:"las la-user-shield"
                     },
@@ -71,7 +64,7 @@ export const MenuList: MenuGroup[] = [
 
             },
             {
-                title: "Settings",
+                title: "الاعدادات",
                 icon: "las la-cog",
                 route: "/dashboard/settings"
 

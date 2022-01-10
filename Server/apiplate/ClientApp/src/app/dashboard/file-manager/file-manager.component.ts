@@ -1,5 +1,5 @@
 import { HttpEventType } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FuiModalService, ModalSize } from 'ngx-fomantic-ui';
 import { DirectoryModel } from 'src/app/core/models/directory.model';
 import { FileModel } from 'src/app/core/models/File.Model';
@@ -35,7 +35,7 @@ export class FileManagerComponent implements OnInit {
   progress = 0;
   selectedFiles: FileModel[] = [];
   PickMode = PickingMode;
-  constructor(private _service: FilesManagerService, private modalService: FuiModalService) {
+  constructor(private _service: FilesManagerService, private modalService: FuiModalService,@Inject("DIRECTION") public direction: string) {
   }
   initData() {
     this.isLoading = true;
@@ -88,19 +88,19 @@ export class FileManagerComponent implements OnInit {
       this._service.moveDirectory(dir.title, this.currentPath, result).subscribe(res => {
         this.DimLoading = false;
         this.initData();
-        this.modalService.open(new MessageModal({ title: "success", content: "item moved successfully", messageType: MessageTypes.Success, isConfirm: false }));
+        this.modalService.open(new MessageModal({ title: "نجاح", content: "تم نقل العنصر بنجاح", messageType: MessageTypes.Success, isConfirm: false }));
       }, err => {
         this.DimLoading = false;
         console.log(err);
         this.modalService.open(new MessageModal({
-          title: "Error",
-          content: "Operation Failed", isConfirm: false, messageType: MessageTypes.Danger
+          title: "خطأ",
+          content: "فشلت العملية", isConfirm: false, messageType: MessageTypes.Danger
         }));
       });
     });
   }
   moveFile(file: FileModel) {
-    this.modalService.open(new FileManagerModal({ title: "Select Destination Folder", pickingMode: PickingMode.Folder })).onApprove((result: string) => {
+    this.modalService.open(new FileManagerModal({ title: "الرجاء اختيار المسار", pickingMode: PickingMode.Folder })).onApprove((result: string) => {
       console.log(result);
       let path = this.currentPath;
       this.DimLoading = true;
@@ -110,13 +110,13 @@ export class FileManagerComponent implements OnInit {
       this._service.moveFile(file.title, path, result).subscribe(res => {
         this.DimLoading = false;
         this.initData();
-        this.modalService.open(new MessageModal({ title: "success", content: "item moved successfully", messageType: MessageTypes.Success, isConfirm: false }));
+        this.modalService.open(new MessageModal({ title: "نجاح", content: "تم نقل العنصر بنجاح", messageType: MessageTypes.Success, isConfirm: false }));
       }, err => {
         this.DimLoading = false;
         console.log(err);
         this.modalService.open(new MessageModal({
-          title: "Error",
-          content: "Operation Failed", isConfirm: false, messageType: MessageTypes.Danger
+          title: "خطأ",
+          content: "فشلت العملية", isConfirm: false, messageType: MessageTypes.Danger
         }));
       });
     });
@@ -130,8 +130,8 @@ export class FileManagerComponent implements OnInit {
   }
   deleteDirectory(dir: DirectoryModel) {
     this.modalService.open(new MessageModal({
-      title: "Confirm",
-      content: "are you sure you want to delete this folder ?",
+      title: "تأكيد",
+      content: "هل انت متأكد من أنك تريد حذف هذا العنصر ؟",
       isConfirm: true, messageType: MessageTypes.Warning
     })).onApprove(() => {
       this.DimLoading = true;
@@ -140,15 +140,15 @@ export class FileManagerComponent implements OnInit {
         this.DimLoading = false;
         this.initData();
         this.modalService.open(new MessageModal({
-          title: "Success",
-          content: "folder deleted Successfully", isConfirm: false, messageType: MessageTypes.Success
+          title: "تأكيد",
+          content: "تم حذف الملف بنجاح", isConfirm: false, messageType: MessageTypes.Success
         }));
       }, err => {
         this.DimLoading = false;
         console.log(err);
         this.modalService.open(new MessageModal({
-          title: "Error",
-          content: "Operation Failed", isConfirm: false, messageType: MessageTypes.Danger
+          title: "خطأ ",
+          content: "فشلت العملية", isConfirm: false, messageType: MessageTypes.Danger
         }));
       });
 
@@ -174,8 +174,8 @@ export class FileManagerComponent implements OnInit {
   }
   deleteFile(file: FileModel) {
     this.modalService.open(new MessageModal({
-      title: "Confirm",
-      content: "are you sure you want to delete this file ?",
+      title: "تأكيد",
+      content: " هل انت متأكد من أنك تريد حذف هذا العنصر ؟" ,
       isConfirm: true, messageType: MessageTypes.Warning
     })).onApprove(() => {
       this.DimLoading = true;
@@ -183,15 +183,15 @@ export class FileManagerComponent implements OnInit {
         this.DimLoading = false;
         this.initData();
         this.modalService.open(new MessageModal({
-          title: "Success",
-          content: "file deleted Successfully", isConfirm: false, messageType: MessageTypes.Success
+          title: "نجاح",
+          content: "تم حذف الملف بنجاح", isConfirm: false, messageType: MessageTypes.Success
         }));
       }, err => {
         this.DimLoading = false;
         console.log(err);
         this.modalService.open(new MessageModal({
-          title: "Error",
-          content: "Operation Failed", isConfirm: false, messageType: MessageTypes.Danger
+          title: "خطأ",
+          content: "فشلت العملية", isConfirm: false, messageType: MessageTypes.Danger
         }));
       });
 
@@ -289,7 +289,7 @@ export class FileManagerComponent implements OnInit {
           title: undefined,
           controls: [
             {
-              title: "Folder", name: "title", controlType: ControlTypes.TextInput, icon: "folder icon", width: "100%"
+              title: "العنوان", name: "title", controlType: ControlTypes.TextInput, icon: "folder icon", width: "100%"
             }
           ]
         }
@@ -306,10 +306,8 @@ export class FileManagerComponent implements OnInit {
     });
   }
   ngAfterViewInit(){
-    console.log("view initied");
   }
   ngOnInit(): void {
-    console.log("initializing");
     this.initData();
 
   }

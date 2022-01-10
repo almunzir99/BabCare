@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  direction: "ltr"
+  direction: "rtl"
 };
 
 /*

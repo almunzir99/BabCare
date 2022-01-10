@@ -39,6 +39,10 @@
     left: unset;
 }
 
+.menu-container.rtl .ui.dropdown .menu>.item {
+    text-align: right;
+}
+
 .las.la-user-circle {
     font-size: 20px;
 }

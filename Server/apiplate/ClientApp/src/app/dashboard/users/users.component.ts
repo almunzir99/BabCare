@@ -68,14 +68,14 @@ export class UsersComponent implements OnInit {
     this.cols = [
       {
         prop: "image",
-        title: "Image",
+        title: "الصورة",
         show:true,
 
 
       },
       {
         prop: "id",
-        title: "Id",
+        title: "الرقم التعريفي",
         show:true,
         sortable:true
 
@@ -83,14 +83,14 @@ export class UsersComponent implements OnInit {
      
       {
         prop: "username",
-        title: "Username",
+        title: "اسم المستخدم",
         show:true,
         sortable:true
 
       },
       {
         prop: "phone",
-        title: "Phone Number",
+        title: "رقم الهاتف",
         show:true,
         sortable:true
 
@@ -98,7 +98,7 @@ export class UsersComponent implements OnInit {
       },
       {
         prop: "email",
-        title: "email",
+        title: "البريد",
         show:true,
         sortable:true
 
@@ -106,14 +106,14 @@ export class UsersComponent implements OnInit {
       },
       {
         prop: "role",
-        title: "role",
+        title: "الوظيفة",
         show:true,
 
 
       },
       {
         prop: "createdAt",
-        title: "Created At",
+        title: "تاريخ الانشاء",
         show:true,
         sortable:true
 
@@ -121,14 +121,14 @@ export class UsersComponent implements OnInit {
       },
       {
         prop: "lastUpdate",
-        title: "Last Update",
+        title: "تاريخ التعديل",
         show:true,
         sortable:true
 
 
       }, {
         prop: "Actions",
-        title: "Actions",
+        title: "الافعال",
         show:true,
 
       }
@@ -151,16 +151,16 @@ export class UsersComponent implements OnInit {
   delete(id:number) {
     this.modalService
       .open(new MessageModal({
-        title: "Confirm Message",
-        content: "are you sure you want to delete this item ?", isConfirm: true , messageType:MessageTypes.Danger
+        title: "تأكيد",
+        content: "هل انت متأكد كن انك تريد حذف هذا العنصر ؟", isConfirm: true , messageType:MessageTypes.Danger
       }))
       .onApprove(() => {
           this.DimLoading = true;
           this._service.delete(id).subscribe(res =>{
               this.DimLoading = false;
               this.modalService.open(new MessageModal({
-                title: "Success",
-                content: "Item Deleted Successfully", isConfirm: false , messageType:MessageTypes.Success
+                title: "نجاح",
+                content: "تم حذف العنصر بنجاح", isConfirm: false , messageType:MessageTypes.Success
               }))
               this.initData();
           },err =>{
@@ -180,7 +180,7 @@ export class UsersComponent implements OnInit {
       const form: FormBuilderGroup[] = [
         {
 
-          title: "General",
+          title: "عام",
           controls: [
             {
               title: "id",
@@ -190,7 +190,7 @@ export class UsersComponent implements OnInit {
               value: user ? user.id : undefined
             },
             {
-              title: "username",
+              title: "اسم المستخدم",
               name: "username",
               icon: "user tie icon",
               controlType: ControlTypes.TextInput,
@@ -203,7 +203,7 @@ export class UsersComponent implements OnInit {
               ]
             },
             {
-              title: "phone",
+              title: "رقم الهاتف",
               name: "phone",
               icon: "phone icon",
               controlType: ControlTypes.NumberInput,
@@ -218,7 +218,7 @@ export class UsersComponent implements OnInit {
 
             },
             {
-              title: "email",
+              title: "البريد الالكتروني",
               name: "email",
               icon: "mail icon",
               controlType: ControlTypes.TextInput,
@@ -231,7 +231,7 @@ export class UsersComponent implements OnInit {
 
             },
             {
-              title: "password",
+              title: "كلمة المرور",
               name: "password",
               icon: "key icon",
 
@@ -243,7 +243,7 @@ export class UsersComponent implements OnInit {
 
             },
             {
-              title: "re-enter the password",
+              title: "اعد ادخال كلمة المرور",
               name: "repassword",
               icon: "key icon",
               validators:[
@@ -254,7 +254,7 @@ export class UsersComponent implements OnInit {
               width: "50%"
             },
             {
-              title: "Role",
+              title: "الوظيفة",
               name: "roleId",
               controlType: ControlTypes.Selection,
               data: roles,
@@ -266,7 +266,7 @@ export class UsersComponent implements OnInit {
 
             },
             {
-              title: "image",
+              title: "الصورة",
               name: "image",
               controlType: ControlTypes.LocalFilePicker,
               width: "100%",
@@ -280,7 +280,7 @@ export class UsersComponent implements OnInit {
       ];
       this.modalService.open(new FormBuilderModal(
         {
-          title: user ? "Update User Info" : "New User",
+          title: user ? "تعديل بيانات مستخدم" : "مستخدم جديد",
           controlGroups: form
         }
       )).onApprove((result) => {
@@ -301,8 +301,8 @@ export class UsersComponent implements OnInit {
       this.initData();
       this.DimLoading = false;
       this.modalService.open(new MessageModal({
-        title: "Success",
-        content: "Item Created Successfully", isConfirm: false , messageType:MessageTypes.Success
+        title: "نجاح",
+        content: "تم انشاء العنصر بنجاح", isConfirm: false , messageType:MessageTypes.Success
       }))
     },err=>{
       console.log(err);
@@ -316,8 +316,8 @@ export class UsersComponent implements OnInit {
       this.initData();
       this.DimLoading = false;
       this.modalService.open(new MessageModal({
-        title: "Success",
-        content: "Item Updated Successfully", isConfirm: false , messageType:MessageTypes.Success
+        title: "نجاج",
+        content: "تم تحديث بيانات العنصر بنجاح", isConfirm: false , messageType:MessageTypes.Success
       }))
     },err=>{
       console.log(err);

@@ -1,3 +1,4 @@
+@import 'variables';
 .title-container {
     display: flex;
     align-items: center;
@@ -29,4 +30,18 @@
 
 .ui.fluid.accordion {
     margin: 15px 0px;
+}
+
+.empty-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    i {
+        color: $primary-color;
+        font-size: 40px;
+        margin: 10px 0px;
+    }
 }

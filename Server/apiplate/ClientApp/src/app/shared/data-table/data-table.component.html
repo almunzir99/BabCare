@@ -24,7 +24,7 @@
                     <td [attr.colspan]="cols.length">
                         <div class="empty-placeholder">
                             <i class="lab la-dropbox"></i>
-                            <p>No Records</p>
+                            <p>لا توجد بيانات</p>
                         </div>
                     </td>
                 </tr>
@@ -60,7 +60,7 @@
 
                         </div>
                         <div style="font-weight: bold;">
-                            Showing {{(pageSize * pageIndex) - 9}} to {{pageSize * pageIndex}} of {{totalItems}} items
+                            عرض {{(pageSize * pageIndex) - 9}} الى {{pageSize * pageIndex}} من {{totalItems}} عناصر
                             <fui-pagination style="margin:0px 10px" [collectionSize]="totalItems" [pageSize]="pageSize" [canRotate]="true" [maxSize]="3" hasEllipses="true" (pageChange)="pageIndexChange($event)" [(page)]="pageIndex">
                             </fui-pagination>
                         </div>
@@ -71,7 +71,7 @@
     </table>
     <fui-modal size="mini" *ngIf="openTableModal" #tableModal (dismissed)="closeTableSetting()">
         <div class="header">
-            Table Columns Settings
+            اعدادات الجدول
         </div>
         <div class="content">
             <div *ngFor="let col of columns">
@@ -81,7 +81,7 @@
             </div>
         </div>
         <div class="actions">
-            <button class="ui primary button" (click)="closeTableSetting()" autofocus>OK</button>
+            <button class="ui primary button" (click)="closeTableSetting()" autofocus>تأكيد</button>
         </div>
     </fui-modal>
 </div>

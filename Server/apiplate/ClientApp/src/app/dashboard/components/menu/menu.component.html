@@ -15,14 +15,14 @@
                     <div class="menu" fuiDropdownMenu>
                         <div class="item">
                             <div class="Messages">
-                                <i class="envelope icon"></i> Messages
+                                <i class="envelope icon"></i> الرسائل
                             </div>
                         </div>
                         <div class="item">
-                            <i class="cog icon"></i> Settings
+                            <i class="cog icon"></i> الاعدادات
                         </div>
                         <div (click)="logout()" class="item">
-                            <i class="power off icon"></i> Logout
+                            <i class="power off icon"></i> تسجيل خروج
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
             </div>
             <div>
                 <h4>{{currentUser.username}}</h4>
-                <p [textContent]="currentUser.isManager ? 'Manager' : 'Admin'"> </p>
+                <p [textContent]="currentUser.isManager ? 'مدير' : 'مشرف'"> </p>
             </div>
         </div>
         <div class="menu-items">
