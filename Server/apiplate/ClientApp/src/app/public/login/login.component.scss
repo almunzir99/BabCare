@@ -1,0 +1,27 @@
+.login-layout {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background-color: white;
+}
+
+.text {
+    color: #627898;
+}
+
+.login-container {
+    width: 400px;
+    height: fit-content;
+    padding: 30px;
+    border-radius: 5px;
+    border: 1px solid #e3e8f3;
+}
+
+.input {
+    margin: 10px 0px;
+}

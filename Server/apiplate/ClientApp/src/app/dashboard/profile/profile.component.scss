@@ -1,0 +1,30 @@
+.profile {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.profile img {
+    height: 160px;
+    width: 160px;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.profile .image-placeholder {
+    height: 160px;
+    width: 160px;
+    border-radius: 20px;
+    margin: 20px;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i {
+        font-size: 100px;
+    }
+}
+
+.profile .form-builder {
+    width: 70%;
+}

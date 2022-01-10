@@ -1,0 +1,108 @@
+.file-manager {
+    padding: 15px 30px;
+}
+
+.file-manager .action-bar {
+    background: white;
+    border-radius: 10px;
+    border: 1.0px solid #e3e8f3;
+    padding: 10px;
+    margin: 0px;
+    align-items: center;
+}
+
+.action-bar p {
+    color: #17263A;
+    font-weight: bold;
+    margin: 0px 15px;
+    font-size: 17px;
+}
+
+.nodes-container {
+    display: flex;
+    flex-wrap: wrap;
+    height: 60vh;
+    overflow: auto;
+    margin: 10px 0px;
+}
+
+.page-container .ui.buttons {
+    margin: 10px;
+    float: right;
+}
+
+.node-container {
+    width: 150px;
+    height: 150px;
+    padding: 25px;
+    background: white;
+    border-radius: 10px;
+    border: 1.0px solid #e3e8f3;
+    color: #17263A;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px;
+    position: relative;
+}
+
+.image-node-container {
+    padding: 0px!important;
+    justify-content: flex-start;
+}
+
+.image-node-container img {
+    height: 90px;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.image-node-container .node-info {
+    padding: 0px 15px!important;
+}
+
+.node-container .node-icon {
+    width: 100%;
+}
+
+.node-container .node-icon i {
+    font-size: 50px;
+}
+
+.node-container .node-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.node-container .checkmark-container {
+    height: 100px;
+    width: 100px;
+    font-size: 35px;
+    background-color: #17263a6c;
+    color: whitesmoke;
+    border-radius: 100%;
+    border: 5px solid whitesmoke;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fade-zoom {
+    animation: fade-zoom 0.4s;
+}
+
+@keyframes fade-zoom {
+    0% {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

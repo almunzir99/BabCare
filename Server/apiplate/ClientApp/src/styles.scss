@@ -1,0 +1,172 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* Provide sufficient contrast against white background */
+
+@import "../node_modules/semantic-ui-css/semantic.min.css";
+@import "../node_modules/eva-icons/style/eva-icons.css";
+@import "~line-awesome/dist/line-awesome/css/line-awesome.min.css";
+@import 'variables';
+@font-face {
+    src: url("assets/fonts/poppins.ttf");
+    font-family: "poppins";
+}
+
+* {
+    font-family: "poppins";
+    outline: none;
+    box-sizing: border-box;
+}
+
+code {
+    color: #e01a76;
+}
+
+.background-color {
+    background-color: $bg-color;
+}
+
+.transition.ui.dimmer.page.modals {
+    z-index: 1004;
+}
+
+.ui.modal {
+    position: relative;
+    height: fit-content;
+    z-index: 2000;
+    overflow: visible;
+}
+
+.ui.selection.dropdown .menu {
+    z-index: 2001!important;
+}
+
+.ui.pagination.menu .active.item {
+    background-color: $primary-color;
+    color: white;
+}
+
+.ui.active.loader p {
+    margin-top: 40px;
+    margin-right: 20px;
+}
+
+
+/* Pages Styles */
+
+.page-container {
+    padding: 15px 20px;
+}
+
+.page-container .selection.ui.dropdown {
+    min-width: 5rem;
+}
+
+.page-container .action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.page-container .action-bar .actions-buttons {
+    display: flex;
+    justify-content: stretch;
+    flex-wrap: wrap;
+    margin: 5px;
+}
+
+.page-container .actions-buttons .button {
+    margin: 5px;
+    min-width: 168px;
+}
+
+.page-container .action-bar .inputs-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.page-container .action-bar .inputs-container .input input {
+    width: 300px;
+}
+
+.selection-container {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    /* min-width: 210px; */
+}
+
+.selection-container p {
+    margin: 0px 5px;
+    margin-top: 5px;
+}
+
+.page-container .action-bar .input {
+    margin-right: 10px;
+}
+
+.page-container .cell-image {
+    height: 40px;
+    width: 40px;
+    border-radius: 7px;
+}
+
+.page-container .actions-cell {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.page-container .actions-cell .cell-btn {
+    height: 30px;
+    width: 30px;
+    border-radius: 3px;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.page-container .actions-cell .cell-btn i {
+    margin-bottom: 5px;
+}
+
+.page-container .actions-cell .edit-btn {
+    color: $accent-color;
+    background-color: rgba($color: $accent-color, $alpha: 0.15);
+}
+
+.page-container .actions-cell .delete-btn {
+    color: red;
+    background-color: rgba(255, 146, 146, 0.288);
+}
+
+.ui.primary.button,
+.ui.primary.buttons .button {
+    background-color: $primary-color!important;
+}
+
+.ui.toggle.checkbox input:checked~.box:before,
+.ui.toggle.checkbox input:checked~label:before {
+    background-color: $primary-color!important;
+}
+
+.ui.styled.accordion,
+.ui.styled.accordion .accordion {
+    box-shadow: $box-shadow!important;
+    border-radius: 10px!important;
+}
+
+.note-modal-backdrop {
+    z-index: 900;
+}
+
+.ar {
+    text-align: right;
+}

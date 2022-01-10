@@ -1,0 +1,91 @@
+<div *ngIf="isLoading==false else loading" class="page-container cms-page">
+    <div class="langs-bar">
+        <div class="langs-drop">
+            Select Langauge:
+            <fui-select #templated [optionTemplate]="langTemplate" [(ngModel)]="currentLang" (selectedOptionChange)="changeLang($event)" class="selection" placeholder="Page Size">
+                <fui-select-option *ngFor="let lang of langs" [value]="lang">
+                </fui-select-option>
+            </fui-select>
+        </div>
+        <button (click)="createLang()" class="ui left labeled icon primary button">
+            <i class="plus icon"></i>
+            Create Language
+        </button>
+        <ng-template let-code #langTemplate>
+            <img style="height: 20px;width: 20px; border-radius: 100%;" class="flag" [src]="'assets/flags/'+getFlag (code)+'.png'"> {{code}}
+        </ng-template>
+    </div>
+    <div class="page-sections">
+        <div class="keys-viewer">
+            <div class="main-title">
+                <div>Keys Viewer</div>
+                <button (click)="CreateParent()" class="ui left labeled icon yellow button mini">
+                    <i class="plus icon"></i>
+                    New Parent
+                </button>
+            </div>
+            <fui-accordion *ngFor="let key of getKeys(currentJson)" class="node-parent">
+                <fui-accordion-panel [isOpen]="true">
+                    <div title class="title">
+                        <div>
+                            <i class="folder icon yellow"></i> {{key}}
+                        </div>
+                        <div (click)="onAdd(key)" class="add-btn">
+                            <button class="ui  primary mini icon button">
+                                <i class="plus icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div content class="children">
+                        <div [class.node-selected]="currentNode?.parent == key && currentNode.key == childKey " (click)="selectNode(key,childKey)" class="node-child" *ngFor="let childKey of getKeys(currentJson[key])">
+                            <div class="title">
+                                <i class="file alternate icon grey"></i> {{childKey}}
+                            </div>
+                        </div>
+
+                    </div>
+                </fui-accordion-panel>
+
+            </fui-accordion>
+        </div>
+        <div class="values-viewer">
+            <div class="actions-bar">
+                <div class="main-title">Values Viewer</div>
+                <div class="actions">
+                    <button (click)="onApply()" class="ui  primary button">
+                        <i class="checkmark icon"></i> apply
+                    </button>
+                    <button (click)="DeleteNode()" class="ui  red button">
+                        <i class="trash icon"></i> Delete
+                    </button>
+                </div>
+            </div>
+            <div class="ui form" style="width: 100%;padding: 15px;" *ngIf="currentNode != null else noElementSelected">
+                <div  class="field">
+                    <label disabled="" tabindex="-1">key title:</label>
+                    <input  tabindex="-1" [(ngModel)]="currentNode.key" type="text" placeholder="key title...">
+                </div>
+                <div class="field">
+                    <label>Content:</label>
+                    <custom-summernote-editor doChanges="true" editorId="summernote-cms" (htmlContentChange)="editorChange($event)" [htmlContent]="currentNode.value"></custom-summernote-editor>
+                </div>
+            </div>
+
+            <ng-template #noElementSelected>
+                <div style="padding: 15px;">
+                    no element is selected !
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #loading>
+    <div class="loader-container">
+        <div class="ui active loader"></div>
+    </div>
+</ng-template>
+<fui-dimmer class="page" [(isDimmed)]="DimLoading">
+    <div class="ui active loader"></div>
+</fui-dimmer>

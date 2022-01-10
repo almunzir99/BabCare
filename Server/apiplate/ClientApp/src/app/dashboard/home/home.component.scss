@@ -1,0 +1,127 @@
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.card-container {
+    height: 210px;
+    position: relative;
+    cursor: pointer;
+    transition: 0.5s all ease;
+}
+
+.card-container:hover {
+    transform: translateY(-10px);
+}
+
+.card {
+    height: 180px;
+    width: 180px;
+    margin: 10px;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 2px 2px 22px -12px rgba(0, 0, 0, 0.47);
+    padding: 15px;
+    border-bottom: 3px solid #1b6ec2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.card .title {
+    color: rgb(78, 77, 77);
+    font-weight: bold;
+    font-size: 13px;
+    margin: 20px 0px;
+}
+
+.view-more {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    color: #1b6ec2;
+}
+
+.card .number {
+    font-size: 60px;
+    color: rgb(78, 77, 77);
+}
+
+.icon-container {
+    color: white;
+    background-color: #1b6ec2;
+    box-shadow: 2px 2px 20px hsla(210, 76%, 43%, 0.534);
+    font-size: 40px;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.card-container.dark-blue .card {
+    border-bottom: 3px solid #183d6e;
+}
+
+.card-container.crimson .card {
+    border-bottom: 3px solid crimson;
+}
+
+.card-container.yellow .card {
+    border-bottom: 3px solid #FBBD08;
+}
+
+.card-container.teal .card {
+    border-bottom: 3px solid #00B5AD;
+}
+
+.card-container.violet .card {
+    border-bottom: 3px solid #6435C9;
+}
+
+.card-container.dark-blue .view-more {
+    color: #183d6e;
+}
+
+.card-container.crimson .view-more {
+    color: crimson;
+}
+
+.card-container.yellow .view-more {
+    color: #FBBD08;
+}
+
+.card-container.teal .view-more {
+    color: #00B5AD;
+}
+
+.card-container.violet .view-more {
+    color: #6435C9;
+}
+
+.card-container.dark-blue .icon-container {
+    background-color: #183d6e;
+    box-shadow: 2px 2px 20px rgba(23, 38, 58, 0.533);
+}
+
+.card-container.crimson .icon-container {
+    background-color: crimson;
+    box-shadow: 2px 2px 20px rgba(220, 20, 60, 0.5);
+}
+
+.card-container.yellow .icon-container {
+    background-color: #FBBD08;
+    box-shadow: 2px 2px 20px hsla(45, 97%, 51%, 0.5);
+}
+
+.card-container.violet .icon-container {
+    background-color: #6435C9;
+    box-shadow: 2px 2px 20px hsla(259, 58%, 50%, 0.5);
+}
+
+.card-container.teal .icon-container {
+    background-color: #00B5AD;
+    box-shadow: 2px 2px 20px hsla(177, 100%, 35%, 0.5);
+}

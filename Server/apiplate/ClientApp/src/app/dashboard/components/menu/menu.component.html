@@ -1,0 +1,77 @@
+<div [class.rtl]="direction == 'rtl'" [class.open-menu]="opened" class="menu-container">
+    <div class="menu-container-content">
+        <div class="options">
+            <div class="logo">
+                <img src="assets/logo.svg" alt="" srcset="">
+            </div>
+            <div>
+                <div class="notification">
+                    <i class="las la-bell"></i>
+                    <div class="badge">3</div>
+                </div>
+                <div style="display: inline-block;" class="ui dropdown" fuiDropdown>
+                    <i class="las la-user-circle"></i>
+
+                    <div class="menu" fuiDropdownMenu>
+                        <div class="item">
+                            <div class="Messages">
+                                <i class="envelope icon"></i> Messages
+                            </div>
+                        </div>
+                        <div class="item">
+                            <i class="cog icon"></i> Settings
+                        </div>
+                        <div (click)="logout()" class="item">
+                            <i class="power off icon"></i> Logout
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="user-image-container">
+            <div class="user-image">
+                <img *ngIf="currentUser.image != null && currentUser.image !='none'" [src]="currentUser.image">
+                <div *ngIf="currentUser.image == null || currentUser =='none'" [src]="currentUser.image" class="image-placeholder">
+                    <i class="las la-user-tie"></i>
+                </div>
+
+            </div>
+            <div>
+                <h4>{{currentUser.username}}</h4>
+                <p [textContent]="currentUser.isManager ? 'Manager' : 'Admin'"> </p>
+            </div>
+        </div>
+        <div class="menu-items">
+            <div class="menu-group" *ngFor="let item of menuItems">
+                <div class="title">{{item.title}}</div>
+                <div class="children" *ngFor="let menuItem of item.children; let i = index">
+                    <div [class.sub-menu]="menuItem.open" [class.active]="selectedMenuItem == menuItem" (click)="selectItem(i,item)" class="menu-item">
+                        <div class="menu-item-info">
+                            <div style="display: flex;">
+                                <i [attr.class]="menuItem.icon"></i>
+                                <div class="item-title">
+                                    {{menuItem.title}}
+                                </div>
+                            </div>
+                            <ng-container *ngIf="direction == 'ltr'">
+                                <i *ngIf="menuItem.children != undefined" class="eva eva-chevron-right"></i>
+                            </ng-container>
+                            <ng-container *ngIf="direction == 'rtl'">
+                                <i *ngIf="menuItem.children != undefined" class="eva eva-chevron-left"></i>
+                            </ng-container>
+                        </div>
+                        <div class="sub-children">
+                            <div (click)="$event.stopPropagation();selectItem(i,item,childIndex)" *ngFor="let child of menuItem.children;let childIndex = index" [class.active]="selectedMenuItem == child" class="menu-item sub-child">
+                                <i [attr.class]="child.icon"></i>
+                                <div class="item-title">
+                                    {{child.title}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

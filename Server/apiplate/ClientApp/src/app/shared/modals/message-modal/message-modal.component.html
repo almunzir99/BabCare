@@ -1,0 +1,17 @@
+<div class="message-container">
+    <div class="title">{{modal.context.title}}</div>
+    <div class="icon-container">
+        <i *ngIf="modal.context.messageType == types.Success" class=" eva eva-checkmark-circle-2 green"></i>
+        <i *ngIf="modal.context.messageType == types.Warning" class="eva eva-alert-triangle orange"></i>
+        <i *ngIf="modal.context.messageType == types.Danger" class="eva eva-close-circle red"></i>
+    </div>
+    <div class="content">{{modal.context.content}}</div>
+    <div class="actions">
+        <button *ngIf="modal.context.isConfirm" class="ui button" (click)="modal.deny(undefined)">
+            <i class="times  icon"></i>
+            Cancel</button>
+        <button [class.green]="modal.context.messageType == types.Success" [class.red]="modal.context.messageType == types.Danger" [class.orange]="modal.context.messageType == types.Warning" class="ui  button" (click)="modal.approve(undefined)" autofocus>
+            <i class="check icon"></i>
+            OK</button>
+    </div>
+</div>

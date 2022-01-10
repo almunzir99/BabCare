@@ -1,0 +1,124 @@
+<div *ngIf="!isLoading else loading" class="page-container file-manager">
+    <div class="action-bar">
+        <div style="display: flex; align-items: center;margin: 5px;">
+            <div (click)="goBack()" class="ui icon button">
+                <i class="chevron left icon"></i> back
+
+            </div>
+            <p>/root/{{currentPath}}</p>
+
+        </div>
+        <div>
+            <div (click)="initData()" class="ui icon button primary">
+                <i class="refresh icon"></i>
+            </div>
+            <label for="fileuploader">
+                <div class="ui violet left labeled icon button">
+                    Upload File
+                    <i class="cloud upload icon"></i>
+                </div>
+            </label>
+            <input multiple (change)="uploadFile($event.target.files)" style="display: none;" type="file" name="fileuploader" id="fileuploader">
+            <div (click)="createFolder()" class="ui  yellow left labeled icon button">
+                New Folder
+                <i class=" folder icon"></i>
+            </div>
+
+        </div>
+    </div>
+    <div [style.height.vh]="pickingMode == PickMode.None ? 70 : 60" class="nodes-container">
+        <div *ngFor="let directory of CurrentDirectory.directories" class="node-container">
+            <div (click)="navigate(directory)" class="node-icon">
+                <i class="folder icon yellow"></i>
+            </div>
+            <div class="node-info">
+                <div (click)="navigate(directory)">{{directory.title}}</div>
+                <div class="ui dropdown" fuiDropdown>
+                    <i class="ellipsis vertical icon"></i>
+                    <div class="menu" fuiDropdownMenu>
+                        <div (click)="moveDir(directory)" class="item">
+                            <div class="Messages">
+
+                                <i class="arrow alternate circle right icon"></i> Move
+                            </div>
+                        </div>
+                        <div (click)="renameDir(directory)" class="item">
+                            <i class="edit icon"></i> Rename
+                        </div>
+                        <div (click)="deleteDirectory(directory)" class="item">
+                            <i class="times icon"></i> Delete
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [class.image-node-container]="file.contentType == '.jpg' || file.contentType == '.png' || file.contentType == '.jiff' || file.contentType == '.jpeg'" *ngFor="let file of CurrentDirectory.files" class="node-container">
+            <div (click)="onFileClick(file)" *ngIf="selectedFiles.includes(file)" class="checkmark-container fade-zoom">
+                <i class="ui checkmark icon"></i>
+            </div>
+            <div (click)="onFileClick(file)" [ngSwitch]="true" class="node-icon">
+                <img *ngSwitchCase="file.contentType == '.jpg' || file.contentType == '.png' || file.contentType == '.jiff' || file.contentType == '.jpeg'" class="file image icon violet" [src]="file.uri">
+                <i *ngSwitchCase="file.contentType == '.mp3' || file.contentType == '.m4a' || file.contentType == '.ogg'" class="file audio icon red"></i>
+                <i *ngSwitchCase="file.contentType == '.docx' || file.contentType == '.doc' " class="file word icon blue"></i>
+
+                <i *ngSwitchDefault class="file icon"></i>
+
+            </div>
+            <div class="node-info">
+                <div (click)="onFileClick(file)" [textContent]="getShortenTitle(file)"></div>
+                <div class="ui dropdown" fuiDropdown>
+                    <i class="ellipsis vertical icon"></i>
+                    <div class="menu" fuiDropdownMenu>
+                        <div (click)="downloadFile(file)" class="item">
+                            <i class="download cloud icon"></i> Download
+                        </div>
+                        <div fuiPopup popupText="copied to clipboard" popupTrigger="outsideClick" (click)="copyUrl(file.uri)" class="item">
+                            <i class="copy icon"></i> copy Url
+                        </div>
+                        <div (click)="moveFile(file)" class="item">
+                            <div class="Messages">
+
+                                <i class="arrow alternate circle right icon"></i> Move
+                            </div>
+                        </div>
+                        <div (click)="renameFile(file)" class="item">
+                            <i class="edit icon"></i> Rename
+                        </div>
+                        <div (click)="deleteFile(file)" class="item">
+                            <i class="times icon"></i> Delete
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="file-node"></div>
+    </div>
+    <div *ngIf="pickingMode == PickMode.Files || pickingMode == PickMode.Folder" class="ui buttons">
+        <button (click)="onCancel()" class="ui button">
+            <i class="times  icon"></i>
+            Cancel</button>
+        <div class="or"></div>
+        <button (click)="onSelectClick()" class="ui primary button">
+            <i class="check icon"></i>
+            Select</button>
+    </div>
+</div>
+<ng-template #loading>
+    <div style="display: flex;align-items: center;flex-direction: column;" class="ui active loader">
+        <p>Loading...</p>
+
+    </div>
+</ng-template>
+<fui-dimmer class="page" [(isDimmed)]="DimLoading">
+    <div class="ui active loader">
+        <p>Loading...</p>
+
+    </div>
+</fui-dimmer>
+<fui-dimmer class="page" [(isDimmed)]="DimUploading">
+    <div style="padding: 10px 0px;" class="ui active loader">
+        {{progress}}%
+        <p>uploading...</p>
+
+    </div>
+</fui-dimmer>

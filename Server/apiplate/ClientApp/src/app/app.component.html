@@ -1,0 +1,7 @@
+<div style="height: 100%;" [class.rtl]="direction == 'rtl'" *ngIf="!loading else preloader">
+    <router-outlet></router-outlet>
+
+</div>
+<ng-template #preloader>
+    <app-preloader></app-preloader>
+</ng-template>

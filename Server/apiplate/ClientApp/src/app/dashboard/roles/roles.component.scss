@@ -1,0 +1,32 @@
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: black;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+}
+
+.a-btn {
+    margin: 5px;
+    padding: 10px;
+    width: fit-content;
+    border-radius: 3px;
+}
+
+.apply-btn {
+    color: #26a007;
+    background-color: hsla(125, 100%, 66%, 0.153);
+}
+
+.delete-btn {
+    color: red;
+    background-color: rgba(255, 146, 146, 0.288);
+}
+
+.ui.fluid.accordion {
+    margin: 15px 0px;
+}

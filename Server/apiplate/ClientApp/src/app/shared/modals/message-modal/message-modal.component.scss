@@ -1,0 +1,36 @@
+.message-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+    color: #5a5a5a;
+}
+
+.message-container .title {
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.message-container .icon-container .eva {
+    font-size: 55px;
+    margin: 15px;
+}
+
+.message-container .content {
+    margin-bottom: 15px;
+    font-size: 15px;
+}
+
+.red {
+    color: #DB2828;
+}
+
+.orange {
+    color: #f2711c;
+}
+
+.green {
+    color: #21BA45;
+}

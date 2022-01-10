@@ -1,0 +1,46 @@
+<div class="page-container">
+    <div class="action-bar">
+        <div class="inputs-container">
+            <div class="ui left icon input">
+                <input #search name="search by name" (input)="onSearchChange(search.value)" type="text" placeholder="Search...">
+                <i class="search icon"></i>
+            </div>
+
+            <div class="selection-container">
+                <p>Page Size : </p>
+                <fui-select [(ngModel)]="pageSize" (selectedOptionChange)="pageSizeChanged($event)" class="selection" placeholder="Page Size">
+                    <fui-select-option *ngFor="let option of range(100,10,10)" [value]="option"></fui-select-option>
+                </fui-select>
+            </div>
+
+        </div>
+    </div>
+    <data-table (sortChange)="onSortChange($event)" [(pageIndex)]="pageIndex" [total-items]="totalRecords" [page-size]="pageSize" (pageIndexChanged)="pageIndexChanged($event)" [cell-template]="cellTemplate" [loading]="isDataLoading" [cols]="cols" [rows]="data">
+        <ng-template #cellTemplate let-rowData="rowData" let-data="cellData" let-col="colIndex" let-row="rowIndex">
+            <ng-container [ngSwitch]="col">
+                <ng-container *ngSwitchCase="4">
+                    <div style="max-width: 200px;">
+                        {{data.substr(0,300)}}
+                    </div>
+
+                </ng-container>
+                <ng-container *ngSwitchCase="6">
+                    <div class="actions">
+
+                        <div style="margin: 5px;" class="ui yellow tiny icon button">
+                            <i class="book icon"></i> Show Full Message
+                        </div>
+                        <div style="margin: 5px;" class="ui teal tiny icon button">
+                            <i class="print icon"></i> Print
+                        </div>
+                        <div style="margin: 5px;" class="ui red tiny icon button">
+                            <i class="trash alternate outline icon"></i> Delete
+                        </div>
+
+                    </div>
+                </ng-container>
+                <div fuiPopup [popupText]="data" *ngSwitchDefault>{{data}}</div>
+            </ng-container>
+        </ng-template>
+    </data-table>
+</div>

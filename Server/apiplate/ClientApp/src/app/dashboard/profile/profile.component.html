@@ -1,0 +1,15 @@
+<div class="page-container profile">
+    <div class="image">
+        <img *ngIf="currentUser.image != null && currentUser.image !='none'" [src]="currentUser.image">
+        <div *ngIf="currentUser.image == null || currentUser.image =='none'" [src]="currentUser.image" class="image-placeholder">
+            <i class="las la-user-tie"></i>
+        </div>
+    </div>
+    <div>
+        <form-builder (submit)="submit($event)" class="form-builder" [control-groups]="formGroups"></form-builder>
+    </div>
+
+</div>
+<fui-dimmer class="page" [(isDimmed)]="loading">
+    <div class="ui active loader"></div>
+</fui-dimmer>

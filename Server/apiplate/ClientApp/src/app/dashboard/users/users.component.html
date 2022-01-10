@@ -1,0 +1,96 @@
+<div class="page-container">
+    <div class="action-bar">
+        <div class="inputs-container">
+            <div class="ui left icon input">
+                <input #search name="search" (input)="onSearchChange(search.value)" type="text" placeholder="Search...">
+                <i class="search icon"></i>
+            </div>
+
+            <div class="selection-container">
+                <p>Page Size : </p>
+                <fui-select [(ngModel)]="pageSize" (selectedOptionChange)="pageSizeChanged($event)" class="selection" placeholder="Page Size">
+                    <fui-select-option *ngFor="let option of range(100,10,10)" [value]="option"></fui-select-option>
+                </fui-select>
+            </div>
+        </div>
+        <div class="actions-buttons">
+            <div (click)="downloadCSV()" class="ui violet left labeled icon button">
+                Export To CSV
+                <i class="file excel outline icon"></i>
+            </div>
+            <div (click)="openFormModal(null)" class="ui primary left labeled icon button">
+                New User
+                <i class="plus  icon"></i>
+            </div>
+
+        </div>
+
+    </div>
+    <data-table (sortChange)="onSortChange($event)" [(pageIndex)]="pageIndex" [total-items]="totalRecords" [page-size]="pageSize" (pageIndexChanged)="pageIndexChanged($event)" [cell-template]="cellTemplate" [loading]="isDataLoading" [cols]="cols" [rows]="users">
+        <ng-template #cellTemplate let-rowData="rowData" let-data="cellData" let-col="colIndex" let-row="rowIndex">
+            <ng-container [ngSwitch]="col">
+                <ng-container *ngSwitchCase="0">
+                    <img class="cell-image" [src]="data ? data : 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png'" alt="No Photo">
+                </ng-container>
+                <ng-container *ngSwitchCase="5">
+                    {{data?.title}}
+                </ng-container>
+                <ng-container *ngSwitchCase="8">
+                    <div class="actions-cell">
+                        <div fuiPopup popupText="Activities" (click)="onActivityClick(rowData)" class="cell-btn activity-btn">
+                            <i class="chart line icon"></i>
+                        </div>
+                        <div fuiPopup popupText="update" (click)="openFormModal(rowData)" class="cell-btn edit-btn">
+                            <i class="edit outline icon"></i>
+                        </div>
+                        <div fuiPopup popupText="delete" (click)="delete(rowData.id)" class="cell-btn delete-btn">
+                            <i class="trash icon"></i>
+                        </div>
+                    </div>
+                </ng-container>
+                <div *ngSwitchDefault>{{data}}</div>
+            </ng-container>
+        </ng-template>
+    </data-table>
+</div>
+<fui-dimmer class="page" [(isDimmed)]="DimLoading">
+    <div class="ui active loader"></div>
+</fui-dimmer>
+
+<fui-modal *ngIf="showActivities" [isClosable]="true" (dismissed)="activityModalDismissed()" #modal>
+    <div class="header">Activities of {{targetUserForActivities.username}}</div>
+    <div class="content">
+        <table class="ui celled table">
+            <thead>
+                <tr>
+                    <th>
+                        Action
+                    </th>
+                    <th>
+                        Effected Table
+                    </th>
+                    <th>
+                        Effected Row Id
+                    </th>
+                    <th>
+                        Happened At
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let activity of targetUserForActivities.activities">
+                    <td>{{activity.action}}</td>
+                    <td>{{activity.effectedTable}}</td>
+                    <td>{{activity.effectedRowId}}</td>
+                    <td>{{activity.createdAt}}</td>
+
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="actions">
+        <button class="ui violet button" (click)="modal.approve('done')" autofocus>OK</button>
+    </div>
+</fui-modal>

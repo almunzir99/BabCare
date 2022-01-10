@@ -1,0 +1,7 @@
+export enum ProgramType {
+    EDUCATION,
+    EMERGENCY_INTERVENTION,
+    PROTRACTIONS,
+    HEALTH_AND_NUTRITION,
+    FSL
+}

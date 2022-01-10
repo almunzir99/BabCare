@@ -1,0 +1,7 @@
+<div [style.width]="width" class="ui action input">
+    <input [attr.name]="name" type="text" placeholder="image url" [(ngModel)]="fileUrl">
+    <button (click)="pick()" class="ui yellow right labeled icon button">
+      <i class="folder icon"></i>
+      Pick
+    </button>
+</div>

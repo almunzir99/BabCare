@@ -1,0 +1,119 @@
+<div class="ui form">
+    <ng-container *ngFor="let group of ControlsGroups">
+        <h4 *ngIf="group.title" class="ui dividing header">{{group.title}}</h4>
+        <div class="form-fields">
+            <div [style.width]="control.width" class="control" *ngFor="let control of group.controls">
+                <!-- 1.selection -->
+                <div *ngIf="control.controlType == controlTypes.Selection" class="field">
+                    <label>{{control.title}}</label>
+                    <fui-select (selectedOptionChange)="selectionChanged(control.name,$event)" [(ngModel)]="resultObject[control.name]" class="selection" [placeholder]="control.title" [labelField]="control.labelProp" [valueField]="control.valueProp">
+                        <fui-select-option *ngFor="let item of control.data" [value]="item"></fui-select-option>
+                    </fui-select>
+                </div>
+                <!-- 2.Multi-selection -->
+                <div *ngIf="control.controlType == controlTypes.MultiSelection" class="field">
+                    <label>{{control.title}}</label>
+                    <fui-multi-select [(ngModel)]="resultObject[control.name]" class="selection" [placeholder]="control.title">
+                        <fui-select-option *ngFor="let item of control.data" [value]="item"></fui-select-option>
+                    </fui-multi-select>
+                </div>
+                <!-- 3.Checkbox -->
+                <div *ngIf="control.controlType == controlTypes.CheckBox" class="field fluid ">
+                    <div class="ui checkbox">
+                        <fui-checkbox [(ngModel)]="resultObject[control.name]" class="toggle" [isDisabled]="eCheckDisabled" [isReadonly]="eCheckReadonly">
+                            {{control.title}}
+                        </fui-checkbox>
+                    </div>
+                </div>
+                <!-- 4. Url -->
+
+                <div [formGroup]="formGroup">
+                    <div *ngIf="control.controlType == controlTypes.Url" class="field">
+                        <label>{{control.title}}</label>
+                        <div class="ui labeled input">
+                            <div class="ui label">
+                                <i [attr.class]="control.icon"></i>
+                            </div>
+                            <input [formControlName]="control.name" [attr.name]="control.name" [(ngModel)]="resultObject[control.name]" type="url" placeholder="image link">
+                        </div>
+                    </div>
+                    <!-- 5. Local File Picker -->
+                    <div *ngIf="control.controlType == controlTypes.LocalFilePicker" class="field">
+                        <label>{{control.title}}</label>
+                        <file-local-picker [name]="control.name" [width]="control.width" [(fileUrl)]="resultObject[control.name]"></file-local-picker>
+
+                    </div>
+                    <!-- 6.Inputs -->
+                    <div [class.ar]="control.alignRight" [class.error]="formGroup.controls[control.name].touched && formGroup.controls[control.name].invalid" *ngIf="control.controlType == controlTypes.TextInput || control.controlType == controlTypes.PasswordInput  || control.controlType == controlTypes.NumberInput"
+                        class="field">
+                        <label>{{control.title}}</label>
+                        <div class="ui left icon input">
+                            <i [attr.class]="control.icon"></i>
+                            <input [formControlName]="control.name" [attr.name]="control.name" [(ngModel)]="resultObject[control.name]" [attr.type]="control.controlType" [attr.placeholder]="control.title">
+                        </div>
+                        <div *ngIf="formGroup.controls[control.name].touched && formGroup.controls[control.name].invalid" class="error-message">
+                            <p *ngIf="formGroup.controls[control.name].errors?.required">
+                                the field {{control.title}} is required
+                            </p>
+                            <p *ngIf="formGroup.controls[control.name].errors?.minlength">
+                                the minimum length of {{control.title}} is {{formGroup.controls[control.name].errors?.minlength.requiredLength}}
+                            </p>
+                            <p *ngIf="formGroup.controls[control.name].errors?.maxlength">
+                                the maximum length of {{control.title}} is {{formGroup.controls[control.name].errors?.maxlength.requiredLength}}
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 7. Text Area -->
+                    <div [class.ar]="control.alignRight" [class.error]="formGroup.controls[control.name].touched && formGroup.controls[control.name].invalid" *ngIf="control.controlType ==  controlTypes.TextArea" class="field">
+                        <label>{{control.title}}</label>
+                        <div class="ui left icon input">
+                            <i [attr.class]="control.icon"></i>
+                            <textarea [formControlName]="control.name" [attr.name]="control.name" [(ngModel)]="resultObject[control.name]" cols="20" rows="10" [attr.placeholder]="control.title"></textarea>
+                        </div>
+                        <div *ngIf="formGroup.controls[control.name].touched && formGroup.controls[control.name].invalid" class="error-message">
+                            <p *ngIf="formGroup.controls[control.name].errors?.required">
+                                the field {{control.title}} is required
+                            </p>
+                            <p *ngIf="formGroup.controls[control.name].errors?.minlength">
+                                the minimum length of {{control.title}} is {{formGroup.controls[control.name].errors?.minlength.requiredLength}}
+                            </p>
+                            <p *ngIf="formGroup.controls[control.name].errors?.maxlength">
+                                the maximum length of {{control.title}} is {{formGroup.controls[control.name].errors?.maxlength.requiredLength}}
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 8. Date Picker -->
+                    <div [class.ar]="control.alignRight" [class.error]="formGroup.controls[control.name].touched && formGroup.controls[control.name].invalid" *ngIf="control.controlType ==  controlTypes.DatePicker " class="field">
+                        <label>{{control.title}}</label>
+                        <div class="ui left icon  input">
+                            <i class="calendar icon"></i>
+                            <input [attr.placeholder]="control.title" [formControlName]="control.name" [attr.name]="control.name" fuiDatepicker [(ngModel)]="resultObject[control.name]">
+                        </div>
+                        <div *ngIf="formGroup.controls[control.name].touched && formGroup.controls[control.name].invalid" class="error-message">
+                            <p *ngIf="formGroup.controls[control.name].errors?.required">
+                                the field {{control.title}} is required
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 9. RichTextEditor -->
+                    <div *ngIf="viewInitiated && control.controlType ==  controlTypes.RichTextEditor" [class.ar]="control.alignRight" class="field">
+                        <label>{{control.title}}</label>
+                        <custom-summernote-editor [editorId]="control.name" (htmlContentChange)="editorChange(control.name,$event)" [htmlContent]="control.value"></custom-summernote-editor>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </ng-container>
+    <div class="ui buttons">
+        <button (click)="onCancel()" class="ui button">
+            <i class="times  icon"></i>
+            Cancel</button>
+        <div class="or"></div>
+        <button [disabled]="formGroup.valid == false" (click)="onSubmit()" class="ui primary button">
+            <i class="check icon"></i>
+            Save</button>
+    </div>
+</div>

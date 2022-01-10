@@ -1,0 +1,4 @@
+<div class="header">{{modal.context.title}}</div>
+<div class="content">
+    <file-manager (onSelect)="onApproved($event)" (onCancel)="onDenied()" [picking-mode]="modal.context.pickingMode"></file-manager>
+</div>

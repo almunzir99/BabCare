@@ -1,0 +1,36 @@
+ .form-fields {
+     display: flex;
+     align-items: center;
+     flex-wrap: wrap;
+     justify-content: stretch;
+     max-height: 65vh;
+     overflow-y: auto;
+     overflow-x: hidden;
+ }
+ 
+ .ui.form .field {
+     margin: 10px;
+     flex-grow: 1;
+     flex-shrink: 0;
+ }
+ 
+ .ui.form .field.fluid {
+     width: 100%;
+ }
+ 
+ .ui.buttons {
+     float: right;
+     margin: 15px 10px;
+ }
+ 
+ .error-message {
+     font-size: 10px;
+     color: red;
+     font-weight: bold;
+ }
+ 
+ @media only screen and (max-width:768px) {
+     .control {
+         width: 100%!important;
+     }
+ }

@@ -1,0 +1,246 @@
+@import 'variables';
+.menu-container {
+    width: 0px;
+    height: 100%;
+    background-color: $menu-bg-color;
+    padding: 20px 0px;
+    padding-top: 0px;
+    overflow: auto;
+}
+
+.menu-container-content {
+    width: 240px;
+}
+
+.options {
+    color: rgba($color: $menu-fr-color, $alpha: 0.7);
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 10px;
+    font-size: 23px;
+}
+
+.options .logo img {
+    height: 40px;
+    width: 40px;
+}
+
+.options i.las {
+    margin: 0px 10px;
+}
+
+.ui.dropdown .menu {
+    top: 40px;
+    left: -93px;
+}
+
+.menu-container.rtl .ui.dropdown .menu {
+    right: -93px;
+    left: unset;
+}
+
+.las.la-user-circle {
+    font-size: 20px;
+}
+
+.notification {
+    display: inline-block;
+    position: relative;
+    height: auto;
+    width: auto;
+}
+
+.notification .badge {
+    background-color: $primary-color;
+    color: white;
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    font-size: 9px;
+    border-radius: 100%;
+}
+
+.user-image-container {
+    display: flex;
+    align-items: center;
+    margin: 20px 10px;
+    color: white;
+    background-color: #ffffff36;
+    border-radius: 13px;
+    padding: 10px;
+}
+
+.user-image-container h4 {
+    margin: 5px 0px;
+}
+
+.user-image-container p {
+    color: rgba($color: $menu-fr-color, $alpha: 0.7);
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.user-image {
+    width: auto;
+    height: auto;
+    position: relative;
+}
+
+.user-image img {
+    height: 55px;
+    width: 55px;
+    border-radius: 10px;
+    margin-right: 19px;
+}
+
+.user-image .image-placeholder {
+    height: 55px;
+    width: 55px;
+    border-radius: 10px;
+    margin-right: 19px;
+    background-color: $menu-bg-color;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i {
+        font-size: 35px;
+    }
+}
+
+.menu-container.rtl .user-image img {
+    margin-left: 20px;
+    margin-right: 0px;
+}
+
+.menu-container.rtl .user-image .image-placeholder {
+    margin-left: 20px;
+    margin-right: 0px;
+}
+
+.open-menu {
+    width: 250px;
+}
+
+.menu-container .menu-items {
+    overflow: hidden;
+    height: 100%;
+}
+
+.menu-container .menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+    color: white;
+    margin-bottom: 20px;
+    height: 80px;
+    background-color: $primary-color;
+}
+
+.menu-header .toggle-button {
+    cursor: pointer;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+
+.menu-group .title {
+    padding: 15px 20px;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: rgba($color: $menu-fr-color, $alpha: 0.7);
+}
+
+.menu-item {
+    margin: 0px 15px;
+    padding: 0px 20px;
+    color: rgba($color: $menu-fr-color, $alpha: 0.7);
+    font-size: 98%;
+    cursor: pointer;
+    // transition: 0.2s all;
+    padding: 12px 15px;
+    border-radius: 7px;
+}
+
+.menu-item.sub-child {
+    margin: 10px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.menu-item-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-item-info .eva.eva-chevron-right,
+.menu-item-info .eva.eva-chevron-left {
+    font-size: 24px;
+}
+
+.menu-item i {
+    margin-right: 10px;
+    font-size: 19px;
+    transition: 0.4s all ease;
+}
+
+.menu-container.rtl .menu-item i {
+    margin-right: 0px;
+    margin-left: 10px;
+}
+
+.menu-item.active {
+    background-color: $primary-color;
+    color: white;
+}
+
+.menu-item .sub-children {
+    height: auto;
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.6s max-height ease;
+}
+
+.sub-menu {
+    color: rgba($color: $menu-fr-color, $alpha: 0.7)!important;
+    border: none!important;
+}
+
+.sub-menu .eva.eva-chevron-right {
+    transform: rotate(90deg);
+}
+
+.sub-menu .eva.eva-chevron-left {
+    transform: rotate(-90deg);
+}
+
+.sub-menu .sub-children {
+    max-height: 200px;
+}
+
+.menu-container::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.menu-container::-webkit-scrollbar {
+    visibility: hidden;
+}
+
+.menu-container::-webkit-scrollbar-thumb {
+    visibility: hidden;
+}
+
+.menu-container:hover::-webkit-scrollbar {
+    visibility: visible;
+}
+
+.menu-container:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}

@@ -1,0 +1,15 @@
+<div [class.rtl]="direction == 'rtl'" class="layout-container">
+    <fui-dimmer class="dim-overlay" (click)="close()" [(isDimmed)]="toggle" [isClickable]="false"></fui-dimmer>
+    <div [class.float-menu]="toggle" class="menu-section">
+        <apiplate-menu (menuItemChange)="menuItemChange($event)" [opened]="toggle"></apiplate-menu>
+    </div>
+    <div [class.shrink-page]="toggle" class="main-section">
+        <div class="header">
+            <apiplate-header [group-title]="currentMenuItem?.group" [page-title]="currentMenuItem?.page" (toggleChange)="toggleMenu($event)"></apiplate-header>
+
+        </div>
+        <div [class.stretched-page]="!toggle" class="page background-color">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

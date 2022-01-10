@@ -1,0 +1,14 @@
+<div [class.rtl]="direction == 'rtl'" class="header-container">
+    <div class="page-info">
+        <div (click)="onToggleClicked()" class="toggle">
+            <i class="las la-bars"></i>
+
+        </div>
+        <div>
+            <div class="group-title">HOME <span><i class="eva eva-arrow-forward"></i></span> {{group}}</div>
+            <div class="page-title">{{page}}</div>
+
+        </div>
+    </div>
+
+</div>

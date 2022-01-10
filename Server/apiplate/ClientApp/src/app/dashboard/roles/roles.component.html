@@ -1,0 +1,79 @@
+<div *ngIf="!isLoading else loading" class="page-container">
+    <div class="action-bar">
+        <div></div>
+        <div>
+            <div (click)="create()" class="ui primary left labeled icon button">
+                New Role
+                <i class="plus  icon"></i>
+            </div>
+
+        </div>
+
+    </div>
+    <fui-accordion *ngFor="let role of roles" class="styled fluid">
+        <fui-accordion-panel [isOpen]="false">
+            <div class="title-container" title>
+                <div>
+                    <i class="dropdown chevron-right icon"></i> {{role.title}}
+                </div>
+                <div class="actions">
+                    <div (click)="onApply(role)" class="a-btn apply-btn">
+                        <i class="check icon"></i> Apply
+                    </div>
+                    <div (click)="onDelete(role.id)" class=" a-btn delete-btn">
+                        <i class="trash icon"></i> Delete
+                    </div>
+                </div>
+            </div>
+
+
+            <div content>
+                <table class="ui celled table">
+                    <thead>
+                        <tr>
+                            <th>Permission</th>
+                            <th>Read</th>
+                            <th>Create</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let key of GetPermissions(role)">
+                            <td>{{key.replace("Permissions","")}}</td>
+                            <td>
+                                <fui-checkbox [(ngModel)]="role[key].read" class="toggle"></fui-checkbox>
+                            </td>
+                            <td>
+                                <fui-checkbox [(ngModel)]="role[key].create" class="toggle"></fui-checkbox>
+
+                            </td>
+                            <td>
+                                <fui-checkbox [(ngModel)]="role[key].update" class="toggle"></fui-checkbox>
+
+                            </td>
+                            <td>
+                                <fui-checkbox [(ngModel)]="role[key].delete" class="toggle"></fui-checkbox>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </fui-accordion-panel>
+
+    </fui-accordion>
+</div>
+<ng-template #loading>
+    <div class="ui active loader">
+        <p>Loading...</p>
+
+    </div>
+</ng-template>
+<fui-dimmer class="page" [(isDimmed)]="DimLoading">
+    <div class="ui active loader"></div>
+    <p>Loading...</p>
+</fui-dimmer>

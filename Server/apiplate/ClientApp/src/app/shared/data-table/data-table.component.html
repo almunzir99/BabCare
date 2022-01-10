@@ -1,0 +1,87 @@
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <ng-container *ngFor="let col of columns;let i = index">
+                    <th *ngIf="col.show">
+                        <div (click)="onSortChange(col.sortable,col.prop)" class="head-cell">
+                            <div>
+                                {{col.title}}
+                            </div>
+                            <div *ngIf="col.sortable" class="ordering-icons">
+                                <i [class.active]="sortProp == col.prop" [class.up]="!ascending && sortProp == col.prop " class="sort amount down icon"></i>
+                            </div>
+                        </div>
+                        <div class="resizer"></div>
+                    </th>
+                </ng-container>
+
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="loading == false else loadingTemplate">
+                <tr *ngIf="rows.length == 0">
+                    <td [attr.colspan]="cols.length">
+                        <div class="empty-placeholder">
+                            <i class="lab la-dropbox"></i>
+                            <p>No Records</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngFor="let row of rows;let rowIndex = index">
+                    <ng-container *ngFor="let col of columns; let colIndex = index">
+                        <td *ngIf="col.show">
+
+                            <ng-container [ngTemplateOutlet]="cellTemplate" [ngTemplateOutletContext]="{colIndex:colIndex,rowIndex:rowIndex,cellData:row[col.prop],rowData:row}"></ng-container>
+
+                        </td>
+                    </ng-container>
+                </tr>
+            </ng-container>
+            <ng-template #loadingTemplate>
+                <tr>
+                    <td [attr.colspan]="columns.length">
+                        <div class="loader-container">
+                            <div class="ui active loader"></div>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <td [attr.colspan]="columns.length">
+                    <div class="bottom-row">
+                        <div style="display: flex;align-items: center;">
+                            <button (click)="openTableSetting()" fuiPopup popupText="table settings" class="ui icon primary button">
+                                <i class="icon cog"></i> 
+                            </button>
+
+                        </div>
+                        <div style="font-weight: bold;">
+                            Showing {{(pageSize * pageIndex) - 9}} to {{pageSize * pageIndex}} of {{totalItems}} items
+                            <fui-pagination style="margin:0px 10px" [collectionSize]="totalItems" [pageSize]="pageSize" [canRotate]="true" [maxSize]="3" hasEllipses="true" (pageChange)="pageIndexChange($event)" [(page)]="pageIndex">
+                            </fui-pagination>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <fui-modal size="mini" *ngIf="openTableModal" #tableModal (dismissed)="closeTableSetting()">
+        <div class="header">
+            Table Columns Settings
+        </div>
+        <div class="content">
+            <div *ngFor="let col of columns">
+                <fui-checkbox class="checkbox" [(ngModel)]="col.show">
+                    {{col.title}}
+                </fui-checkbox>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="ui primary button" (click)="closeTableSetting()" autofocus>OK</button>
+        </div>
+    </fui-modal>
+</div>
