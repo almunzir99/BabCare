@@ -80,8 +80,12 @@ export class MenuComponent implements OnInit {
       this.menuItemChange.emit({
         group: group.title,
         page: childItem.title
+      });
+      this.menuItemChange.emit({
+        group: group.title,
+        page: childItem.title
       })
-
+        return;
     }
     this.router.navigate([item.route]);
     this.selectedMenuItem = item;

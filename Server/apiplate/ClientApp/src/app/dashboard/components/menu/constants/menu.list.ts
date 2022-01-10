@@ -26,7 +26,67 @@ export const MenuList: MenuGroup[] = [
     {
         title: "الصفحات",
         children: [
+            {
+                title: "ادارة العملاء",
+                icon: "las la-user-friends",
+                route: "/dashboard/customers"
 
+            },
+            {
+                title: "ادارة التوصيل",
+                icon: "las la-bicycle",
+                route: "/dashboard/delivery"
+
+            },
+            {
+                title: "ادارة الفروع",
+                icon: "las la-bicycle",
+                route: "/dashboard/branches"
+
+            },
+            {
+                title: "ادارة الاصناف",
+                icon: "la la-layer-group",
+                route: "/dashboard/categories"
+
+            },
+            {
+                title: "ادارة المنتجات",
+                icon: "la la-box",
+                children:[
+                    {
+                        title: "كل المنتجات",
+                        icon: "la la-boxes",
+                        route: "/dashboard/products/all"
+        
+                    },
+                    {
+                        title: "ادراة الخيارات",
+                        icon: "la la-utensils",
+                        route: "/dashboard/products/options"
+        
+                    },
+                    {
+                        title: "ادارة الاضافات",
+                        icon: "la la-puzzle-piece",
+                        route: "/dashboard/products/addons"
+        
+                    },
+                ]
+
+            },
+            {
+                title: "ادارة الطلبات",
+                icon: "la la-layer-group",
+                route: "/dashboard/orders"
+
+            },
+            {
+                title: "ادارة العروض",
+                icon: "la la-percentage",
+                route: "/dashboard/offers"
+
+            },
             {
                 title: "الرسائل",
                 icon: "las la-envelope",

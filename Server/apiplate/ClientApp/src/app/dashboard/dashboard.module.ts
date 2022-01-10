@@ -12,7 +12,7 @@ import { MenuComponent } from './components/menu/menu.component';
   declarations: [
     DashboardComponent,
     HeaderComponent,
-    MenuComponent
+    MenuComponent,
   ],
   imports: [
     CommonModule,

@@ -47,7 +47,35 @@ const routes: Routes = [
       {
         path:"files-manager",
         loadChildren: () => import("./file-manager/file-manager.module").then(c => c.FileManagerModule)
-      }
+      },
+      {
+        path: "customers",
+        loadChildren: () => import('./customers/customers.module').then(c => c.CustomersModule)
+      },
+      {
+        path: "branches",
+        loadChildren: () => import('./branches/branches.module').then(c => c.BranchesModule)
+      },
+      {
+        path: "categories",
+        loadChildren: () => import('./categories/categories.module').then(c => c.CategoriesModule)
+      },
+      {
+        path: "delivery",
+        loadChildren: () => import('./delivery/delivery.module').then(c => c.DeliveryModule)
+      },
+      {
+        path: "orders",
+        loadChildren: () => import('./orders/orders.module').then(c => c.OrdersModule)
+      },
+      {
+        path: "offers",
+        loadChildren: () => import('./offers/offers.module').then(c => c.OffersModule)
+      },
+      {
+        path: "products",
+        loadChildren: () => import('./products/products.module').then(c => c.ProductsModule)
+      },
     ]
   }
 ];
