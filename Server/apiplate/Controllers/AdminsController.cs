@@ -27,7 +27,7 @@ namespace apiplate.Controllers
         {
 
             var actionResult = await base.GetAsync(filter, title, orderBy, ascending);
-            if(actionResult is OkObjectResult)
+            if (actionResult is OkObjectResult)
             {
                 var okActionResult = actionResult as OkObjectResult;
                 var response = okActionResult.Value as PagedResponse<IList<AdminResource>>;
@@ -46,4 +46,5 @@ namespace apiplate.Controllers
                 throw new System.Exception("Permission isn't implemented");
         }
     }
+    
 }

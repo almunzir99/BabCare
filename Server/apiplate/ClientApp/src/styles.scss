@@ -152,6 +152,11 @@ code {
     background-color: $primary-color!important;
 }
 
+.ui.yellow.button,
+.ui.yellow.buttons .button {
+    background-color: $accent-color!important;
+}
+
 .ui.toggle.checkbox input:checked~.box:before,
 .ui.toggle.checkbox input:checked~label:before {
     background-color: $primary-color!important;

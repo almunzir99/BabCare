@@ -13,7 +13,7 @@ namespace apiplate.Extensions
                 switch (sqlException.Number)
                 {
                     case 2601:
-                        return "This Item is Already exist in database";
+                        return "This item is already exist in database";
                     default:
                         return "Error Ocurred While updating the database !";
                 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using apiplate.DataBase;
 
 namespace apiplate.Migrations
 {
     [DbContext(typeof(ApiplateDbContext))]
-    partial class ApiplateDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220111180929_makeEmailRequiredForAdmin")]
+    partial class makeEmailRequiredForAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,112 +115,15 @@ namespace apiplate.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 1, 11, 20, 31, 54, 289, DateTimeKind.Local).AddTicks(5),
+                            CreatedAt = new DateTime(2022, 1, 11, 20, 9, 28, 294, DateTimeKind.Local).AddTicks(3918),
                             Email = "almunzir99@gmail.com",
                             IsManager = true,
-                            LastUpdate = new DateTime(2022, 1, 11, 20, 31, 54, 290, DateTimeKind.Local).AddTicks(1519),
-                            PasswordHash = new byte[] { 114, 208, 197, 86, 227, 34, 151, 78, 183, 73, 230, 106, 86, 150, 195, 174, 53, 30, 166, 236, 110, 41, 17, 141, 230, 52, 28, 229, 153, 14, 7, 12, 43, 140, 61, 114, 115, 249, 119, 74, 106, 254, 77, 15, 53, 168, 133, 224, 27, 99, 24, 164, 94, 37, 161, 17, 48, 74, 185, 55, 242, 26, 197, 77 },
-                            PasswordSalt = new byte[] { 0, 160, 94, 6, 75, 119, 195, 42, 67, 196, 169, 139, 42, 68, 35, 24, 75, 131, 10, 228, 118, 169, 15, 194, 196, 234, 184, 174, 138, 38, 147, 151, 165, 217, 249, 116, 25, 25, 0, 73, 230, 108, 49, 249, 5, 214, 18, 27, 122, 71, 240, 232, 220, 143, 163, 57, 78, 240, 204, 235, 163, 103, 81, 191, 2, 244, 248, 169, 116, 220, 174, 109, 176, 143, 237, 50, 7, 113, 56, 20, 220, 88, 128, 12, 69, 50, 240, 60, 99, 191, 27, 105, 181, 12, 180, 2, 176, 64, 26, 188, 104, 204, 84, 176, 5, 40, 68, 28, 206, 223, 109, 155, 213, 41, 24, 246, 206, 199, 207, 33, 6, 243, 84, 79, 67, 5, 95, 181 },
+                            LastUpdate = new DateTime(2022, 1, 11, 20, 9, 28, 295, DateTimeKind.Local).AddTicks(8767),
+                            PasswordHash = new byte[] { 142, 123, 29, 47, 54, 233, 109, 223, 222, 182, 126, 84, 212, 73, 107, 40, 187, 217, 137, 124, 12, 104, 235, 224, 98, 3, 86, 105, 47, 255, 245, 72, 153, 101, 173, 62, 75, 186, 83, 76, 198, 191, 212, 92, 188, 173, 83, 163, 128, 45, 200, 188, 191, 15, 208, 254, 182, 61, 38, 234, 156, 0, 80, 210 },
+                            PasswordSalt = new byte[] { 206, 73, 253, 89, 239, 176, 224, 221, 237, 182, 137, 5, 97, 67, 28, 155, 103, 66, 237, 183, 91, 234, 172, 131, 116, 159, 125, 168, 148, 20, 105, 11, 196, 64, 254, 62, 111, 195, 59, 119, 94, 119, 191, 8, 194, 66, 27, 218, 213, 60, 101, 182, 30, 166, 223, 108, 59, 136, 61, 109, 26, 130, 3, 145, 37, 183, 15, 72, 234, 113, 235, 228, 203, 16, 181, 59, 12, 220, 158, 7, 53, 104, 220, 138, 41, 73, 240, 50, 36, 27, 224, 139, 217, 232, 157, 130, 208, 208, 112, 120, 37, 136, 123, 100, 184, 4, 104, 252, 139, 5, 166, 39, 31, 81, 228, 111, 14, 140, 80, 37, 166, 201, 176, 223, 178, 241, 71, 170 },
                             Phone = "249128647019",
                             Username = "almunzir99"
                         });
-                });
-
-            modelBuilder.Entity("apiplate.Domain.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Photo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Phone")
-                        .IsUnique();
-
-                    b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("apiplate.Domain.Models.DeliveryDriver", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Photo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Phone")
-                        .IsUnique();
-
-                    b.ToTable("DeliveryDrivers");
                 });
 
             modelBuilder.Entity("apiplate.Domain.Models.Message", b =>
@@ -273,12 +178,6 @@ namespace apiplate.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DeliveryDriverId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("GroupedItem")
                         .HasColumnType("int");
 
@@ -303,10 +202,6 @@ namespace apiplate.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AdminId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("DeliveryDriverId");
 
                     b.ToTable("Notification");
                 });
@@ -360,12 +255,6 @@ namespace apiplate.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CustomersPermissionsId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DeliveryPermissionsId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
 
@@ -381,10 +270,6 @@ namespace apiplate.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AdminsPermissionsId");
-
-                    b.HasIndex("CustomersPermissionsId");
-
-                    b.HasIndex("DeliveryPermissionsId");
 
                     b.HasIndex("MessagesPermissionsId");
 
@@ -418,14 +303,6 @@ namespace apiplate.Migrations
                     b.HasOne("apiplate.Domain.Models.Admin", null)
                         .WithMany("Notifications")
                         .HasForeignKey("AdminId");
-
-                    b.HasOne("apiplate.Domain.Models.Customer", null)
-                        .WithMany("Notifications")
-                        .HasForeignKey("CustomerId");
-
-                    b.HasOne("apiplate.Domain.Models.DeliveryDriver", null)
-                        .WithMany("Notifications")
-                        .HasForeignKey("DeliveryDriverId");
                 });
 
             modelBuilder.Entity("apiplate.Domain.Models.Role", b =>
@@ -433,14 +310,6 @@ namespace apiplate.Migrations
                     b.HasOne("apiplate.Domain.Models.Permission", "AdminsPermissions")
                         .WithMany()
                         .HasForeignKey("AdminsPermissionsId");
-
-                    b.HasOne("apiplate.Domain.Models.Permission", "CustomersPermissions")
-                        .WithMany()
-                        .HasForeignKey("CustomersPermissionsId");
-
-                    b.HasOne("apiplate.Domain.Models.Permission", "DeliveryPermissions")
-                        .WithMany()
-                        .HasForeignKey("DeliveryPermissionsId");
 
                     b.HasOne("apiplate.Domain.Models.Permission", "MessagesPermissions")
                         .WithMany()
@@ -452,10 +321,6 @@ namespace apiplate.Migrations
 
                     b.Navigation("AdminsPermissions");
 
-                    b.Navigation("CustomersPermissions");
-
-                    b.Navigation("DeliveryPermissions");
-
                     b.Navigation("MessagesPermissions");
 
                     b.Navigation("RolesPermissions");
@@ -465,16 +330,6 @@ namespace apiplate.Migrations
                 {
                     b.Navigation("Activities");
 
-                    b.Navigation("Notifications");
-                });
-
-            modelBuilder.Entity("apiplate.Domain.Models.Customer", b =>
-                {
-                    b.Navigation("Notifications");
-                });
-
-            modelBuilder.Entity("apiplate.Domain.Models.DeliveryDriver", b =>
-                {
                     b.Navigation("Notifications");
                 });
 #pragma warning restore 612, 618

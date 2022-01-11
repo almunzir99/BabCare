@@ -11,6 +11,9 @@ namespace apiplate.DataBase{
          protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Admin>().HasIndex(c => c.Email).IsUnique();
+            builder.Entity<Admin>().Property(c => c.Email).IsRequired();
+            builder.Entity<Customer>().HasIndex(c => c.Phone).IsUnique();
+            builder.Entity<DeliveryDriver>().HasIndex(c => c.Phone).IsUnique();
             builder.Entity<Admin>().HasData(GetManagerUser());
             builder.Entity<Role>().HasIndex(c => c.Title).IsUnique();
 
@@ -40,6 +43,9 @@ namespace apiplate.DataBase{
             public DbSet<Message> Messages { get; set; }
             public DbSet<Role> Roles { get; set; }
             public DbSet<Permission> Permissions { get; set; }
+            public DbSet<Customer> Customers { get; set; }
+            public DbSet<DeliveryDriver> DeliveryDrivers { get; set; }
+
             
 
 

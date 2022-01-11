@@ -31,7 +31,7 @@ namespace apiplate.Services
 
     {
         protected abstract string type { get; }
-        private readonly IConfiguration _config;
+        protected readonly IConfiguration _config;
         private readonly ISMTPService _smtpSerivce;
         private readonly IWebHostEnvironment _webhostEnvironment;
         private readonly IFilesManagerService _filesManagerService;

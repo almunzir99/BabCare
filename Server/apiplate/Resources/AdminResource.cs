@@ -12,4 +12,5 @@ namespace apiplate.Resources
         public int? RoleId { get; set; }
         public RoleResource Role { get; set; }
     }
+    
 }

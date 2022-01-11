@@ -40,7 +40,7 @@ export const MenuList: MenuGroup[] = [
             },
             {
                 title: "ادارة الفروع",
-                icon: "las la-bicycle",
+                icon: "las la-code-branch",
                 route: "/dashboard/branches"
 
             },

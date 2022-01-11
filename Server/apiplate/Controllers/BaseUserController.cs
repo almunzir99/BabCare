@@ -55,7 +55,7 @@ namespace apiplate.Controllers
             try
             {
                 var user = await _service.Register(body);
-                var response = new Response<TResource>(data: user, message: "account created successfully in successfuly");
+                var response = new Response<TResource>(data: user, message: "account created successfully");
                 return Ok(response);
             }
             catch (System.Exception e)

@@ -13,6 +13,8 @@ namespace apiplate.Mapping
             this.CreateMap<AdminResource, Admin>();
             this.CreateMap<MessageResource, Message>();
             this.CreateMap<AdminResource, Admin>();
+            this.CreateMap<CustomerResource, Customer>();
+            this.CreateMap<DeliveryDriverResource, DeliveryDriver>();
             this.CreateMap<NotificationResource, Notification>();
 
         }

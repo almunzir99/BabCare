@@ -15,7 +15,7 @@ namespace apiplate.Helpers
         {
             var claims = new List<Claim>{
                 new Claim("id",identity.Id.ToString()),
-                new Claim(ClaimTypes.Email,identity.Email),
+                new Claim(ClaimTypes.Email,(identity.Email == null) ? "NONE" : identity.Email),
                 new Claim(ClaimTypes.Role,identityType),
             };
             if(identityType == "ADMIN")

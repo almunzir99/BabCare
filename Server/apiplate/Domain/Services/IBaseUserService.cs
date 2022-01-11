@@ -18,7 +18,7 @@ namespace apiplate.Domain.Services
         Task ResetPassword(int id,string oldPassword,string newPassword);
         Task<string> ChangePersonalPhoto(int id,IFormFile file);
         Task<TResource> UpdatePersonalInfo(int userId,JsonPatchDocument<TModel> patchDoc);
-        Task<TResource> GetProfileAsync(int userId);
-        
+        Task<TResource> GetProfileAsync(int userId);  
     }
+    
 }

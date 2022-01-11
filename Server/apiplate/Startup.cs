@@ -47,6 +47,9 @@ namespace apiplate
             });
             services.AddScoped<IFilesManagerService, FilesManagerService>();
             services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IDeliveryService, DeliveryService>();
+
             services.AddScoped<IRolesService, RolesService>();
             services.AddScoped<IContentManagementService, ContentManagementService>();
             services.AddScoped<IMessagesService, MessageService>();
