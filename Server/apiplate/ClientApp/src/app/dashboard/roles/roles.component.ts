@@ -18,6 +18,12 @@ export class RolesComponent implements OnInit {
   roles:Role[];
   isLoading = false;
   DimLoading = false;
+  defaultPermission:Permission = {
+    create:false,
+    delete:false,
+    update:false,
+    read:false
+}
   constructor(private _service:RolesService,private modalService:FuiModalService) {
     this.initData();
       }
@@ -25,10 +31,23 @@ export class RolesComponent implements OnInit {
     this.isLoading = true;
     this._service.get().subscribe(res =>{
       this.roles = res.data;
+      console.log(this.roles);
+      this.roles.forEach(role => {
+        this.initRole(role);
+      });
       this.isLoading = false;
     },err=> {
       this.isLoading = false;
     })
+  }
+  initRole(role:Role)
+  {
+    for(const key in role)
+    {
+      if(key.includes("Permissions"))
+      if(role[key] == null)
+      role[key] = {...this.defaultPermission};
+    }
   }
   GetPermissions(obj:any) : string[]
   {
@@ -41,6 +60,7 @@ export class RolesComponent implements OnInit {
   }
    
   onApply(role:Role){
+    console.log(role);
     this.DimLoading = true;
     this._service.put(role).subscribe(res =>{
       this.DimLoading = false;
@@ -56,13 +76,7 @@ export class RolesComponent implements OnInit {
 
     });
   }
-  create(){
-    var defaultPermission:Permission = {
-        create:false,
-        delete:false,
-        update:false,
-        read:false
-    }
+  create(){ 
     var controls : FormBuilderGroup[] = [
         {
           title:undefined,
@@ -80,9 +94,11 @@ export class RolesComponent implements OnInit {
     this.modalService.open(new FormBuilderModal({title:"New Role",controlGroups:controls},ModalSize.Mini)).onApprove(result =>{
         let role : Role = {
           title:result['title'],
-          rolesPermissions: defaultPermission,
-          usersPermissions: defaultPermission,
-          messagesPermissions: defaultPermission,
+          rolesPermissions: this.defaultPermission,
+          usersPermissions: this.defaultPermission,
+          messagesPermissions: this.defaultPermission,
+          deliveryPermissions:this.defaultPermission,
+          customersPermissions:this.defaultPermission
 
         }
         this.DimLoading = true;

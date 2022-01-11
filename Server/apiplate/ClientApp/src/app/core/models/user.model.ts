@@ -1,16 +1,10 @@
 import { Activity } from "./activity.model";
-import { Base } from "./base.model";
+import { BaseUser } from "./base-user.model";
 import { Role } from "./role.model";
 
-export class User extends Base{
-    username:string;
-    phone:string;
-    password?:string;
-    image:string;
-    email:string;
+export class User extends BaseUser{
     activities:Activity[];
     roleId:number;
     role:Role;
-    token:string;
     
 }

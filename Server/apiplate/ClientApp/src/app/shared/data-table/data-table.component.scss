@@ -124,3 +124,8 @@
          margin: 10px 0px;
      }
  }
+ 
+ .rtl td,
+ .rtl th {
+     text-align: right!important;
+ }

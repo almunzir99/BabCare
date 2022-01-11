@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { Column } from './models/column.model';
 @Component({
   selector: 'data-table',
@@ -20,7 +20,7 @@ export class DataTableComponent implements OnInit {
   openTableModal = false;
   resizers: NodeListOf<HTMLElement>;
   cols: NodeListOf<HTMLElement>;
-  constructor() {
+  constructor(@Inject("DIRECTION") public direction:string) {
 
   }
   openTableSetting() {

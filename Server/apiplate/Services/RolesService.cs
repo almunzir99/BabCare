@@ -25,8 +25,10 @@ namespace apiplate.Services
         {
             return _context.Roles.Include(c => c.MessagesPermissions)
             .Include(c => c.AdminsPermissions)
-            .Include(c => c.RolesPermissions);
-            
+            .Include(c => c.RolesPermissions)
+            .Include(c => c.DeliveryPermissions)
+            .Include(c => c.CustomersPermissions);
+
         }
 
 

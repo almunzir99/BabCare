@@ -6,5 +6,9 @@ export class Role extends Base{
     messagesPermissions:Permission;
     rolesPermissions:Permission;
     usersPermissions:Permission;
+    customersPermissions:Permission;
+    deliveryPermissions:Permission;
+
+
 
 }
