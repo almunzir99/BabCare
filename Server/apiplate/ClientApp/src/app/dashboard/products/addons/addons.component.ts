@@ -189,7 +189,6 @@ export class AddonsComponent implements OnInit {
       },
       ModalSize.Mini
     )).onApprove((result) => {
-      result['image'] = {path:result['image']};
       if (addOn)
         this.update(result as AddOn);
       else

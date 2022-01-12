@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } fro
 import { FormBuilderGroup } from './models/form-builder-group.model';
 import { ControlTypes } from './models/control-type.enum';
 import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilderControl } from './models/form-builder-control.model';
+import { Column } from '../data-table/models/column.model';
 
 @Component({
   selector: 'form-builder',
@@ -11,6 +13,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class FormBuilderComponent implements OnInit {
   @Input("title") title: String;
   @Input("control-groups") ControlsGroups: FormBuilderGroup[];
+  @Input("inner-form") innerForm:boolean = false; 
   @Output("submit") submitEventEmitter = new EventEmitter<any>();
   @Output("cancel") cancelEventEmitter = new EventEmitter<void>();
   formGroup: FormGroup;
@@ -23,6 +26,7 @@ export class FormBuilderComponent implements OnInit {
   initResult() {
     this.ControlsGroups.forEach(group => {
       group.controls.forEach(control => {
+
         this.resultObject[control.name] = control.value;
       });
     });
@@ -49,13 +53,33 @@ export class FormBuilderComponent implements OnInit {
   }
   ngAfterViewInit(){
     this.viewInitiated = true;
-    
-
   }
   selectionChanged(controlName:string,value){
     this.resultObject[controlName]=value;
   }
-  
+  mapControlsToCols(groups:FormBuilderGroup[]) : Column[]
+  {
+      var cols : Column[] = [];
+      groups.forEach(group =>{
+        group.controls.forEach(control =>{
+            var col:Column =  {title:control.title,prop:control.name,show:true};
+            cols.push(col);
+        });
+      });
+      cols.push({title:"الافعال",prop:"actions",show:true});
+      return cols;
+  }
+  innerFormAdd(event,value:any[])
+  {
+    value.push({...event});
+  }
+  innerFormRemove(target,value:any[])
+  {
+    var index =  value.indexOf(target);
+    console.log(index);
+    value = value.splice(index,1);
+  }
+
   ngOnInit(): void {
   }
 

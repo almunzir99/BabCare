@@ -21,7 +21,7 @@
         <tbody>
             <ng-container *ngIf="loading == false else loadingTemplate">
                 <tr *ngIf="rows.length == 0">
-                    <td [attr.colspan]="cols.length">
+                    <td [attr.colspan]="columns.length">
                         <div class="empty-placeholder">
                             <i class="lab la-dropbox"></i>
                             <p>لا توجد بيانات</p>
@@ -49,7 +49,7 @@
             </ng-template>
 
         </tbody>
-        <tfoot>
+        <tfoot *ngIf="showFooter">
             <tr>
                 <td [attr.colspan]="columns.length">
                     <div class="bottom-row">

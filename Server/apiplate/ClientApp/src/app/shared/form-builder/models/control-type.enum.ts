@@ -10,6 +10,7 @@ export enum ControlTypes{
     Url = "url",
     Hidden = "hidden",
     TextArea = "TextArea",
-    RichTextEditor = "RichTextEditor"
+    RichTextEditor = "RichTextEditor",
+    TableBuilder = "TableBuilder"
 
 }

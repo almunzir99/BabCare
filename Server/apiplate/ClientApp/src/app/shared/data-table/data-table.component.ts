@@ -14,6 +14,7 @@ export class DataTableComponent implements OnInit {
   @Output('pageIndexChanged') pageIndexChanged = new EventEmitter<number>();
   @Input('total-items') totalItems = 1;
   @Input('page-size') pageSize = 1;
+  @Input("show-footer") showFooter = true;
   @Output('sortChange') sortChange = new EventEmitter<object>();
   sortProp = "lastUpdate";
   ascending = false;
@@ -69,7 +70,6 @@ export class DataTableComponent implements OnInit {
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
     };
-
     resizer.addEventListener('mousedown', mouseDownHandler);
   }
   ngOnInit(): void {

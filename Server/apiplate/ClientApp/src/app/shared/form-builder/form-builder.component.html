@@ -1,4 +1,11 @@
 <div class="ui form">
+    <div *ngIf="innerForm" class="inner-form-header">
+        <div class="title">{{title}}</div>
+        <div [disabled]="formGroup.valid == false" (click)="onSubmit()" class="ui primary left icon button">
+            اضافة
+            <i class="plus  icon"></i>
+        </div>
+    </div>
     <ng-container *ngFor="let group of ControlsGroups">
         <h4 *ngIf="group.title" class="ui dividing header">{{group.title}}</h4>
         <div class="form-fields">
@@ -100,13 +107,31 @@
                         <custom-summernote-editor [editorId]="control.name" (htmlContentChange)="editorChange(control.name,$event)" [htmlContent]="control.value"></custom-summernote-editor>
 
                     </div>
+                    <!-- 10. Table Builder -->
+                    <div style="padding: 0px 25px;direction: rtl;" *ngIf="control.controlType ==  controlTypes.TableBuilder">
+                        <form-builder (submit)="innerFormAdd($event,control.value)" [title]="control.title" [inner-form]="true" [control-groups]="control.controls"></form-builder>
+                        <data-table [cell-template]="cellTemplate" [show-footer]="false" [cols]="mapControlsToCols(control.controls)" [rows]="control.value">
+                            <ng-template #cellTemplate let-rowData="rowData" let-data="cellData" let-col="colIndex" let-row="rowIndex">
+                                <ng-container [ngSwitch]="col">
+                                    <ng-container *ngSwitchCase="mapControlsToCols(control.controls)?.length -  1">
+                                        <button (click)="innerFormRemove(rowData,control.value)" class="ui button red icon">
+                                                <i class="la las-trash"></i>
+                                                حذف
+                                            </button>
+                                    </ng-container>
+                                    <div *ngSwitchDefault>{{data}}</div>
+                                </ng-container>
+
+                            </ng-template>
+                        </data-table>
+                    </div>
                 </div>
             </div>
 
         </div>
 
     </ng-container>
-    <div class="ui buttons">
+    <div *ngIf="innerForm == false" class="ui buttons">
         <button (click)="onCancel()" class="ui button">
             <i class="times  icon"></i>
             الغاء</button>

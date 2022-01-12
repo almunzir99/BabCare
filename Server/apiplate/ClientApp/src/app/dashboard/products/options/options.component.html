@@ -1,1 +1,52 @@
-<p>options works!</p>
+<div class="page-container">
+    <div class="action-bar">
+        <div class="inputs-container">
+            <div class="ui left icon input">
+                <input #search name="search" (input)="onSearchChange(search.value)" type="text" placeholder="Search...">
+                <i class="search icon"></i>
+            </div>
+
+            <div class="selection-container">
+                <p>عدد العناصر في الصفحة : </p>
+                <fui-select [(ngModel)]="pageSize" (selectedOptionChange)="pageSizeChanged($event)" class="selection" placeholder="Page Size">
+                    <fui-select-option *ngFor="let option of range(100,10,10)" [value]="option"></fui-select-option>
+                </fui-select>
+            </div>
+        </div>
+        <div class="actions-buttons">
+            <div (click)="downloadCSV()" class="ui yellow left labeled icon button">
+                تصدير كملف csv
+                <i class="file excel outline icon"></i>
+            </div>
+            <div (click)="openFormModal(null)" class="ui primary left labeled icon button">
+                انشاء خيار جديد
+                <i class="plus  icon"></i>
+            </div>
+
+        </div>
+
+    </div>
+    <data-table (sortChange)="onSortChange($event)" [(pageIndex)]="pageIndex" [total-items]="totalRecords" [page-size]="pageSize" (pageIndexChanged)="pageIndexChanged($event)" [cell-template]="cellTemplate" [loading]="isDataLoading" [cols]="cols" [rows]="options">
+        <ng-template #cellTemplate let-rowData="rowData" let-data="cellData" let-col="colIndex" let-row="rowIndex">
+            <ng-container [ngSwitch]="col">
+                <ng-container *ngSwitchCase="2">
+                    {{data.length}}
+                </ng-container>
+                <ng-container *ngSwitchCase="5">
+                    <div class="actions-cell">
+                        <div fuiPopup popupText="update" (click)="openFormModal(rowData)" class="cell-btn edit-btn">
+                            <i class="edit outline icon"></i>
+                        </div>
+                        <div fuiPopup popupText="delete" (click)="delete(rowData.id)" class="cell-btn delete-btn">
+                            <i class="trash icon"></i>
+                        </div>
+                    </div>
+                </ng-container>
+                <div *ngSwitchDefault>{{data}}</div>
+            </ng-container>
+        </ng-template>
+    </data-table>
+</div>
+<fui-dimmer class="page" [(isDimmed)]="DimLoading">
+    <div class="ui active loader"></div>
+</fui-dimmer>
