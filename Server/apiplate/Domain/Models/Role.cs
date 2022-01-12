@@ -8,8 +8,8 @@ namespace apiplate.Domain.Models
         public Permission CustomersPermissions { get; set; }
         public Permission DeliveryPermissions { get; set; }
         public Permission RolesPermissions { get; set; }
+        public Permission ProductsPermisson { get; set; }
+        public Permission CategoriesPermisson { get; set; }
  
-
-
     }
 }

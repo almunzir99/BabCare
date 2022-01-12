@@ -1,7 +1,9 @@
 using System;
 
-namespace apiplate.Resources{
-    public class BaseResource{
+namespace apiplate.Resources
+{
+    public class BaseResource
+    {
         public int? Id { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;

@@ -16,6 +16,16 @@ namespace apiplate.Mapping
             this.CreateMap<CustomerResource, Customer>();
             this.CreateMap<DeliveryDriverResource, DeliveryDriver>();
             this.CreateMap<NotificationResource, Notification>();
+            this.CreateMap<ProductResource, Product>();
+            this.CreateMap<CategoryResource, Category>();
+            this.CreateMap<OptionResource, Option>();
+            this.CreateMap<OptionValueResource, OptionValue>();
+            this.CreateMap<AddOnResource, AddOn>();
+            this.CreateMap<ImageResource, Image>();
+
+
+
+
 
         }
         public void CreateMap<TResource, TModel>(string IgnoreItem = null)

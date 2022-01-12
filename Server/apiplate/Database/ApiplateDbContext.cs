@@ -45,6 +45,11 @@ namespace apiplate.DataBase{
             public DbSet<Permission> Permissions { get; set; }
             public DbSet<Customer> Customers { get; set; }
             public DbSet<DeliveryDriver> DeliveryDrivers { get; set; }
+            public DbSet<Category> Categories { get; set; }
+            public DbSet<Product> Products { get; set; }
+            public DbSet<Option> Options { get; set; }
+            public DbSet<AddOn> Addons { get; set; }
+            public DbSet<OptionValue> OptionValues { get; set; }
 
             
 

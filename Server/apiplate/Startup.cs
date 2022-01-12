@@ -49,10 +49,18 @@ namespace apiplate
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IDeliveryService, DeliveryService>();
-
             services.AddScoped<IRolesService, RolesService>();
             services.AddScoped<IContentManagementService, ContentManagementService>();
             services.AddScoped<IMessagesService, MessageService>();
+            services.AddScoped<IProductsService, ProductsService>();
+            services.AddScoped<ICategoriesService, CategoriesService>();
+            services.AddScoped<IOptionsService, OptionsService>();
+            services.AddScoped<IAddOnsService, AddOnsService>();
+
+
+
+
+
             services.AddCors(options =>
        {
            options.AddPolicy("CorsPolicy",
