@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { FuiModalService } from 'ngx-fomantic-ui';
+import { FuiModalService, ModalSize } from 'ngx-fomantic-ui';
 import { Category } from 'src/app/core/models/category.model';
 import { CategoriesService } from 'src/app/core/services/categories.service';
 import { Column } from 'src/app/shared/data-table/models/column.model';
@@ -180,7 +180,9 @@ export class CategoriesComponent implements OnInit {
       {
         title: category ? "تعديل بيانات صنف" : "صنف جديد",
         controlGroups: form
-      }
+      },
+      ModalSize.Mini
+
     )).onApprove((result) => {
       result['image'] = {path:result['image']};
       if (category)
