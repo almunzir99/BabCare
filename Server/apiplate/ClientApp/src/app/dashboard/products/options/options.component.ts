@@ -156,7 +156,7 @@ export class OptionsComponent implements OnInit {
           {
             title: "اسم الاضافة",
             name: "title",
-            icon: "layer icon",
+            icon: "utensils icon",
             controlType: ControlTypes.TextInput,
             width: "100%",
             value: option ? option.title : undefined,
@@ -168,7 +168,6 @@ export class OptionsComponent implements OnInit {
           {
             title: "قيم الاضافة",
             name: "values",
-            icon: "layer icon",
             controlType: ControlTypes.TableBuilder,
             width: "100%",
             value: option ? option.values : [],
@@ -179,11 +178,13 @@ export class OptionsComponent implements OnInit {
                   {
                     title: "الاسم",
                     name: "title",
+                    icon:"utensils icon",
                     controlType: ControlTypes.TextInput,
                     width: "50%"
                   },
                   {
                     title: "القيمة",
+                    icon:"dollar sign icon",
                     name: "value",
                     controlType: ControlTypes.TextInput,
                     width: "50%"

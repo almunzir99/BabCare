@@ -154,7 +154,7 @@ export class CategoriesComponent implements OnInit {
           {
             title: "اسم الصنف",
             name: "title",
-            icon: "layer icon",
+            icon: "tags icon",
             controlType: ControlTypes.TextInput,
             width: "100%",
             value: category ? category.title : undefined,

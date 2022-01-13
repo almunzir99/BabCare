@@ -156,7 +156,7 @@ export class AddonsComponent implements OnInit {
           {
             title: "اسم الاضافة",
             name: "title",
-            icon: "layer icon",
+            icon: "puzzle piece icon",
             controlType: ControlTypes.TextInput,
             width: "100%",
             value: addOn ? addOn.title : undefined,
@@ -168,7 +168,7 @@ export class AddonsComponent implements OnInit {
           {
             title: "قيمة الاضافة",
             name: "price",
-            icon: "layer icon",
+            icon: "dollar sign icon",
             controlType: ControlTypes.NumberInput,
             width: "100%",
             value: addOn ? addOn.price : undefined,

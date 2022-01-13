@@ -177,7 +177,7 @@ export class ProductsComponent implements OnInit {
             {
               title: "اسم المنتج",
               name: "title",
-              icon: "layer icon",
+              icon: "tags icon",
               controlType: ControlTypes.TextInput,
               width: "100%",
               value: product ? product.title : undefined,
@@ -201,7 +201,7 @@ export class ProductsComponent implements OnInit {
             {
               title: "سعر المنتج",
               name: "price",
-              icon: "layer icon",
+              icon: "dollar sign icon",
               controlType: ControlTypes.NumberInput,
               width: "50%",
               value: product ? product.price : undefined,
@@ -214,7 +214,7 @@ export class ProductsComponent implements OnInit {
             {
               title: "قيمة التخفيض",
               name: "discount",
-              icon: "layer icon",
+              icon: "percent icon",
               controlType: ControlTypes.NumberInput,
               width: "50%",
               value: product ? product.price : 0,
@@ -226,7 +226,6 @@ export class ProductsComponent implements OnInit {
             {
               title: "الوصف",
               name: "description",
-              icon: "layer icon",
               controlType: ControlTypes.TextArea,
               width: "100%",
               value: product ? product.price : undefined,
