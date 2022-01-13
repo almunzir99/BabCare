@@ -4,6 +4,7 @@ import { FormBuilderGroup } from '../../form-builder/models/form-builder-group.m
 interface IFormBuilderModalContext {
   title: string;
   controlGroups: FormBuilderGroup[];
+  tableDeleteClick?:Function;
 }
 @Component({
   selector: 'form-builder-modal',
@@ -15,6 +16,14 @@ export class FormBuilderModalComponent implements OnInit {
   constructor(private modal: FuiBaseModal<IFormBuilderModalContext, any, void>) { }
   onApproved(data:any){
     this.modal.approve(data);
+    
+    
+  }
+  onTableDeleteClick(event)
+  {
+
+    console.log("called");
+    this.modal.context.tableDeleteClick(event);
   }
   onDenied()
   {

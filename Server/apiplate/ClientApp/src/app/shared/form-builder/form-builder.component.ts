@@ -16,6 +16,7 @@ export class FormBuilderComponent implements OnInit {
   @Input("inner-form") innerForm:boolean = false; 
   @Output("submit") submitEventEmitter = new EventEmitter<any>();
   @Output("cancel") cancelEventEmitter = new EventEmitter<void>();
+  @Output("tableDelete") tableDeleteEvent =  new EventEmitter<any>();
   formGroup: FormGroup;
   resultObject = {};
   controlTypes = ControlTypes;
@@ -73,11 +74,9 @@ export class FormBuilderComponent implements OnInit {
   {
     value.push({...event});
   }
-  innerFormRemove(target,value:any[])
+  innerFormRemove(target,values:any[])
   {
-    var index =  value.indexOf(target);
-    console.log(index);
-    value = value.splice(index,1);
+    this.tableDeleteEvent.emit({target:target,values:values});
   }
 
   ngOnInit(): void {

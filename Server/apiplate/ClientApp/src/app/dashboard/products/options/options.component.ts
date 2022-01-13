@@ -56,7 +56,7 @@ export class OptionsComponent implements OnInit {
   }
   initCols() {
     this.cols = [
-       
+
       {
         prop: "id",
         title: "الرقم التعريفي",
@@ -174,21 +174,21 @@ export class OptionsComponent implements OnInit {
             value: option ? option.values : [],
             controls: [
               {
-                title:undefined,
-                controls:[
+                title: undefined,
+                controls: [
                   {
-                    title:"الاسم",
-                    name:"title",
-                    controlType:ControlTypes.TextInput,
-                    width:"50%"
+                    title: "الاسم",
+                    name: "title",
+                    controlType: ControlTypes.TextInput,
+                    width: "50%"
                   },
                   {
-                    title:"القيمة",
-                    name:"value",
-                    controlType:ControlTypes.TextInput,
-                    width:"50%"
+                    title: "القيمة",
+                    name: "value",
+                    controlType: ControlTypes.TextInput,
+                    width: "50%"
                   }
-              ],
+                ],
               }
             ],
             validators: [
@@ -196,16 +196,26 @@ export class OptionsComponent implements OnInit {
               Validators.maxLength(25),
             ]
           },
-          
+
 
 
         ]
-      } 
+      }
     ];
     this.modalService.open(new FormBuilderModal(
       {
         title: option ? "تعديل بيانات خيار" : "خيار جديد",
-        controlGroups: form
+        controlGroups: form,
+        tableDeleteClick: (event) => {
+          if (!option) {
+            var index = event.values.indexOf(event.target);
+            console.log(index);
+            event.values = event.values.splice(index, 1);
+          }
+          else{
+
+          }
+        }
       },
       ModalSize.Normal
     )).onApprove((result) => {
@@ -216,6 +226,9 @@ export class OptionsComponent implements OnInit {
         this.create(result as Option);
 
     });
+  }
+  deleteOptionValue(){
+    
   }
   create(option: Option) {
     this.DimLoading = true;

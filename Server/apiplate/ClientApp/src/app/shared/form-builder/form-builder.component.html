@@ -108,7 +108,7 @@
 
                     </div>
                     <!-- 10. Table Builder -->
-                    <div style="padding: 0px 25px;direction: rtl;" *ngIf="control.controlType ==  controlTypes.TableBuilder">
+                    <div style="padding: 15px 25px;direction: rtl;margin: 10px 10px;background-color: #f1efef;border-radius: 12px;" *ngIf="control.controlType ==  controlTypes.TableBuilder">
                         <form-builder (submit)="innerFormAdd($event,control.value)" [title]="control.title" [inner-form]="true" [control-groups]="control.controls"></form-builder>
                         <data-table [cell-template]="cellTemplate" [show-footer]="false" [cols]="mapControlsToCols(control.controls)" [rows]="control.value">
                             <ng-template #cellTemplate let-rowData="rowData" let-data="cellData" let-col="colIndex" let-row="rowIndex">

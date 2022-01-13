@@ -1,4 +1,4 @@
 <div class="header">{{modal.context.title}}</div>
 <div class="content">
-    <form-builder (submit)="onApproved($event)" (cancel)="onDenied()" [control-groups]="modal.context.controlGroups" [title]="modal.context.title"></form-builder>
+    <form-builder (tableDelete)="onTableDeleteClick($event)" (submit)="onApproved($event)" (cancel)="onDenied()" [control-groups]="modal.context.controlGroups" [title]="modal.context.title"></form-builder>
 </div>
