@@ -10,20 +10,25 @@ import { PickingMode } from 'src/app/dashboard/file-manager/file-manager.compone
   styleUrls: ['./image-local-picker.component.scss']
 })
 export class ImageLocalPickerComponent implements OnInit {
-  @Input()fileUrl :string;
-  @Output()fileUrlChange = new EventEmitter<string>();
+  @Input() fileUrl: string | string[];
+  @Output() fileUrlChange = new EventEmitter<string | string[]>();
   @Input('width') width = "100%";
-  @Input("name") name =undefined;
-
-  constructor(private modalService:FuiModalService) { }
-  pick(){
-    this.modalService.open(new FileManagerModal({title:"Select Destination Folder",pickingMode:PickingMode.Files})).onApprove((result:FileModel[]) =>{
+  @Input("name") name = undefined;
+  filesCount = 0;
+  constructor(private modalService: FuiModalService) { }
+  pick() {
+    this.modalService.open(new FileManagerModal({ title: "Select Destination Folder", pickingMode: PickingMode.Files })).onApprove((result: FileModel[]) => {
+      if (result.length == 1) {
+        this.filesCount = 1;
         this.fileUrl = result[0].uri;
-        this.fileUrlChange.emit(this.fileUrl);
+      }
+      if (result.length > 1) { 
+        this.fileUrl = result.map(e => e.uri);
+       }
+      this.fileUrlChange.emit(this.fileUrl);
     });
   }
   ngOnInit(): void {
   }
 
 }
- 

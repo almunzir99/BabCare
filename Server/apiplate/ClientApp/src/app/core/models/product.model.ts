@@ -11,4 +11,5 @@ export class Product extends Base {
     discount: number;
     options: Option[];
     addOns: AddOn[];
+    categoryId:number;
 }

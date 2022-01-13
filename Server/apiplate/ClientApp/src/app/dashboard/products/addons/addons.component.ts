@@ -67,7 +67,7 @@ export class AddonsComponent implements OnInit {
 
       {
         prop: "title",
-        title: "اسم الصنف",
+        title: "اسم الاضافة",
         show: true,
         sortable: true
 
