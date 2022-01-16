@@ -11,6 +11,7 @@ export enum ControlTypes{
     Hidden = "hidden",
     TextArea = "TextArea",
     RichTextEditor = "RichTextEditor",
-    TableBuilder = "TableBuilder"
+    TableBuilder = "TableBuilder",
+    MapPicker = "MapPicker"
 
 }

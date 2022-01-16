@@ -14,11 +14,11 @@ export class OptionsService {
     console.log(`${this.baseUrl}api/products/options?pageSize=${pageSize}&pageIndex=${pageIndex}`);
     return this.http.get(`${this.baseUrl}api/products/options?pageIndex=${pageIndex}&pageSize=${pageSize}&title=${title}&orderBy=${orderBy}&ascending=${ascending}`) as Observable<PagedResponse<Option[]>>;
   }
-  post(user: Option) {
-    return this.http.post(`${this.baseUrl}api/products/options`, user);
+  post(option: Option) {
+    return this.http.post(`${this.baseUrl}api/products/options`, option);
   }
-  put(user: Option) {
-    return this.http.put(`${this.baseUrl}api/products/options/${user.id}`, user);
+  put(option: Option) {
+    return this.http.put(`${this.baseUrl}api/products/options/${option.id}`, option);
   }
   delete(id: number) {
     return this.http.delete(`${this.baseUrl}api/products/options/${id}`);

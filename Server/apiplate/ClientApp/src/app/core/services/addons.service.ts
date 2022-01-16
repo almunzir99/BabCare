@@ -15,11 +15,11 @@ export class AddonsService {
     console.log(`${this.baseUrl}api/products/addons?pageSize=${pageSize}&pageIndex=${pageIndex}`);
     return this.http.get(`${this.baseUrl}api/products/addons?pageIndex=${pageIndex}&pageSize=${pageSize}&title=${title}&orderBy=${orderBy}&ascending=${ascending}`) as Observable<PagedResponse<AddOn[]>>;
   }
-  post(user: AddOn) {
-    return this.http.post(`${this.baseUrl}api/products/addons`, user);
+  post(addon: AddOn) {
+    return this.http.post(`${this.baseUrl}api/products/addons`, addon);
   }
-  put(user: AddOn) {
-    return this.http.put(`${this.baseUrl}api/products/addons/${user.id}`, user);
+  put(addon: AddOn) {
+    return this.http.put(`${this.baseUrl}api/products/addons/${addon.id}`, addon);
   }
   delete(id: number) {
     return this.http.delete(`${this.baseUrl}api/products/addons/${id}`);

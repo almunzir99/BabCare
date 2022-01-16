@@ -14,11 +14,11 @@ export class CategoriesService {
     console.log(`${this.baseUrl}api/categories?pageSize=${pageSize}&pageIndex=${pageIndex}`);
     return this.http.get(`${this.baseUrl}api/categories?pageIndex=${pageIndex}&pageSize=${pageSize}&title=${title}&orderBy=${orderBy}&ascending=${ascending}`) as Observable<PagedResponse<Category[]>>;
   }
-  post(user: Category) {
-    return this.http.post(`${this.baseUrl}api/categories`, user);
+  post(category: Category) {
+    return this.http.post(`${this.baseUrl}api/categories`, category);
   }
-  put(user: Category) {
-    return this.http.put(`${this.baseUrl}api/categories/${user.id}`, user);
+  put(category: Category) {
+    return this.http.put(`${this.baseUrl}api/categories/${category.id}`, category);
   }
   delete(id: number) {
     return this.http.delete(`${this.baseUrl}api/categories/${id}`);

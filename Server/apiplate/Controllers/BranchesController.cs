@@ -9,10 +9,10 @@ namespace apiplate.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CategoriesController : BaseController<Category, CategoryResource, ICategoriesService>
+    public class BranchesController : BaseController<Branch, BranchResource, IBranchesService>
     { 
         private readonly IRolesService _roleService;
-        public CategoriesController(ICategoriesService service, IUriService uriSerivce, IRolesService roleService) : base(service, uriSerivce)
+        public BranchesController(IBranchesService service, IUriService uriSerivce, IRolesService roleService) : base(service, uriSerivce)
         {
             _roleService = roleService;
         }
@@ -20,7 +20,7 @@ namespace apiplate.Controllers
         {
             var role = await _roleService.GetRoleByTitle(title);
             if (role != null)
-                return role.CategoriesPermisson;
+                return role.BranchesPermisson;
             else
                 throw new System.Exception("Permission isn't implemented");
         }

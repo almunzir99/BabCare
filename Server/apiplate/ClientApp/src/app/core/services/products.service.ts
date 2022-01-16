@@ -14,11 +14,11 @@ export class ProductsService {
     console.log(`${this.baseUrl}api/products?pageSize=${pageSize}&pageIndex=${pageIndex}`);
     return this.http.get(`${this.baseUrl}api/products?pageIndex=${pageIndex}&pageSize=${pageSize}&title=${title}&orderBy=${orderBy}&ascending=${ascending}`) as Observable<PagedResponse<Product[]>>;
   }
-  post(user: Product) {
-    return this.http.post(`${this.baseUrl}api/products`, user);
+  post(product: Product) {
+    return this.http.post(`${this.baseUrl}api/products`, product);
   }
-  put(user: Product) {
-    return this.http.put(`${this.baseUrl}api/products/${user.id}`, user);
+  put(product: Product) {
+    return this.http.put(`${this.baseUrl}api/products/${product.id}`, product);
   }
   delete(id: number) {
     return this.http.delete(`${this.baseUrl}api/products/${id}`);

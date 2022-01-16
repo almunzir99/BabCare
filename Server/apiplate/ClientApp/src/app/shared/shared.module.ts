@@ -10,6 +10,8 @@ import { ImageLocalPickerComponent } from './image-local-picker/image-local-pick
 import { CustomSummernoteEditorComponent } from './custom-summernote-editor/custom-summernote-editor.component';
 import { NgxSummernoteModule } from 'ngx-summernote';
 import { PreloaderComponent } from './preloader/preloader.component';
+import { AgmCoreModule } from '@agm/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 
@@ -20,7 +22,7 @@ import { PreloaderComponent } from './preloader/preloader.component';
     FormBuilderComponent,
     FormBuilderModalComponent,
     ImageLocalPickerComponent,
-    CustomSummernoteEditorComponent,
+    CustomSummernoteEditorComponent, 
     PreloaderComponent,
   ],
   imports: [
@@ -28,8 +30,10 @@ import { PreloaderComponent } from './preloader/preloader.component';
     FomanticUIModule,
     FormsModule,
     NgxSummernoteModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCsE5KDJqjPpbTHsQFqSjnJHclQuCBw8c4'
+    })
     
 
   ],

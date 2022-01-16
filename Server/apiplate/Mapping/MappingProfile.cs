@@ -21,7 +21,9 @@ namespace apiplate.Mapping
             this.CreateMap<OptionResource, Option>();
             this.CreateMap<OptionValueResource, OptionValue>();
             this.CreateMap<AddOnResource, AddOn>();
+            this.CreateMap<BranchResource, Branch>();
             this.CreateMap<ImageResource, Image>();
+
 
 
 

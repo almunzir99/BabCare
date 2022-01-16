@@ -43,6 +43,14 @@
      }
  }
  
+ agm-map {
+     height: 300px;
+ }
+ 
+ .map-container {
+     padding: 15px;
+ }
+ 
  @media only screen and (max-width:768px) {
      .control {
          width: 100%!important;

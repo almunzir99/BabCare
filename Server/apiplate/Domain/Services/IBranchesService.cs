@@ -3,7 +3,7 @@ using apiplate.Resources;
 
 namespace apiplate.Domain.Services
 {
-    public interface IAddOnsService : IRepository<AddOn,AddOnResource>{}
+    public interface IBranchesService : IRepository<Branch,BranchResource>{}
 
 
 
