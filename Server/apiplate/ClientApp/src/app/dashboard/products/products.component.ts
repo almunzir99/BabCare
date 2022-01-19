@@ -87,7 +87,7 @@ export class ProductsComponent implements OnInit {
 
       },
       {
-        prop: "category",
+        prop: "categoryName",
         title: "صنف المنتج",
         show: true,
         sortable: true
