@@ -8,7 +8,6 @@ const routes: Routes = [
     redirectTo:'all',
     pathMatch:"full"
   },
-
   {
     path:'all',
     component:ProductsComponent
@@ -20,6 +19,10 @@ const routes: Routes = [
   {
     path:'addons',
     loadChildren:() => import("./addons/addons.module").then(c => c.AddonsModule)
+  },
+  {
+    path:":id",
+    loadChildren:() => import("./product-detail/product-detail.module").then(c => c.ProductDetailModule)
   }
 ];
 

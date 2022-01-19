@@ -16,7 +16,8 @@ namespace apiplate.Mapping
             this.CreateMap<CustomerResource, Customer>();
             this.CreateMap<DeliveryDriverResource, DeliveryDriver>();
             this.CreateMap<NotificationResource, Notification>();
-            this.CreateMap<ProductResource, Product>();
+            this.CreateMap<ProductResource, Product>()
+            .ForMember(c => c.CategoryName,op => op.MapFrom(c => c.Category.Title));
             this.CreateMap<CategoryResource, Category>();
             this.CreateMap<OptionResource, Option>();
             this.CreateMap<OptionValueResource, OptionValue>();
@@ -30,10 +31,10 @@ namespace apiplate.Mapping
 
 
         }
-        public void CreateMap<TResource, TModel>(string IgnoreItem = null)
+        public IMappingExpression<TModel, TResource> CreateMap<TResource, TModel>(string IgnoreItem = null)
          where TResource : BaseResource where TModel : BaseModel
         {
-            base.CreateMap<TResource, TModel>()
+            return base.CreateMap<TResource, TModel>()
             .ForMember(c => c.Id, opt => opt.Condition(c => c.Id
              != null))
             .ForMember(c => c.CreatedAt, opt => opt.Condition(c => c.CreatedAt != default))

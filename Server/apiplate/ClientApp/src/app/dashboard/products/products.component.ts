@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { FuiModalService, ModalSize } from 'ngx-fomantic-ui';
 import { Product } from 'src/app/core/models/product.model';
 import { CategoriesService } from 'src/app/core/services/categories.service';
@@ -28,7 +29,7 @@ export class ProductsComponent implements OnInit {
   orderBy = "lastUpdate";
   ascending = false;
   searchValue = "";
-  constructor(private _service: ProductsService,private _categoriesService : CategoriesService, private modalService: FuiModalService) {
+  constructor(private _service: ProductsService,private _categoriesService : CategoriesService, private modalService: FuiModalService,private router:Router) {
 
   }
   onSearchChange(value) {
@@ -49,11 +50,17 @@ export class ProductsComponent implements OnInit {
       this.totalRecords = res.totalRecords;
       this.totalPages = res.totalPages;
       this.isDataLoading = false;
-
+      
     }, err => {
       this.isDataLoading = false;
 
     });
+  }
+  goToDetails(product:Product)
+  {
+    this._service.$currentProduct.next(product);
+    this.router.navigate(['/','dashboard','products',product.id]);
+
   }
   initCols() {
     this.cols = [

@@ -1,0 +1,48 @@
+@import 'variables';
+.page {
+    padding: 20px;
+    width: 100%;
+    h3 {
+        font-family: "rb"!important;
+    }
+}
+
+.info-card {
+    padding: 20px;
+    box-shadow: $box-shadow;
+    width: 100%;
+    background-color: white;
+    margin: 0px 10px;
+    .info-card-title {
+        margin-bottom: 20px;
+    }
+    .info-content {
+        display: flex;
+        flex-wrap: wrap;
+        .info {
+            flex: 1;
+            min-width: 33.3%;
+            margin: 15px 0px;
+        }
+    }
+}
+
+.content-table {
+    margin: 25px 10px;
+    .table-header {
+        margin-bottom: 15px;
+    }
+    .form {
+        margin-top: 30px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        label {
+            display: block;
+        }
+        button {
+            max-height: 40px;
+        }
+    }
+}

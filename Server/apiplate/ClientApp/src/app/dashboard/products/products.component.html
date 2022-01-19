@@ -40,6 +40,7 @@
                     {{data}} %
                 </ng-container>
                 <ng-container *ngSwitchCase="8">
+                    <button (click)="goToDetails(rowData)" style="padding: 10px 25px;" class="ui primary button mini"> التفاصيل</button>
                     <div class="actions-cell">
                         <div fuiPopup popupText="update" (click)="openFormModal(rowData)" class="cell-btn edit-btn">
                             <i class="edit outline icon"></i>

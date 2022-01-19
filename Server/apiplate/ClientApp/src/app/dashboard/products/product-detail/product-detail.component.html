@@ -1,0 +1,99 @@
+<div class="page">
+    <div *ngIf="!isLoading else loading" class="content">
+        <div class="info-card">
+            <h3 class="info-card-title">المعلومات الاساسية : </h3>
+            <div class="info-content">
+                <div class="info">
+                    الرقم التعريفي : <span class="value">{{product.id}}</span>
+                </div>
+                <div class="info">
+                    اسم المنتج : <span class="value">{{product.title}}</span>
+                </div>
+                <div class="info">
+                    سعر المنتج : <span class="value">{{product.price}}</span>
+                </div>
+                <div class="info">
+                    قيمة التخفيض : <span class="value">{{product.discount}}</span>
+                </div>
+                <div class="info">
+                    صنف المنتج : <span class="value">{{product.categoryName}}</span>
+                </div>
+                <div class="info">
+                    تاريخ الانشاء : <span class="value">{{product.createdAt}}</span>
+                </div>
+                <div class="info">
+                    تاريخ التعديل : <span class="value">{{product.lastUpdate}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="content-table">
+            <div class="table-header">
+                <h3 class="info-card-title">خيارات المنتج : </h3>
+                <div class="form">
+                    <div class="field">
+                        <label>حدد الخيار </label>
+                        <fui-select #optionSelect class="selection" placeholder="اختر الخيار" labelField="title" valueField="id">
+                            <fui-select-option *ngFor="let item of options" [value]="item"></fui-select-option>
+                        </fui-select>
+                    </div>
+                    <button [disabled]="!optionSelect.selectedOption" (click)="addOption(optionSelect.selectedOption)" class="ui primary icon button">
+                        <i class="plus icon"></i>
+                        اضف الخيار
+                    </button>
+                </div>
+            </div>
+            <data-table [cell-template]="cellTemplate" [show-footer]="false" [cols]="optionsCols" [rows]="product.options">
+                <ng-template #cellTemplate let-rowData="rowData" let-data="cellData" let-col="colIndex" let-row="rowIndex">
+                    <ng-container [ngSwitch]="col">
+                        <ng-container *ngSwitchCase="optionsCols.length -  1">
+                            <button (click)="removeOption(rowData)" class="ui button red icon">
+                                    <i class="la las-trash"></i>
+                                    حذف
+                                </button>
+                        </ng-container>
+                        <div *ngSwitchDefault>{{data}}</div>
+                    </ng-container>
+
+                </ng-template>
+            </data-table>
+        </div>
+        <div class="content-table">
+            <div class="table-header">
+                <h3 class="info-card-title">اضافات المنتج : </h3>
+                <div class="form">
+                    <div class="field">
+                        <label>حدد الاضافة </label>
+                        <fui-select #addonSelect class="selection" placeholder="اختر الاضافة" labelField="title" valueField="id">
+                            <fui-select-option *ngFor="let item of addons" [value]="item"></fui-select-option>
+                        </fui-select>
+                    </div>
+                    <button [disabled]="!addonSelect.selectedOption" (click)="addAddon(addonSelect.selectedOption)" class="ui primary icon button">
+                        <i class="plus icon"></i>
+                        اضف الاضافة
+                    </button>
+                </div>
+            </div>
+            <data-table [cell-template]="addonsCellTemplate" [show-footer]="false" [cols]="addOnsCols" [rows]="product.addOns">
+                <ng-template #addonsCellTemplate let-rowData="rowData" let-data="cellData" let-col="colIndex" let-row="rowIndex">
+                    <ng-container [ngSwitch]="col">
+                        <ng-container *ngSwitchCase="optionsCols.length -  1">
+                            <button (click)="removeAddon(rowData)" class="ui button red icon">
+                                    <i class="la las-trash"></i>
+                                    حذف
+                                </button>
+                        </ng-container>
+                        <div *ngSwitchDefault>{{data}}</div>
+                    </ng-container>
+                </ng-template>
+            </data-table>
+        </div>
+    </div>
+
+
+    <ng-template #loading>
+        <div class="ui active loader"></div>
+    </ng-template>
+</div>
+<fui-dimmer class="page" [(isDimmed)]="dimLoading">
+    <div class="ui active loader"></div>
+</fui-dimmer>
