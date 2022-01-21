@@ -201,7 +201,7 @@ export class ProductsComponent implements OnInit {
               isObjectData:true,
               labelProp:"title",
               valueProp:"id",
-              width: "100%",
+              width: "50%",
               value: product ? product.categoryId : undefined,
 
             },

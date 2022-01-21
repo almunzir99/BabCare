@@ -8,5 +8,6 @@ namespace apiplate.Domain.Models
         [Required]
         public string Title { get; set; }
         public IList<OptionValue> Values { get; set; } = new List<OptionValue>();
+        public IList<Product> Products { get; set; }
     }
 }
