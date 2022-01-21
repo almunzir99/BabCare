@@ -29,7 +29,9 @@ namespace apiplate.Services
             .Include(c => c.DeliveryPermissions)
             .Include(c => c.CustomersPermissions)
             .Include(c => c.ProductsPermisson)
-            .Include(c => c.CategoriesPermisson);
+            .Include(c => c.CategoriesPermisson)
+            .Include(c => c.OrdersPermisson)
+            .Include(c => c.OffersPermisson);
 
         }
 

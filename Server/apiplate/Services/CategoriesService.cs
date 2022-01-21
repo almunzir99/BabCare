@@ -16,7 +16,7 @@ namespace apiplate.Services
         }
         protected override IQueryable<Category> GetDbSet()
         {
-            return base.GetDbSet().Include(c => c.Products).Include(c => c.Image);
+            return base.GetDbSet().Include(c => c.Products).Include(c => c.Image).Include(c => c.Offer);
         }
     }
 }

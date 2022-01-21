@@ -3,6 +3,6 @@ using apiplate.Resources;
 
 namespace apiplate.Domain.Services
 {
-    public interface IBranchesService : IRepository<Branch,BranchResource>{}
+    public interface IOffersService : IRepository<Offer,OfferResource>{}
 
 }

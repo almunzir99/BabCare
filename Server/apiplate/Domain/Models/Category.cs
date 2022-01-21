@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace apiplate.Domain.Models
 {
@@ -10,6 +11,9 @@ namespace apiplate.Domain.Models
         [Required]
         public Image Image { get; set; }
         public IList<Product> Products { get; set; } = new List<Product>();
-        
+        [ForeignKey("Offer")]
+        public int? OfferId { get; set; }
+        public Offer Offer { get; set; }
+
     }
 }

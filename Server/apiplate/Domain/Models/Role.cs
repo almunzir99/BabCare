@@ -11,6 +11,10 @@ namespace apiplate.Domain.Models
         public Permission ProductsPermisson { get; set; }
         public Permission CategoriesPermisson { get; set; }
         public Permission BranchesPermisson { get; set; }
+        public Permission OrdersPermisson { get; set; }
+
+        public Permission OffersPermisson { get; set; }
+
 
  
     }

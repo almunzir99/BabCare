@@ -58,6 +58,8 @@ namespace apiplate
             services.AddScoped<IAddOnsService, AddOnsService>();
             services.AddScoped<IBranchesService, BranchesService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOffersService, OffersService>();
+
 
             
 

@@ -17,18 +17,21 @@ namespace apiplate.Mapping
             this.CreateMap<DeliveryDriverResource, DeliveryDriver>();
             this.CreateMap<NotificationResource, Notification>();
             this.CreateMap<ProductResource, Product>()
-            .ForMember(c => c.CategoryName,op => op.MapFrom(c => c.Category.Title));
+            .ForMember(c => c.CategoryName, op => op.MapFrom(c => c.Category.Title))
+            .ForMember(c => c.Discount, op => op.MapFrom(c => (c.Category.Offer == null) ? 0 : c.Category.Offer.Discount));
             this.CreateMap<CategoryResource, Category>();
             this.CreateMap<OptionResource, Option>();
             this.CreateMap<OptionValueResource, OptionValue>();
             this.CreateMap<AddOnResource, AddOn>();
             this.CreateMap<BranchResource, Branch>();
             this.CreateMap<ImageResource, Image>();
-            this.CreateMap<OrderResource,Order>();
-            this.CreateMap<OrderedProductResource,OrderedProduct>();
-            this.CreateMap<OrderedOptionResource,OrderedOption>();
-            this.CreateMap<OrderedAddonResource,OrderedAddon>();
-            this.CreateMap<OrderRequestResource,Order>();
+            this.CreateMap<OrderResource, Order>();
+            this.CreateMap<OrderedProductResource, OrderedProduct>();
+            this.CreateMap<OrderedOptionResource, OrderedOption>();
+            this.CreateMap<OrderedAddonResource, OrderedAddon>();
+            this.CreateMap<OrderRequestResource, Order>();
+            this.CreateMap<OfferResource, Offer>();
+
 
 
 

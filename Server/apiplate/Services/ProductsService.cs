@@ -112,7 +112,7 @@ namespace apiplate.Services
         protected override IQueryable<Product> GetDbSet()
         {
             return base.GetDbSet()
-            .Include(c => c.Category)
+            .Include(c => c.Category).ThenInclude(c => c.Offer)
             .Include(c => c.Images)
             .Include(c => c.Options).ThenInclude(c => c.Values)
             .Include(c => c.AddOns);

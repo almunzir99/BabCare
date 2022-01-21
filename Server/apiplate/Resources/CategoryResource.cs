@@ -10,6 +10,8 @@ namespace apiplate.Resources
         [Required]
         public ImageResource Image { get; set; }
         public IList<ProductResource> Products { get; set; } = new List<ProductResource>();
+        public int? OfferId { get; set; }
+        public OfferResource Offer { get; set; }
         
     }
 }

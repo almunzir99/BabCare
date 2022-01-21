@@ -15,6 +15,10 @@ namespace apiplate.Resources
         public PermissionResource ProductsPermissions { get; set; } = new PermissionResource(false, false, false, false); 
         public PermissionResource CategoriesPermissions { get; set; } = new PermissionResource(false, false, false, false); 
         public PermissionResource BranchesPermissions { get; set; } = new PermissionResource(false, false, false, false); 
+        public PermissionResource OrdersPermissions { get; set; } = new PermissionResource(false, false, false, false); 
+        public PermissionResource OffersPermissions { get; set; } = new PermissionResource(false, false, false, false); 
+
+
 
 
     }

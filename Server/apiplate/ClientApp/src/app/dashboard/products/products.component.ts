@@ -218,18 +218,7 @@ export class ProductsComponent implements OnInit {
               ]
             },
             
-            {
-              title: "قيمة التخفيض",
-              name: "discount",
-              icon: "percent icon",
-              controlType: ControlTypes.NumberInput,
-              width: "50%",
-              value: product ? product.price : 0,
-              validators: [
-                Validators.required,
-                Validators.maxLength(25),
-              ]
-            },
+           
             {
               title: "الوصف",
               name: "description",
