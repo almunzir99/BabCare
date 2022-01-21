@@ -24,6 +24,14 @@ namespace apiplate.Mapping
             this.CreateMap<AddOnResource, AddOn>();
             this.CreateMap<BranchResource, Branch>();
             this.CreateMap<ImageResource, Image>();
+            this.CreateMap<OrderResource,Order>();
+            this.CreateMap<OrderedProductResource,OrderedProduct>();
+            this.CreateMap<OrderedOptionResource,OrderedOption>();
+            this.CreateMap<OrderedAddonResource,OrderedAddon>();
+            this.CreateMap<OrderRequestResource,Order>();
+
+
+
 
 
 

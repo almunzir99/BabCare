@@ -82,6 +82,7 @@ where TModel : BaseModel where TResource : BaseResource where TService : IReposi
                 return BadRequest(response);
             }
         }
+        [AllowAnonymous]
         [HttpGet]
         public virtual async Task<IActionResult> GetAsync([FromQuery] PaginationFilter filter = null, [FromQuery] string title = "", [FromQuery] string orderBy = "LastUpdate", Boolean ascending = true)
         {
@@ -100,6 +101,7 @@ where TModel : BaseModel where TResource : BaseResource where TService : IReposi
             return Ok(PaginationHelper.CreatePagedResponse<TResource>(result,
             validFilter, _uriSerivce, totalRecords, Request.Path.Value));
         }
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> SingleAsync(int id)
         {
@@ -185,7 +187,7 @@ where TModel : BaseModel where TResource : BaseResource where TService : IReposi
             return isAnonymous == null ? false : true; 
         
         }
-          protected int GetCurrentUserId()
+        protected int GetCurrentUserId()
         {
             int _currentUserId = int.Parse(HttpContext.User.GetClaimValue("id"));
             return _currentUserId;

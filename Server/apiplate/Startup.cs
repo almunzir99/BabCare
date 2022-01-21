@@ -57,6 +57,8 @@ namespace apiplate
             services.AddScoped<IOptionsService, OptionsService>();
             services.AddScoped<IAddOnsService, AddOnsService>();
             services.AddScoped<IBranchesService, BranchesService>();
+            services.AddScoped<IOrderService, OrderService>();
+
             
 
 

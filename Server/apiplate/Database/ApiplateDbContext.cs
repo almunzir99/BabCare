@@ -51,6 +51,10 @@ namespace apiplate.DataBase{
             public DbSet<AddOn> Addons { get; set; }
             public DbSet<OptionValue> OptionValues { get; set; }
             public DbSet<Branch> Branches { get; set; }
+            public DbSet<Order> Orders { get; set; }
+            public DbSet<OrderedProduct> OrderedProducts { get; set; }
+            public DbSet<OrderedOption> OrderedOptions { get; set; }
+            public DbSet<OrderedAddon> OrderedAddons { get; set; }
 
 
             

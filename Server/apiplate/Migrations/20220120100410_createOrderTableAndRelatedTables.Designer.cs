@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using apiplate.DataBase;
 
 namespace apiplate.Migrations
 {
     [DbContext(typeof(ApiplateDbContext))]
-    partial class ApiplateDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220120100410_createOrderTableAndRelatedTables")]
+    partial class createOrderTableAndRelatedTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,12 +148,12 @@ namespace apiplate.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 1, 20, 19, 17, 3, 409, DateTimeKind.Local).AddTicks(1152),
+                            CreatedAt = new DateTime(2022, 1, 20, 12, 4, 8, 958, DateTimeKind.Local).AddTicks(2976),
                             Email = "almunzir99@gmail.com",
                             IsManager = true,
-                            LastUpdate = new DateTime(2022, 1, 20, 19, 17, 3, 410, DateTimeKind.Local).AddTicks(4024),
-                            PasswordHash = new byte[] { 24, 156, 211, 129, 219, 102, 253, 172, 117, 230, 28, 23, 210, 116, 234, 60, 192, 19, 82, 109, 94, 32, 196, 162, 67, 208, 88, 99, 148, 221, 116, 213, 12, 170, 163, 57, 133, 146, 254, 103, 156, 245, 160, 228, 205, 221, 101, 138, 57, 31, 94, 86, 82, 68, 6, 102, 80, 113, 104, 5, 210, 42, 150, 5 },
-                            PasswordSalt = new byte[] { 96, 1, 89, 50, 121, 145, 33, 178, 245, 18, 212, 26, 102, 60, 132, 40, 23, 17, 202, 181, 90, 210, 235, 247, 179, 220, 177, 43, 102, 14, 27, 220, 77, 134, 188, 186, 16, 88, 99, 62, 75, 220, 114, 190, 63, 118, 150, 75, 81, 116, 190, 92, 220, 101, 215, 46, 13, 117, 42, 153, 10, 9, 48, 49, 132, 203, 5, 194, 104, 210, 228, 41, 65, 200, 127, 86, 8, 187, 187, 93, 143, 0, 237, 149, 69, 113, 110, 9, 89, 250, 104, 133, 8, 32, 94, 126, 157, 52, 169, 255, 35, 183, 70, 31, 237, 145, 135, 62, 153, 90, 151, 28, 124, 118, 165, 32, 152, 136, 154, 119, 35, 209, 130, 143, 213, 145, 37, 151 },
+                            LastUpdate = new DateTime(2022, 1, 20, 12, 4, 8, 959, DateTimeKind.Local).AddTicks(4005),
+                            PasswordHash = new byte[] { 65, 101, 161, 240, 170, 91, 192, 203, 192, 161, 184, 173, 89, 148, 163, 196, 176, 187, 202, 198, 129, 181, 98, 171, 2, 36, 185, 100, 110, 75, 1, 205, 244, 110, 182, 51, 96, 141, 6, 183, 114, 86, 163, 160, 186, 226, 90, 112, 99, 99, 239, 162, 187, 238, 24, 40, 103, 2, 224, 192, 199, 243, 244, 179 },
+                            PasswordSalt = new byte[] { 57, 141, 182, 199, 9, 221, 58, 68, 204, 177, 168, 121, 16, 189, 130, 240, 242, 121, 5, 88, 139, 74, 161, 162, 15, 110, 73, 248, 139, 5, 174, 65, 247, 163, 192, 48, 50, 25, 88, 188, 126, 215, 231, 203, 50, 214, 108, 144, 153, 158, 41, 8, 42, 5, 32, 249, 67, 210, 158, 38, 163, 166, 21, 25, 126, 91, 41, 196, 102, 74, 85, 88, 54, 102, 156, 136, 22, 194, 133, 46, 157, 212, 19, 206, 178, 5, 116, 214, 80, 35, 241, 136, 80, 207, 9, 152, 46, 90, 55, 31, 111, 157, 228, 83, 205, 238, 56, 190, 159, 43, 164, 140, 183, 33, 207, 91, 129, 14, 139, 237, 2, 159, 238, 143, 39, 3, 5, 181 },
                             Phone = "249128647019",
                             Username = "almunzir99"
                         });
@@ -533,9 +535,6 @@ namespace apiplate.Migrations
                     b.Property<double>("Lat")
                         .HasColumnType("float");
 
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Long")
                         .HasColumnType("float");
 
@@ -642,14 +641,9 @@ namespace apiplate.Migrations
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderedProducts");
                 });
@@ -898,7 +892,7 @@ namespace apiplate.Migrations
             modelBuilder.Entity("apiplate.Domain.Models.OrderedOption", b =>
                 {
                     b.HasOne("apiplate.Domain.Models.OrderedProduct", null)
-                        .WithMany("OrderedOptions")
+                        .WithMany("OrderedOption")
                         .HasForeignKey("OrderedProductId");
                 });
 
@@ -907,14 +901,6 @@ namespace apiplate.Migrations
                     b.HasOne("apiplate.Domain.Models.Order", null)
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
-
-                    b.HasOne("apiplate.Domain.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("apiplate.Domain.Models.Product", b =>
@@ -1015,7 +1001,7 @@ namespace apiplate.Migrations
                 {
                     b.Navigation("OrderedAddons");
 
-                    b.Navigation("OrderedOptions");
+                    b.Navigation("OrderedOption");
                 });
 
             modelBuilder.Entity("apiplate.Domain.Models.Product", b =>
