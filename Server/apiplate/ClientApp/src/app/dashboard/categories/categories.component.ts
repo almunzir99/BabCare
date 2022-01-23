@@ -168,7 +168,7 @@ export class CategoriesComponent implements OnInit {
             name: "image",
             controlType: ControlTypes.LocalFilePicker,
             width: "100%",
-            value: category ? category.image.path : undefined,
+            value: category ? category.image?.path : undefined,
 
           },
 
