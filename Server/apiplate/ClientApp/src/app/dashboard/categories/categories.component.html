@@ -32,7 +32,13 @@
                 <ng-container *ngSwitchCase="0">
                     <img style="width: 60px;height: 60px;" class="cell-image" [src]="data.path" alt="No Photo">
                 </ng-container>
-                <ng-container *ngSwitchCase="5">
+                <ng-container *ngSwitchCase="3">
+                    <div [textContent]="data ? data.title : 'لا يوجد العرض'"></div>
+                </ng-container>
+                <ng-container *ngSwitchCase="4">
+                    <div [textContent]="data ? data.discount+'%' : 'لا يوجد العرض'"></div>
+                </ng-container>
+                <ng-container *ngSwitchCase="7">
                     <div class="actions-cell">
                         <div fuiPopup popupText="update" (click)="openFormModal(rowData)" class="cell-btn edit-btn">
                             <i class="edit outline icon"></i>

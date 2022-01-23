@@ -6,5 +6,6 @@ export class Category extends Base{
     title:string;
     image:Image;
     products:Product[];
+    offerId:number;
     offer:Offer;
 }

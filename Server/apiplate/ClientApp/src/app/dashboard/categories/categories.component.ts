@@ -3,6 +3,7 @@ import { Validators } from '@angular/forms';
 import { FuiModalService, ModalSize } from 'ngx-fomantic-ui';
 import { Category } from 'src/app/core/models/category.model';
 import { CategoriesService } from 'src/app/core/services/categories.service';
+import { OffersService } from 'src/app/core/services/offers.service';
 import { Column } from 'src/app/shared/data-table/models/column.model';
 import { ControlTypes } from 'src/app/shared/form-builder/models/control-type.enum';
 import { FormBuilderGroup } from 'src/app/shared/form-builder/models/form-builder-group.model';
@@ -27,7 +28,7 @@ export class CategoriesComponent implements OnInit {
   orderBy = "lastUpdate";
   ascending = false;
   searchValue = "";
-  constructor(private _service: CategoriesService, private modalService: FuiModalService) {
+  constructor(private _service: CategoriesService, private _offerService:OffersService, private modalService: FuiModalService) {
 
   }
   onSearchChange(value) {
@@ -77,7 +78,18 @@ export class CategoriesComponent implements OnInit {
         sortable: true
 
       },
+      {
+        prop: "offer",
+        title: "اسم العرض",
+        show: true,
 
+      },
+      {
+        prop: "offer",
+        title: "قيمة العرض",
+        show: true,
+
+      },
 
       {
         prop: "createdAt",
@@ -139,6 +151,11 @@ export class CategoriesComponent implements OnInit {
 
   }
   openFormModal(category: Category) {
+      var offers;
+      this.DimLoading = true;
+      this._offerService.get().subscribe(res => {
+        offers = res.data;
+        this.DimLoading = false;
     const form: FormBuilderGroup[] = [
       {
 
@@ -162,6 +179,18 @@ export class CategoriesComponent implements OnInit {
               Validators.required,
               Validators.maxLength(25),
             ]
+          },
+          {
+            title: "تحديد العرض",
+            name: "offerId",
+            controlType: ControlTypes.Selection,
+            data: offers,
+            isObjectData:true,
+            labelProp:"title",
+            valueProp:"id",
+            width: "100%",
+            value: category ? category.offerId : undefined,
+
           },
           {
             title: "الصورة",
@@ -189,6 +218,10 @@ export class CategoriesComponent implements OnInit {
         this.update(result as Category);
       else
         this.create(result as Category);
+
+    }); },err => {
+      this.DimLoading = false;
+      return;
 
     });
   }
