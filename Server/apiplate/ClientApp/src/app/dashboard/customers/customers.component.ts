@@ -193,7 +193,7 @@ export class CustomersComponent implements OnInit {
               icon: "map icon",
               controlType: ControlTypes.TextInput,
               width: "100%",
-              value: customer ? customer.email : undefined,
+              value: customer ? customer.location : undefined,
  
 
             },

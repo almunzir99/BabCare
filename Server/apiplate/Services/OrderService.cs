@@ -163,7 +163,7 @@ namespace apiplate.Services
                 var validFilter = (filter == null) ?
                 new PaginationFilter()
                 : new PaginationFilter(filter.PageIndex, filter.PageSize);
-                var orders = await _context.Orders.ToListAsync();
+                var orders = await GetDbSet().ToListAsync();
                 if (conditions != default)
                 {
                     foreach (var condition in conditions)
@@ -196,7 +196,7 @@ namespace apiplate.Services
         {
             try
             {
-                var orders = await _context.Orders.Where(c => c.CustomerId == customerId).ToListAsync();
+                var orders = await GetDbSet().Where(c => c.CustomerId == customerId).ToListAsync();
                 var validFilter = (filter == null) ?
                 new PaginationFilter()
                 : new PaginationFilter(filter.PageIndex, filter.PageSize);
@@ -358,7 +358,8 @@ namespace apiplate.Services
         {
             return _context.Orders.Include(c => c.Branch)
             .Include(c => c.Customer).Include(c => c.Delivery)
-            .Include(c => c.Products).ThenInclude(c => c.Product)
+            .Include(c => c.Products).ThenInclude(c => c.Product).ThenInclude(c => c.AddOns)
+            .Include(c => c.Products).ThenInclude(c => c.Product).ThenInclude(c => c.Options).ThenInclude(c => c.Values)
             .Include(c => c.Products).ThenInclude(c => c.OrderedOptions)
             .Include(c => c.Products).ThenInclude(c => c.OrderedAddons);
         }

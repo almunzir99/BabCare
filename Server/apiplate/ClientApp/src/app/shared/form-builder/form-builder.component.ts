@@ -56,13 +56,15 @@ export class FormBuilderComponent implements OnInit {
     this.resultObject[controlName] = content;
   }
   ngAfterContentInit() {
+    this.initResult();
     this.setMapLocation();
     this.formGroup = new FormGroup({});
     this.ControlsGroups.forEach(group => {
       group.controls.forEach(control => {
-        this.formGroup.addControl(control.name, new FormControl(control.name, control.validators));
+        this.formGroup.addControl(control.name, new FormControl(control.value, control.validators));
       });
     });
+    this.cdr.detectChanges();
 
   }
   ngAfterViewInit() {
@@ -98,7 +100,7 @@ export class FormBuilderComponent implements OnInit {
         this.initResult();
 
 
-      });
+      } );
 
     }
   }

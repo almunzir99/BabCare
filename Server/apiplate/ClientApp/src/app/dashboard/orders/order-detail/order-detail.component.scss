@@ -1,0 +1,88 @@
+@import 'variables';
+.page {
+    padding: 20px;
+    width: 100%;
+    h3 {
+        font-family: "rb"!important;
+    }
+    height: 100%;
+    .content {
+        height: 100%;
+    }
+}
+
+.basic-info {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.map {
+    height: auto;
+    width: 41%;
+    height: 100%;
+    agm-map {
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.info-card {
+    padding: 20px;
+    box-shadow: $box-shadow;
+    width: 55%;
+    background-color: white;
+    margin: 0px 20px;
+    .info-card-title {
+        margin-bottom: 20px;
+    }
+    .info-content {
+        display: flex;
+        flex-wrap: wrap;
+        .info {
+            flex: 1;
+            width: 33.3%;
+            min-width: 200px;
+            margin: 15px 0px;
+            .significant {
+                color: $primary-color;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.content-table {
+    margin: 25px 10px;
+    .table-header {
+        margin-bottom: 15px;
+    }
+    .form {
+        margin-top: 30px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        label {
+            display: block;
+        }
+        button {
+            max-height: 40px;
+        }
+    }
+    .chips {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 0px 5px;
+        .chip {
+            background-color: $accent-color;
+            padding: 5px 15px;
+            border-radius: 15px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

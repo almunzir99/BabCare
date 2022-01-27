@@ -100,14 +100,14 @@ namespace apiplate.Controllers
             }
         }
         [Authorize(Roles = "ADMIN")]
-        public async Task<IActionResult> GetAsync([FromQuery] PaginationFilter filter = null, [FromQuery] int? id = null, [FromQuery] string orderBy = "LastUpdate", Boolean ascending = true)
+        public async Task<IActionResult> GetAsync([FromQuery] PaginationFilter filter = null, [FromQuery] int? id = null, [FromQuery] string orderBy = "LastUpdate", Boolean ascending = true,[FromQuery] OrderStatus? status = null)
         {
 
             var validFilter = (filter == null)
            ? new PaginationFilter()
            : new PaginationFilter(pageIndex: filter.PageIndex, pageSize: filter.PageSize);
             int _currentUserId = int.Parse(HttpContext.User.GetClaimValue("id"));
-            var result = await _service.ListAsync(filter, new List<Func<Order, bool>>(), id, orderBy, ascending);
+            var result = await _service.ListAsync(filter, new List<Func<Order, bool>>(), id, orderBy, ascending,status);
             var totalRecords = await _service.GetTotalRecords();
             return Ok(PaginationHelper.CreatePagedResponse<OrderResource>(result,
             validFilter, _uriService, totalRecords, Request.Path.Value));

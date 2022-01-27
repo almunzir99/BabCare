@@ -31,7 +31,7 @@
         <div class="user-image-container">
             <div class="user-image">
                 <img *ngIf="currentUser.image != null && currentUser.image !='none'" [src]="currentUser.image">
-                <div *ngIf="currentUser.image == null || currentUser =='none'" [src]="currentUser.image" class="image-placeholder">
+                <div *ngIf="currentUser.image == null || currentUser.image =='none'" [src]="currentUser.image" class="image-placeholder">
                     <i class="las la-user-tie"></i>
                 </div>
 

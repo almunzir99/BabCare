@@ -13,7 +13,7 @@ interface IFormBuilderModalContext {
 })
 export class FormBuilderModalComponent implements OnInit {
 
-  constructor(private modal: FuiBaseModal<IFormBuilderModalContext, any, void>) { }
+  constructor(public modal: FuiBaseModal<IFormBuilderModalContext, any, void>) { }
   onApproved(data:any){
     this.modal.approve(data);
     
@@ -39,10 +39,10 @@ export class FormBuilderModal extends ComponentModalConfig<IFormBuilderModalCont
    */
   constructor(context: IFormBuilderModalContext, size = ModalSize.Normal) {
     super(FormBuilderModalComponent, context);
-    this.isClosable = false;
-    this.transitionDuration = 500;
-    this.size = size;
-    this.isCentered = true;
+    super.isClosable = false;
+    super.transitionDuration = 500;
+    super.size = size;
+    super.isCentered = true;
 
   }
 

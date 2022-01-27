@@ -9,6 +9,7 @@ namespace apiplate.Resources
         
         public int ProductId { get; set; }
         public ProductResource Product { get; set; }
+        public int Quantity { get; set; }
         public IList<OrderedOptionResource> OrderedOptions { get; set; } = new List<OrderedOptionResource>();
         public IList<OrderedAddonResource> OrderedAddons { get; set; } = new List<OrderedAddonResource>();
     }

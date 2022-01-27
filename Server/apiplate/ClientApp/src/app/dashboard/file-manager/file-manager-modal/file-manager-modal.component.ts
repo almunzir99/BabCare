@@ -12,7 +12,7 @@ export interface IFileManagerModalContext{
 })
 export class FileManagerModalComponent implements OnInit {
 
-  constructor(private modal: FuiBaseModal<IFileManagerModalContext, any, void>) { }
+  constructor(public modal: FuiBaseModal<IFileManagerModalContext, any, void>) { }
 
   ngOnInit(): void {
   }
@@ -31,9 +31,9 @@ export class FileManagerModal extends ComponentModalConfig<IFileManagerModalCont
    */
   constructor(context:IFileManagerModalContext) {
     super(FileManagerModalComponent,context);
-    this.isClosable = false;
-    this.transitionDuration = 500;
-    this.size = ModalSize.Large;
-    this.isCentered = true;
+    super.isClosable = false;
+    super.transitionDuration = 500;
+    super.size = ModalSize.Large;
+    super.isCentered = true;
   }
 }

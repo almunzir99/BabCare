@@ -1,0 +1,122 @@
+<div class="page">
+    <div *ngIf="!isLoading else loading" class="content">
+        <div class="basic-info">
+            <div class="info-card">
+                <h3 class="info-card-title"> معلومات الطلب : </h3>
+                <div class="info-content">
+                    <div class="info">
+                        الرقم التعريفي : <span class="value">{{currentOrder?.id}}</span>
+                    </div>
+                    <div class="info">
+                        تاريخ الطلب : <span class="value">{{currentOrder?.createdAt}}</span>
+                    </div>
+                    <div class="info">
+                        عدد المنتجات : <span class="value">{{currentOrder?.products.length}} منتج</span>
+                    </div>
+                    <div class="info">
+                        الاجمالي : <span class="value significant">{{currentOrder?.total}} ج.س</span>
+                    </div>
+                    <div class="info">
+                        الحالة : <span class="value">{{statuses[currentOrder?.status]}}</span>
+                    </div>
+                    <div class="info">
+                        الخطوة التالية : <span class="value">
+                        </span>
+                        <button (click)="changeStatus(currentOrder.status + 1)" [disabled]="currentOrder.status == 3 || currentOrder.status == 4 || currentOrder.status == 5 || currentOrder.status == 6" class="ui yellow tiny button">
+                            <ng-container *ngIf="currentOrder.status == 0"> تأكيد الطلب </ng-container>
+                            <ng-container *ngIf="currentOrder.status == 1"> بدأ التحضير </ng-container>
+                            <ng-container *ngIf="currentOrder.status == 2"> بدأ التوصيل </ng-container>
+                            <ng-container
+                                *ngIf="currentOrder.status == 3 || currentOrder.status == 4 || currentOrder.status == 5 || currentOrder.status == 6">
+                                {{statuses[currentOrder?.status]}} </ng-container>
+
+
+
+                        </button>
+                        <button (click)="changeStatus(-1)" [disabled]="currentOrder.status == 4 || currentOrder.status == 5 || currentOrder.status == 6" class="ui red tiny button">الغاء الطلب</button>
+
+                    </div>
+
+                </div>
+                <h3 class="info-card-title"> معلومات العميل الاساسية : </h3>
+                <div class="info-content">
+                    <div class="info">
+                        الرقم التعريفي : <span class="value">{{currentOrder?.customer?.id}}</span>
+                    </div>
+                    <div class="info">
+                        اسم العميل : <span class="value">{{currentOrder?.customer?.username}}</span>
+                    </div>
+                    <div class="info">
+                        رقم هاتف العميل : <span class="value">{{currentOrder?.customer?.phone}}</span>
+                    </div>
+                    <div class="info">
+                        عنوان العميل : <span class="value">{{currentOrder?.customer?.location}}</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="map">
+                <agm-map [latitude]="currentOrder?.lat" [longitude]="currentOrder?.long" [zoom]="14">
+                    <agm-marker [latitude]="currentOrder?.lat" [longitude]="currentOrder?.long"></agm-marker>
+                    <agm-marker [latitude]="currentOrder?.branch?.lat" [longitude]="currentOrder?.branch?.long"></agm-marker>
+
+                    <agm-polyline [visible]="true" [strokeWeight]="5" strokeColor="#DC143C">
+                        <agm-polyline-point [latitude]="currentOrder?.lat" [longitude]="currentOrder?.long">
+                        </agm-polyline-point>
+                        <agm-polyline-point [latitude]="currentOrder?.branch?.lat" [longitude]="currentOrder?.branch?.long">
+                        </agm-polyline-point>
+                    </agm-polyline>
+                </agm-map>
+            </div>
+        </div>
+        <h3 style="margin: 30px 20px;" class="info-card-title"> المنتجات المطلوبة : </h3>
+        <div class="content-table">
+            <data-table [cell-template]="cellTemplate" [show-footer]="false" [cols]="productCols" [rows]="currentOrder.products">
+                <ng-template #cellTemplate let-rowData="rowData" let-data="cellData" let-col="colIndex" let-row="rowIndex">
+                    <ng-container [ngSwitch]="col">
+                        <ng-container *ngSwitchCase="1">{{data.title}}</ng-container>
+                        <ng-container *ngSwitchCase="2">{{data.price}} ج.س</ng-container>
+                        <ng-container *ngSwitchCase="3">{{data.price}}</ng-container>
+                        <ng-container *ngSwitchCase="4">{{data.price}} ج.س</ng-container>
+                        <ng-container *ngSwitchCase="5">
+                            <div class="chips">
+                                <div *ngFor="let addon of data" class="chip">
+                                    {{rowData.product.addOns[addon.addonIndex]?.title}}</div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="6">
+                            <table class="ui   celled table">
+                                <thead>
+                                    <tr>
+                                        <th>اسم الخيار</th>
+                                        <th>قيمة الخيار</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let option of data">
+                                        <td> {{rowData.product.options[option.optionIndex]?.title}}</td>
+                                        <td>{{rowData.product.options[option.optionIndex]?.values[option.optionValueIndex]?.title}}
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </ng-container>
+
+
+                        <div *ngSwitchDefault>{{data}}</div>
+                    </ng-container>
+
+                </ng-template>
+            </data-table>
+        </div>
+    </div>
+
+
+    <ng-template #loading>
+        <div class="ui active loader"></div>
+    </ng-template>
+</div>
+<fui-dimmer class="page" [(isDimmed)]="dimLoading">
+    <div class="ui active loader"></div>
+</fui-dimmer>

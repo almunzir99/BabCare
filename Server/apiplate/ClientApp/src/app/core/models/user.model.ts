@@ -6,5 +6,6 @@ export class User extends BaseUser{
     activities:Activity[];
     roleId:number;
     role:Role;
+    isManager?:boolean;
     
 }

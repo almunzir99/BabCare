@@ -224,7 +224,7 @@ export class ProductsComponent implements OnInit {
               name: "description",
               controlType: ControlTypes.TextArea,
               width: "100%",
-              value: product ? product.price : undefined,
+              value: product ? product.description : undefined,
               validators: [
                 Validators.required,
                 Validators.maxLength(25),

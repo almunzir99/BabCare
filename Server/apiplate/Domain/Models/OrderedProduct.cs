@@ -6,6 +6,7 @@ namespace apiplate.Domain.Models
     {
         public int ProductId { get; set; }
         public Product Product { get; set; }
+        public int Quantity { get; set; }
         public IList<OrderedOption> OrderedOptions { get; set; }
         public IList<OrderedAddon> OrderedAddons { get; set; }
     }
