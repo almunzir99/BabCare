@@ -14,6 +14,8 @@
         position: relative;
         border-radius: 15px;
         margin: 5px;
+        cursor: pointer;
+        transition: 0.3s all ease;
         .count {
             font-size: 32px;
             font-weight: bold;
@@ -40,5 +42,8 @@
             font-size: 80px;
             color: #ffffff2d;
         }
+    }
+    .custom-card:hover {
+        transform: translateY(-7px);
     }
 }

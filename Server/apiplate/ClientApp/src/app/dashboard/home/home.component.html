@@ -1,63 +1,63 @@
-<div class="home-layout">
+<div *ngIf="!isLoading else loading" class="home-layout">
     <div class="cards-container">
-        <div style="background-color: #DC143C;" class="custom-card">
-            <div class="count">20</div>
+        <div [routerLink]="['/','dashboard','orders']" style="background-color: #DC143C;" class="custom-card">
+            <div class="count">{{stats.orders}}</div>
             <div>
                 <div class="title">اجمالي الطلبات</div>
                 <div class="view-more">عرض المزيد <i class="las la-arrow-left"></i></div>
             </div>
             <i class="la la-layer-group overlay"></i>
         </div>
-        <div style="background-color: #F2711C;" class="custom-card">
-            <div class="count">20</div>
+        <div [routerLink]="['/','dashboard','offers']" style="background-color: #F2711C;" class="custom-card">
+            <div class="count">{{stats.offers}}</div>
             <div>
                 <div class="title">اجمالي العروض</div>
                 <div class="view-more">عرض المزيد <i class="las la-arrow-left"></i></div>
             </div>
             <i class="la la-percentage overlay"></i>
         </div>
-        <div style="background-color:#FBBD08; " class="custom-card">
-            <div class="count">20</div>
+        <div [routerLink]="['/','dashboard','products']" style="background-color:#FBBD08; " class="custom-card">
+            <div class="count">{{stats.products}}</div>
             <div>
                 <div class="title">اجمالي المنتجات</div>
                 <div class="view-more">عرض المزيد <i class="las la-arrow-left"></i></div>
             </div>
             <i class="la la-boxes overlay"></i>
         </div>
-        <div style="background-color: #B5CC18" class="custom-card">
-            <div class="count">20</div>
+        <div [routerLink]="['/','dashboard','delivery']" style="background-color: #B5CC18" class="custom-card">
+            <div class="count">{{stats.delivery}}</div>
             <div>
                 <div class="title">اجمالي الموصلين</div>
                 <div class="view-more">عرض المزيد <i class="las la-arrow-left"></i></div>
             </div>
             <i class="las la-bicycle overlay"></i>
         </div>
-        <div style="background-color: #21BA45" class="custom-card">
-            <div class="count">20</div>
+        <div [routerLink]="['/','dashboard','customers']" style="background-color: #21BA45" class="custom-card">
+            <div class="count">{{stats.customers}}</div>
             <div>
                 <div class="title">اجمالي العملاء</div>
                 <div class="view-more">عرض المزيد <i class="las la-arrow-left"></i></div>
             </div>
             <i class="las la-user-friends overlay"></i>
         </div>
-        <div style="background-color: #2185D0;" class="custom-card">
-            <div class="count">20</div>
+        <div [routerLink]="['/','dashboard','branches']" style="background-color: #2185D0;" class="custom-card">
+            <div class="count">{{stats.branches}}</div>
             <div>
                 <div class="title">عدد الفروع</div>
                 <div class="view-more">عرض المزيد <i class="las la-arrow-left"></i></div>
             </div>
             <i class="las la-code-branch overlay"></i>
         </div>
-        <div style="background-color: #6435C9;" class="custom-card">
-            <div class="count">20</div>
+        <div [routerLink]="['/','dashboard','categories']" style="background-color: #6435C9;" class="custom-card">
+            <div class="count">{{stats.categories}}</div>
             <div>
                 <div class="title">اجمالي الاصناف</div>
                 <div class="view-more">عرض المزيد <i class="las la-arrow-left"></i></div>
             </div>
             <i class="la la-layer-group overlay"></i>
         </div>
-        <div style="background-color: #A333C8;" class="custom-card">
-            <div class="count">20</div>
+        <div [routerLink]="['/','dashboard','admins']" style="background-color: #A333C8;" class="custom-card">
+            <div class="count">{{stats.admins}}</div>
             <div>
                 <div class="title">اجمالي المشرفين</div>
                 <div class="view-more">عرض المزيد <i class="las la-arrow-left"></i></div>
@@ -66,3 +66,9 @@
         </div>
     </div>
 </div>
+<ng-template #loading>
+    <div style="display: flex;align-items: center;flex-direction: column;" class="ui active loader">
+        <p>الرجاء الانتظار</p>
+
+    </div>
+</ng-template>

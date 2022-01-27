@@ -59,14 +59,7 @@ namespace apiplate
             services.AddScoped<IBranchesService, BranchesService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IOffersService, OffersService>();
-
-
-            
-
-
-
-
-
+            services.AddScoped<IStatisticsService, StatisticsService>();
             services.AddCors(options =>
        {
            options.AddPolicy("CorsPolicy",
