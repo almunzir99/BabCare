@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using apiplate.Domain.Services;
 using apiplate.Resources;
 using apiplate.Wrappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apiplate.Controllers
 {
+    [Authorize(Roles = "ADMIN")]
     [ApiController]
     [Route("api/[controller]")]
     public class StatisticsController : ControllerBase
