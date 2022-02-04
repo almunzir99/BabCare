@@ -1,12 +1,21 @@
+import 'package:babcare/controllers/auth_controller.dart';
+import 'package:babcare/models/customer.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:babcare/views/components/custom_text_form_field.dart';
+import 'package:babcare/views/components/customer_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SignupPage extends StatelessWidget {
   SignupPage({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
+  final _controller = AuthController();
+  final _nameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _locationController = TextEditingController();
+  final _phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +35,7 @@ class SignupPage extends StatelessWidget {
                   children: [
                     CustomTextFormField(
                       label: "اسمك",
+                      controller: _nameController,
                       icon: LineIcons.alternateUser,
                       onChange: (value) {},
                       validator: (value) {
@@ -38,6 +48,7 @@ class SignupPage extends StatelessWidget {
                       tag: "phone_field",
                       child: Material(
                         child: CustomTextFormField(
+                          controller: _phoneController,
                           label: "رقم الهاتف",
                           icon: LineIcons.phone,
                           onChange: (value) {},
@@ -51,6 +62,7 @@ class SignupPage extends StatelessWidget {
                     ),
                     CustomTextFormField(
                       label: "عنوانك",
+                      controller: _locationController,
                       icon: LineIcons.mapMarked,
                       onChange: (value) {},
                       validator: (value) {
@@ -65,6 +77,7 @@ class SignupPage extends StatelessWidget {
                         child: CustomTextFormField(
                           label: "كلمة المرور",
                           icon: LineIcons.key,
+                          controller: _passwordController,
                           isObscure: true,
                           onChange: (value) {},
                           validator: (value) {
@@ -78,43 +91,66 @@ class SignupPage extends StatelessWidget {
                     const SizedBox(
                       height: 25.0,
                     ),
-                    InkWell(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          Get.toNamed("/home");
-                        }
-                      },
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 15.0, horizontal: 30.0),
-                          decoration: BoxDecoration(
-                            color: primaryColor,
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text(
-                                "تسجيل",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 17.0),
-                              ),
-                              SizedBox(
-                                width: 5.0,
-                              ),
-                              Icon(
-                                LineIcons.alternateSignIn,
-                                color: Colors.white,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    Obx(() {
+                      return CustomButton(
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            try {
+                              var customer = Customer(
+                                username: _nameController.value.text,
+                                phone: _phoneController.value.text,
+                                password: _passwordController.value.text,
+                                email: _phoneController.value.text,
+                              );
+                              var result = await _controller.register(customer);
+                              await Alert(
+                                context: context,
+                                type: AlertType.success,
+                                title: "نجام",
+                                desc:
+                                    "مرحب يا ${result.username}, تم التسجيل بنجاح",
+                                buttons: [
+                                  DialogButton(
+                                    color: primaryColor,
+                                    child: const Text(
+                                      "تمام",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20),
+                                    ),
+                                    onPressed: () => Navigator.pop(context),
+                                    width: 120,
+                                  )
+                                ],
+                              ).show();
+                              Get.toNamed("/home");
+                            } catch (e) {
+                              Alert(
+                                context: context,
+                                type: AlertType.error,
+                                title: "خطأ",
+                                desc: "فشلت العملية الرجاء اعاة المحاولة",
+                                buttons: [
+                                  DialogButton(
+                                    color: primaryColor,
+                                    child: const Text(
+                                      "تمام",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20),
+                                    ),
+                                    onPressed: () => Navigator.pop(context),
+                                    width: 120,
+                                  )
+                                ],
+                              ).show();
+                            }
+                          }
+                        },
+                        text: "تسجيل",
+                        icon: LineIcons.alternateSignIn,
+                        width: MediaQuery.of(context).size.width * .87,
+                        isLoading: _controller.isButtonLoading.value,
+                      );
+                    }),
                     const SizedBox(
                       height: 30.0,
                     ),

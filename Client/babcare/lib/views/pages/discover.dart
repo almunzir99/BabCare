@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:babcare/controllers/auth_controller.dart';
 import 'package:babcare/controllers/discover_controller.dart';
 import 'package:babcare/models/category.dart';
 import 'package:babcare/theme/style.dart';
@@ -11,10 +12,13 @@ import 'package:line_icons/line_icons.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class DiscoverPage extends StatelessWidget {
-  const DiscoverPage({Key? key}) : super(key: key);
+  DiscoverPage({Key? key}) : super(key: key);
+  final _authController = Get.put(AuthController());
+
   @override
   Widget build(BuildContext context) {
     var controller = Get.put(DiscoverController());
+    var currentCustomer = _authController.currentCustomer.value;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -41,7 +45,7 @@ class DiscoverPage extends StatelessWidget {
                           ),
                           //User name
                           AutoSizeText(
-                            "المنزر",
+                            "${currentCustomer!.username}",
                             style: TextStyle(
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.bold,

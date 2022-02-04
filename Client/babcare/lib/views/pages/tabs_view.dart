@@ -68,13 +68,13 @@ class _TabsViewState extends State<TabsView> {
       ),
       body: IndexedStack(
         index: _selectedIndex,
-        children: const [
+        children: [
           DiscoverPage(),
-          FavouritesPage(),
-          OrdersPage(
+          const FavouritesPage(),
+          const OrdersPage(
             hideAppBar: true,
           ),
-          AccountPage()
+          const AccountPage()
         ],
       ),
       bottomNavigationBar: Container(

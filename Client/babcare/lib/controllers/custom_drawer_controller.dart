@@ -12,6 +12,7 @@ class CustomDrawerController extends GetxController {
       _currentPage = menuItems[index].page;
       toggleDrawer();
     }
+    if (index == menuItems.length - 1) Get.offAllNamed("/login");
   }
 
   void toggleDrawer() {

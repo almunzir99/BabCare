@@ -5,6 +5,7 @@ class Customer {
   String? phone;
   String? photo;
   String? token;
+  String? password;
   List? notifications;
   int? id;
   String? createdAt;
@@ -20,7 +21,8 @@ class Customer {
       this.notifications,
       this.id,
       this.createdAt,
-      this.lastUpdate});
+      this.lastUpdate,
+      this.password});
 
   Customer.fromJson(Map<String, dynamic> json) {
     location = json['location'];
@@ -43,14 +45,11 @@ class Customer {
     data['username'] = username;
     data['email'] = email;
     data['phone'] = phone;
-    data['photo'] = photo;
-    data['token'] = token;
+    data['password'] = password;
     if (notifications != null) {
       // data['notifications'] = notifications.map((v) => v.toJson()).toList();
     }
-    data['id'] = id;
-    data['createdAt'] = createdAt;
-    data['lastUpdate'] = lastUpdate;
+
     return data;
   }
 }
