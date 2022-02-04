@@ -11,6 +11,7 @@ class CustomTextFormField extends StatelessWidget {
   final void Function(String?)? onChange;
   final bool isObscure;
   final EdgeInsets padding;
+  final TextInputType inputType;
   const CustomTextFormField({
     Key? key,
     @required this.label,
@@ -21,6 +22,7 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.onChange,
     this.isObscure = false,
+    this.inputType = TextInputType.text,
     this.padding = const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
   }) : super(key: key);
 
@@ -32,6 +34,7 @@ class CustomTextFormField extends StatelessWidget {
           obscureText: isObscure,
           controller: controller,
           initialValue: value,
+          keyboardType: inputType,
           decoration: InputDecoration(
             focusColor: primaryColor,
             fillColor: (fillColor == null) ? Colors.grey.shade200 : fillColor,
