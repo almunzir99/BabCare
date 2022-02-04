@@ -179,7 +179,7 @@ class DiscoverPage extends StatelessWidget {
                     height: 30.0,
                   ),
                   //Categories Horizontal List
-                  Container(
+                  SizedBox(
                     height: 90.0,
                     child: ListView.builder(
                         itemCount: categories.length,
@@ -213,7 +213,7 @@ class DiscoverPage extends StatelessWidget {
                                         height: 60.0,
                                         width: 60.0,
                                         image:
-                                            AssetImage(categories[index].icon),
+                                            AssetImage(categories[index].icon!),
                                         fit: BoxFit.contain,
                                       ),
                                       const SizedBox(
@@ -222,7 +222,7 @@ class DiscoverPage extends StatelessWidget {
                                       SizedBox(
                                         width: 40.0,
                                         child: AutoSizeText(
-                                          categories[index].name,
+                                          categories[index].title!,
                                           maxLines: 2,
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
@@ -249,7 +249,7 @@ class DiscoverPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           AutoSizeText(
-                            categories[controller.selectedCategoryIndex].name,
+                            categories[controller.selectedCategoryIndex].title!,
                             style: const TextStyle(
                                 fontSize: 22.0, fontWeight: FontWeight.bold),
                           ),

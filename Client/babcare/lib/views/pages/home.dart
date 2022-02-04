@@ -18,7 +18,7 @@ class HomePage extends GetView<CustomDrawerController> {
               showShadow: true,
               angle: 0,
               isRtl: true,
-              style: DrawerStyle.Style1,
+              style: DrawerStyle.DefaultStyle,
               backgroundColor: Colors.white.withOpacity(0.3),
               slideWidth: MediaQuery.of(context).size.width * 0.6,
             ));

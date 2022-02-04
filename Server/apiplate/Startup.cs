@@ -5,6 +5,8 @@ using apiplate.Hubs;
 using apiplate.Services;
 using apiplate.Services.ContentManagement;
 using apiplate.Services.FilesManager;
+using apiplate.StartupTasks;
+using apiplate.StartupTasks.Extensions;
 using apiplate.Utils;
 using apiplate.Utils.SMTP.Services;
 using apiplate.Utils.URI;
@@ -59,7 +61,9 @@ namespace apiplate
             services.AddScoped<IBranchesService, BranchesService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IOffersService, OffersService>();
-            services.AddScoped<IStatisticsService, StatisticsService>();
+            services.AddScoped<IStatisticsService,StatisticsService>();
+            services.AddStartupTask<ImagesStartupTask>();
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddCors(options =>
        {
            options.AddPolicy("CorsPolicy",
