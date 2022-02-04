@@ -1,23 +1,17 @@
-import 'package:babcare/models/options.dart';
-
 class OptionValue {
   String? title;
-  int? value;
+  double? value;
   int? id;
-  DateTime? createdAt;
-  DateTime? lastUpdate;
 
   OptionValue({
     this.title,
     this.value,
     this.id,
-    this.createdAt,
-    this.lastUpdate,
   });
 
   OptionValue.fromJson(Map<String, dynamic> json) {
     title = json['title'];
-    value = json['value'];
+    value = json['value'] * 1.0;
     id = json['id'];
   }
 

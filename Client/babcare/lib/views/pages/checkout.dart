@@ -217,7 +217,7 @@ class CheckOutPage extends StatelessWidget {
                                         width: 7.0,
                                       ),
                                       Text(
-                                        "$e",
+                                        e,
                                         style: TextStyle(color: Colors.black),
                                       ),
                                     ])))

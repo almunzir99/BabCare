@@ -4,7 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
 class HorizontalProductCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final double price;
+  final int? discount;
+  final double? oldPrice;
+  final String image;
+  final void Function()? onTap;
+  final void Function()? onFavTap;
   const HorizontalProductCard({
+    required this.title,
+    required this.subtitle,
+    required this.price,
+    required this.image,
+    this.oldPrice,
+    this.onFavTap,
+    this.onTap,
+    this.discount,
     Key? key,
   }) : super(key: key);
 
@@ -27,11 +43,11 @@ class HorizontalProductCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(25.0),
-                    child: const Image(
+                    child: Image(
                       height: 110.0,
                       width: 110.0,
-                      image: AssetImage(
-                        "assets/temp/food/image-9.png",
+                      image: NetworkImage(
+                        image,
                       ),
                       fit: BoxFit.fill,
                     ),
@@ -44,15 +60,16 @@ class HorizontalProductCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     //Product title
-                    const AutoSizeText(
-                      "بيتزا بالخضار",
-                      style: TextStyle(
+                    AutoSizeText(
+                      title,
+                      style: const TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
 
-                    const AutoSizeText(
-                      "بيتزا ",
-                      style: TextStyle(fontSize: 13.0, color: Colors.grey),
+                    AutoSizeText(
+                      subtitle,
+                      style:
+                          const TextStyle(fontSize: 13.0, color: Colors.grey),
                     ),
                     //Prices
                     Column(
@@ -61,9 +78,9 @@ class HorizontalProductCard extends StatelessWidget {
                         //Current Price
                         Row(
                           children: [
-                            const AutoSizeText(
-                              "1800",
-                              style: TextStyle(
+                            AutoSizeText(
+                              "$price",
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -79,12 +96,15 @@ class HorizontalProductCard extends StatelessWidget {
                             )
                           ],
                         ),
-                        AutoSizeText(
-                          "2200 ج.س",
-                          style: TextStyle(
-                              decoration: TextDecoration.lineThrough,
-                              color: Colors.grey.shade500,
-                              fontSize: 11.0),
+                        Visibility(
+                          visible: oldPrice != null,
+                          child: AutoSizeText(
+                            "$oldPrice ج.س",
+                            style: TextStyle(
+                                decoration: TextDecoration.lineThrough,
+                                color: Colors.grey.shade500,
+                                fontSize: 11.0),
+                          ),
                         )
                       ],
                     ),
@@ -96,16 +116,22 @@ class HorizontalProductCard extends StatelessWidget {
           Positioned(
             top: 20.0,
             right: 20.0,
-            child: Container(
-              padding: const EdgeInsets.all(7.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: accentColor),
-              child: const Center(
-                child: Text(
-                  "20%",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
+            child: Visibility(
+              visible: discount != null,
+              child: GestureDetector(
+                onTap: onFavTap,
+                child: Container(
+                  padding: const EdgeInsets.all(7.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: accentColor),
+                  child: Center(
+                    child: Text(
+                      "$discount%",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ),
                 ),
               ),
             ),

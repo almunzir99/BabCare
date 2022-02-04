@@ -1,6 +1,6 @@
 class AddOn {
   String? title;
-  int? price;
+  double? price;
   int? id;
   DateTime? createdAt;
   DateTime? lastUpdate;

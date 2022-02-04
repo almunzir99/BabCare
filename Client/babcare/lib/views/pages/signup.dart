@@ -11,7 +11,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 class SignupPage extends StatelessWidget {
   SignupPage({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
-  final _controller = AuthController();
+  final _controller = Get.put(AuthController());
   final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _locationController = TextEditingController();
@@ -106,7 +106,7 @@ class SignupPage extends StatelessWidget {
                               await Alert(
                                 context: context,
                                 type: AlertType.success,
-                                title: "نجام",
+                                title: "نجاح",
                                 desc:
                                     "مرحب يا ${result.username}, تم التسجيل بنجاح",
                                 buttons: [

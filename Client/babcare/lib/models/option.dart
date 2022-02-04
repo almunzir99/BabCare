@@ -4,15 +4,11 @@ class Option {
   String? title;
   List<OptionValue>? values;
   int? id;
-  DateTime? createdAt;
-  DateTime? lastUpdate;
 
   Option({
     this.title,
     this.values,
     this.id,
-    this.createdAt,
-    this.lastUpdate,
   });
 
   Option.fromJson(Map<String, dynamic> json) {
@@ -24,8 +20,6 @@ class Option {
       });
     }
     id = json['id'];
-    createdAt = json['createdAt'];
-    lastUpdate = json['lastUpdate'];
   }
 
   Map<String, dynamic> toJson() {

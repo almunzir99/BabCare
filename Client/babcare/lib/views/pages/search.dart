@@ -114,7 +114,7 @@ class SearchPage extends StatelessWidget {
                     md: 4,
                     child: const Padding(
                       padding: EdgeInsets.all(5.0),
-                      child: ProductCard(),
+                      // child: ProductCard(),
                     ));
               }).toList(),
             )

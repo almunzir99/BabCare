@@ -9,6 +9,8 @@ class CustomButton extends StatelessWidget {
   final Color? color;
   final double borderRadius;
   final void Function()? onTap;
+  final double fontSize;
+  final double iconSize;
   const CustomButton(
       {Key? key,
       required this.text,
@@ -17,6 +19,8 @@ class CustomButton extends StatelessWidget {
       this.isLoading = false,
       this.borderRadius = 20.0,
       this.onTap,
+      this.fontSize = 17.0,
+      this.iconSize = 24.0,
       this.color})
       : super(key: key);
 
@@ -40,10 +44,10 @@ class CustomButton extends StatelessWidget {
             children: [
               Text(
                 isLoading ? "الرجاء الانتظار ..." : text,
-                style: const TextStyle(
+                style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
-                    fontSize: 17.0),
+                    fontSize: fontSize),
               ),
               SizedBox(
                 width: isLoading || icon != null ? 10.0 : 0,
@@ -61,10 +65,7 @@ class CustomButton extends StatelessWidget {
               ),
               Visibility(
                 visible: !isLoading && icon != null,
-                child: Icon(
-                  icon,
-                  color: Colors.white,
-                ),
+                child: Icon(icon, color: Colors.white, size: iconSize),
               ),
             ],
           ),

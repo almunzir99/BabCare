@@ -1,5 +1,6 @@
 import 'package:babcare/models/customer.dart';
 import 'package:babcare/services/auth_service.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
@@ -10,6 +11,8 @@ class AuthController extends GetxController {
     try {
       isButtonLoading.value = true;
       var result = await _authService.authenticate(phone, password);
+      var storage = const FlutterSecureStorage();
+      await storage.write(key: "token", value: result.token);
       isButtonLoading.value = false;
       currentCustomer.value = result;
     } catch (e) {
@@ -23,9 +26,11 @@ class AuthController extends GetxController {
     try {
       isButtonLoading.value = true;
       var result = await _authService.register(customer);
+      var storage = const FlutterSecureStorage();
+      await storage.write(key: "token", value: result.token);
       isButtonLoading.value = false;
       currentCustomer.value = result;
-      return customer;
+      return result;
     } catch (e) {
       isButtonLoading.value = false;
       rethrow;

@@ -4,6 +4,9 @@ import 'package:babcare/controllers/discover_controller.dart';
 import 'package:babcare/models/category.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:babcare/views/components/horizontal_product_card.dart';
+import 'package:babcare/views/components/placeholders/discover_page_shimmer.dart';
+import 'package:babcare/views/components/placeholders/empty_placeholder.dart';
+import 'package:babcare/views/components/placeholders/error_placeholder.dart';
 import 'package:babcare/views/components/product_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +16,12 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class DiscoverPage extends StatelessWidget {
   DiscoverPage({Key? key}) : super(key: key);
+  var controller = Get.put(DiscoverController());
   final _authController = Get.put(AuthController());
-
+  Future? _loadItemsAsync;
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(DiscoverController());
+    _loadItemsAsync = controller.loadItems();
     var currentCustomer = _authController.currentCustomer.value;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -136,182 +140,8 @@ class DiscoverPage extends StatelessWidget {
                   const SizedBox(
                     height: 50.0,
                   ),
-                  //Order Carousel
-                  Column(
-                    children: [
-                      CarouselSlider(
-                        carouselController: controller.carouselController,
-                        items: [1, 2, 3].map((e) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: Image(
-                              image:
-                                  AssetImage("assets/temp/food/Image-$e.png"),
-                              fit: BoxFit.cover,
-                            ),
-                          );
-                        }).toList(),
-                        options: CarouselOptions(
-                            autoPlay: true,
-                            height: MediaQuery.of(context).size.height * 0.25,
-                            enlargeCenterPage: true,
-                            viewportFraction: 1.0,
-                            aspectRatio: 2.0,
-                            onPageChanged: (index, reason) {
-                              controller.onCarouselSlide(index);
-                            }),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Obx(() {
-                        return Center(
-                          child: AnimatedSmoothIndicator(
-                            activeIndex: controller.currentCarouselIndex,
-                            count: 3,
-                            effect: WormEffect(
-                                dotColor: Colors.grey.shade200,
-                                activeDotColor: primaryColor,
-                                dotHeight: 10.0,
-                                dotWidth: 10.0),
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 30.0,
-                  ),
-                  //Categories Horizontal List
-                  SizedBox(
-                    height: 90.0,
-                    child: ListView.builder(
-                        itemCount: categories.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return InkWell(
-                              radius: 20.0,
-                              focusColor: Colors.white24,
-                              onTap: () {
-                                controller.selectCategory(index);
-                              },
-                              child: Obx(
-                                () => AnimatedContainer(
-                                  duration: const Duration(milliseconds: 300),
-                                  height: 100.0,
-                                  padding: const EdgeInsets.all(10.0),
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 05.0, vertical: 10.0),
-                                  decoration: BoxDecoration(
-                                    color: (controller.selectedCategoryIndex ==
-                                            index)
-                                        ? primaryColor
-                                        : Colors.white,
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Image(
-                                        height: 60.0,
-                                        width: 60.0,
-                                        image:
-                                            AssetImage(categories[index].icon!),
-                                        fit: BoxFit.contain,
-                                      ),
-                                      const SizedBox(
-                                        width: 10.0,
-                                      ),
-                                      SizedBox(
-                                        width: 40.0,
-                                        child: AutoSizeText(
-                                          categories[index].title!,
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: (controller
-                                                          .selectedCategoryIndex ==
-                                                      index)
-                                                  ? Colors.white
-                                                  : Colors.black),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ));
-                        }),
-                  ),
-                  const SizedBox(
-                    height: 30.0,
-                  ),
-                  Obx(() {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          AutoSizeText(
-                            categories[controller.selectedCategoryIndex].title!,
-                            style: const TextStyle(
-                                fontSize: 22.0, fontWeight: FontWeight.bold),
-                          ),
-                          AutoSizeText(
-                            "عرض الكل",
-                            style:
-                                TextStyle(fontSize: 16.0, color: primaryColor),
-                          )
-                        ],
-                      ),
-                    );
-                  }),
-                  //Products Horizontal List
-                  Container(
-                      height: 250.0,
-                      margin: const EdgeInsets.symmetric(vertical: 20.0),
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: 20.0),
-                              child: GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed("/product_details");
-                                  },
-                                  child: const ProductCard()),
-                            );
-                          })),
-
-                  const SizedBox(
-                    height: 30.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const AutoSizeText(
-                          "الاكثر طلبا",
-                          style: TextStyle(
-                              fontSize: 22.0, fontWeight: FontWeight.bold),
-                        ),
-                        AutoSizeText(
-                          "عرض الكل",
-                          style: TextStyle(fontSize: 16.0, color: primaryColor),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  Column(
-                    children: [1, 2, 3, 4].map((e) {
-                      return const HorizontalProductCard();
-                    }).toList(),
-                  )
+                  FutureBuilder(
+                      future: _loadItemsAsync, builder: loadItemFutureBuilder)
                 ],
               ),
             )
@@ -319,5 +149,242 @@ class DiscoverPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget loadItemFutureBuilder(
+      BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const DiscoverPageShimmer();
+    } else {
+      if (snapshot.hasError) {
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * .4,
+          child: ErrorPlaceHolder(onTap: () {
+            loadItemFutureBuilder(context, snapshot);
+          }),
+        );
+      }
+      return Column(
+        children: [
+          //Order Carousel
+          Column(
+            children: [
+              CarouselSlider(
+                carouselController: controller.carouselController,
+                items: controller.offers.map((offer) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: Image(
+                      image: NetworkImage(offer.image!.path!),
+                      fit: BoxFit.cover,
+                    ),
+                  );
+                }).toList(),
+                options: CarouselOptions(
+                    autoPlay: true,
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    enlargeCenterPage: true,
+                    viewportFraction: 1.0,
+                    aspectRatio: 2.0,
+                    onPageChanged: (index, reason) {
+                      controller.onCarouselSlide(index);
+                    }),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Obx(() {
+                return Center(
+                  child: AnimatedSmoothIndicator(
+                    activeIndex: controller.currentCarouselIndex,
+                    count: controller.offers.length,
+                    effect: WormEffect(
+                        dotColor: Colors.grey.shade200,
+                        activeDotColor: primaryColor,
+                        dotHeight: 10.0,
+                        dotWidth: 10.0),
+                  ),
+                );
+              }),
+            ],
+          ),
+          const SizedBox(
+            height: 30.0,
+          ),
+          //Categories Horizontal List
+          SizedBox(
+            height: 90.0,
+            child: ListView.builder(
+                itemCount: controller.categories.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) {
+                  return InkWell(
+                      radius: 20.0,
+                      focusColor: Colors.white24,
+                      onTap: () {
+                        controller.selectCategory(index);
+                      },
+                      child: Obx(
+                        () => AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          height: 100.0,
+                          padding: const EdgeInsets.all(10.0),
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 05.0, vertical: 10.0),
+                          decoration: BoxDecoration(
+                            color: (controller.selectedCategoryIndex == index)
+                                ? primaryColor
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image(
+                                height: 60.0,
+                                width: 60.0,
+                                image: NetworkImage(
+                                    controller.categories[index].image!.path!),
+                                fit: BoxFit.contain,
+                              ),
+                              const SizedBox(
+                                width: 10.0,
+                              ),
+                              SizedBox(
+                                width: 40.0,
+                                child: AutoSizeText(
+                                  controller.categories[index].title!,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                          (controller.selectedCategoryIndex ==
+                                                  index)
+                                              ? Colors.white
+                                              : Colors.black),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ));
+                }),
+          ),
+          const SizedBox(
+            height: 30.0,
+          ),
+          Obx(() {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AutoSizeText(
+                        controller
+                            .categories[controller.selectedCategoryIndex].title!
+                            .toString(),
+                        style: const TextStyle(
+                            fontSize: 22.0, fontWeight: FontWeight.bold),
+                      ),
+                      AutoSizeText(
+                        "عرض الكل",
+                        style: TextStyle(fontSize: 16.0, color: primaryColor),
+                      )
+                    ],
+                  ),
+                ),
+
+                //Products Horizontal List
+                Container(
+                    height: 250.0,
+                    margin: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: controller
+                            .categories[controller.selectedCategoryIndex]
+                            .products!
+                            .isEmpty
+                        ? const EmptyPlaceholder()
+                        : ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: controller
+                                .categories[controller.selectedCategoryIndex]
+                                .products!
+                                .length,
+                            itemBuilder: (context, index) {
+                              var product = controller
+                                  .categories[controller.selectedCategoryIndex]
+                                  .products![index];
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed("/product_details");
+                                  },
+                                  child: ProductCard(
+                                      title: product.title!,
+                                      subtitle: product.categoryName!,
+                                      price: (product.price! -
+                                              product.price! *
+                                                  (product.discount! / 100))
+                                          .roundToDouble(),
+                                      discount: product.discount == 0.0 ||
+                                              product.discount == null
+                                          ? null
+                                          : product.discount,
+                                      oldPrice: product.discount == 0.0 ||
+                                              product.discount == null
+                                          ? null
+                                          : product.price,
+                                      image: product.images![0].path!),
+                                ),
+                              );
+                            }))
+              ],
+            );
+          }),
+          const SizedBox(
+            height: 30.0,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const AutoSizeText(
+                  "الاكثر طلبا",
+                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+                ),
+                AutoSizeText(
+                  "عرض الكل",
+                  style: TextStyle(fontSize: 16.0, color: primaryColor),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          Column(
+            children: controller.products.map((product) {
+              return HorizontalProductCard(
+                title: product.title!,
+                subtitle: product.categoryName!,
+                price: (product.price! -
+                        product.price! * (product.discount! / 100))
+                    .roundToDouble(),
+                discount: product.discount == 0.0 || product.discount == null
+                    ? null
+                    : product.discount,
+                oldPrice: product.discount == 0.0 || product.discount == null
+                    ? null
+                    : product.price,
+                image: product.images![0].path!,
+              );
+            }).toList(),
+          ),
+        ],
+      );
+    }
   }
 }

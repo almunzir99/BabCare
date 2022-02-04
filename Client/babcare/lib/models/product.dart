@@ -4,7 +4,7 @@ import 'option.dart';
 
 class Product {
   late String? title;
-  late int? price;
+  late double? price;
   late int? discount;
   late int? categoryId;
   late String? categoryName;
@@ -13,24 +13,20 @@ class Product {
   List<Option>? options;
   List<AddOn>? addOns;
   late int? id;
-  late DateTime? createdAt;
-  late DateTime? lastUpdate;
   DateTime? createdBy;
 
-  Product(
-      {this.title,
-      this.price,
-      this.discount,
-      this.categoryId,
-      this.categoryName,
-      this.description,
-      this.images,
-      this.options,
-      this.addOns,
-      this.id,
-      this.createdAt,
-      this.lastUpdate,
-      this.createdBy});
+  Product({
+    this.title,
+    this.price,
+    this.discount,
+    this.categoryId,
+    this.categoryName,
+    this.description,
+    this.images,
+    this.options,
+    this.addOns,
+    this.id,
+  });
 
   Product.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -78,7 +74,6 @@ class Product {
       data['addOns'] = addOns!.map((v) => v.toJson()).toList();
     }
     data['id'] = id;
-    data['createdBy'] = createdBy;
     return data;
   }
 }
