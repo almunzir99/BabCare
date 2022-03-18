@@ -1,22 +1,27 @@
+import 'package:babcare/controllers/auth_controller.dart';
+import 'package:babcare/models/customer.dart';
 import 'package:babcare/theme/style.dart';
+import 'package:babcare/views/components/custom_button.dart';
 import 'package:babcare/views/components/custom_text_form_field.dart';
 import 'package:babcare/views/components/fancy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class AccountPage extends StatelessWidget {
-  const AccountPage({Key? key}) : super(key: key);
-
+  AccountPage({Key? key}) : super(key: key);
+  final _controller = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
+    var customer = _controller.currentCustomer.value!;
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: (MediaQuery.of(context).size.height * .47) + 50.0,
+              height: (MediaQuery.of(context).size.height * .38) + 50.0,
               width: (MediaQuery.of(context).size.width * .8) + 30.0,
               child: Stack(
                 alignment: Alignment.center,
@@ -24,7 +29,7 @@ class AccountPage extends StatelessWidget {
                   Positioned(
                     bottom: 0,
                     child: Container(
-                      height: MediaQuery.of(context).size.height * .47,
+                      height: MediaQuery.of(context).size.height * .38,
                       width: MediaQuery.of(context).size.width * .8,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20.0),
@@ -36,9 +41,9 @@ class AccountPage extends StatelessWidget {
                           const SizedBox(
                             height: 30.0,
                           ),
-                          const Text(
-                            "المنزر الحسن",
-                            style: TextStyle(
+                          Text(
+                            "${customer.username}",
+                            style: const TextStyle(
                                 fontSize: 24.0, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
@@ -46,6 +51,14 @@ class AccountPage extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
+                              final _formKey = GlobalKey<FormState>();
+
+                              var nameController = TextEditingController(
+                                  text: customer.username);
+                              var locationController = TextEditingController(
+                                  text: customer.location);
+                              var phoneController =
+                                  TextEditingController(text: customer.phone);
                               showDialog(
                                   context: context,
                                   builder: (_) => FancyDialog(
@@ -67,57 +80,141 @@ class AccountPage extends StatelessWidget {
                                               height: 20.0,
                                             ),
                                             // ignore: prefer_const_constructors
-                                            CustomTextFormField(
-                                              label: "اسمك كامل",
-                                              icon: LineIcons.user,
-                                              value: 'المنزر الحسن',
-                                            ),
-                                            // ignore: prefer_const_constructors
-                                            CustomTextFormField(
-                                              label: "رقم تلفوني تاني",
-                                              icon: LineIcons.alternatePhone,
-                                              value: '0128 647 019',
-                                            ),
-                                            const CustomTextFormField(
-                                              label: "عنوانك",
-                                              icon: LineIcons.map,
-                                              value: 'الخرطوم، شرق النيل',
+                                            Form(
+                                              key: _formKey,
+                                              child: Column(
+                                                children: [
+                                                  CustomTextFormField(
+                                                    label: "اسمك كامل",
+                                                    icon: LineIcons.user,
+                                                    validator: (value) {
+                                                      if (value == null ||
+                                                          value == '') {
+                                                        return "الرجاء ادخال الاسم";
+                                                      }
+                                                    },
+                                                    controller: nameController,
+                                                  ),
+                                                  // ignore: prefer_const_constructors
+                                                  CustomTextFormField(
+                                                    label: "رقم تلفوني ",
+                                                    icon: LineIcons
+                                                        .alternatePhone,
+                                                    validator: (value) {
+                                                      if (value == null ||
+                                                          value == '') {
+                                                        return "الرجاء ادخال رقم الهاتف";
+                                                      }
+                                                    },
+                                                    controller: phoneController,
+                                                  ),
+                                                  CustomTextFormField(
+                                                    label: "عنوانك",
+                                                    icon: LineIcons.map,
+                                                    validator: (value) {
+                                                      if (value == null ||
+                                                          value == '') {
+                                                        return "الرجاء ادخال العنوان";
+                                                      }
+                                                    },
+                                                    controller:
+                                                        locationController,
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                             const SizedBox(
                                               height: 20.0,
                                             ),
-                                            Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 15.0,
-                                                      horizontal: 30.0),
-                                              decoration: BoxDecoration(
-                                                color: primaryColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(20.0),
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: const [
-                                                  Icon(
-                                                    LineIcons.check,
-                                                    color: Colors.white,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 5.0,
-                                                  ),
-                                                  Text(
-                                                    "اكمال",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.white,
-                                                        fontSize: 17.0),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
+                                            Obx(() {
+                                              return Material(
+                                                child: CustomButton(
+                                                  onTap: () async {
+                                                    if (_formKey.currentState!
+                                                        .validate()) {
+                                                      try {
+                                                        var newCustomer =
+                                                            Customer(
+                                                          username:
+                                                              nameController
+                                                                  .value.text,
+                                                          phone: phoneController
+                                                              .value.text,
+                                                          location:
+                                                              locationController
+                                                                  .value.text,
+                                                        );
+                                                        await _controller
+                                                            .updateProfile(
+                                                                customer.id!,
+                                                                newCustomer);
+                                                        await Alert(
+                                                          context: context,
+                                                          type:
+                                                              AlertType.success,
+                                                          title: "نجاح",
+                                                          desc:
+                                                              "تم تعديل البيانات بنجاح",
+                                                          buttons: [
+                                                            DialogButton(
+                                                              color:
+                                                                  primaryColor,
+                                                              child: const Text(
+                                                                "تمام",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        20),
+                                                              ),
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      context),
+                                                              width: 120,
+                                                            )
+                                                          ],
+                                                        ).show();
+                                                        Get.toNamed("/home");
+                                                      } catch (e) {
+                                                        Alert(
+                                                          context: context,
+                                                          type: AlertType.error,
+                                                          title: "خطأ",
+                                                          desc:
+                                                              "فشلت العملية الرجاء اعاة المحاولة",
+                                                          buttons: [
+                                                            DialogButton(
+                                                              color:
+                                                                  primaryColor,
+                                                              child: const Text(
+                                                                "تمام",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        20),
+                                                              ),
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      context),
+                                                              width: 120,
+                                                            )
+                                                          ],
+                                                        ).show();
+                                                      }
+                                                    }
+                                                  },
+                                                  text: "اكمال",
+                                                  icon: LineIcons.check,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      .87,
+                                                  isLoading: _controller
+                                                      .isButtonLoading.value,
+                                                ),
+                                              );
+                                            }),
                                           ],
                                         ),
                                         icon: LineIcons.userEdit,
@@ -230,41 +327,6 @@ class AccountPage extends StatelessWidget {
                                 LineIcons.edit,
                                 size: 22.0,
                               ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Get.toNamed("/banks");
-                            },
-                            child: ListTile(
-                              leading: Icon(
-                                LineIcons.creditCard,
-                                size: 25.0,
-                                color: primaryColor,
-                              ),
-                              title: const Text(
-                                "حساباتي البنكية",
-                                style: TextStyle(fontSize: 18.0),
-                              ),
-                              trailing: const Icon(
-                                LineIcons.angleLeft,
-                                size: 22.0,
-                              ),
-                            ),
-                          ),
-                          ListTile(
-                            leading: Icon(
-                              LineIcons.map,
-                              size: 25.0,
-                              color: primaryColor,
-                            ),
-                            title: const Text(
-                              "تاريح المواقع ",
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                            trailing: const Icon(
-                              LineIcons.angleLeft,
-                              size: 22.0,
                             ),
                           ),
                           ListTile(

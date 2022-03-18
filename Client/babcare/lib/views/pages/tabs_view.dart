@@ -74,7 +74,7 @@ class _TabsViewState extends State<TabsView> {
           const OrdersPage(
             hideAppBar: true,
           ),
-          const AccountPage()
+          AccountPage()
         ],
       ),
       bottomNavigationBar: Container(

@@ -1,4 +1,3 @@
-import 'package:babcare/models/options.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -121,45 +120,45 @@ class CartPage extends StatelessWidget {
                                             const SizedBox(
                                               height: 7.0,
                                             ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  .39,
-                                              child: Wrap(
-                                                runAlignment:
-                                                    WrapAlignment.start,
-                                                children: options
-                                                    .map((e) => Container(
-                                                        decoration: BoxDecoration(
-                                                            color: accentColor
-                                                                .withOpacity(
-                                                                    0.3),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0)),
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal:
-                                                                    15.0,
-                                                                vertical: 2.0),
-                                                        margin: const EdgeInsets
-                                                                .only(
-                                                            left: 5.0,
-                                                            bottom: 5.0),
-                                                        // ignore: prefer_const_constructors
-                                                        child: Text(
-                                                          "${e.name}",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  accentColor,
-                                                              fontSize: 12.0),
-                                                        )))
-                                                    .toList(),
-                                              ),
-                                            )
+                                            // SizedBox(
+                                            //   width: MediaQuery.of(context)
+                                            //           .size
+                                            //           .width *
+                                            //       .39,
+                                            //   child: Wrap(
+                                            //     runAlignment:
+                                            //         WrapAlignment.start,
+                                            //     children: options
+                                            //         .map((e) => Container(
+                                            //             decoration: BoxDecoration(
+                                            //                 color: accentColor
+                                            //                     .withOpacity(
+                                            //                         0.3),
+                                            //                 borderRadius:
+                                            //                     BorderRadius
+                                            //                         .circular(
+                                            //                             50.0)),
+                                            //             padding:
+                                            //                 const EdgeInsets
+                                            //                         .symmetric(
+                                            //                     horizontal:
+                                            //                         15.0,
+                                            //                     vertical: 2.0),
+                                            //             margin: const EdgeInsets
+                                            //                     .only(
+                                            //                 left: 5.0,
+                                            //                 bottom: 5.0),
+                                            //             // ignore: prefer_const_constructors
+                                            //             child: Text(
+                                            //               "${e.name}",
+                                            //               style: TextStyle(
+                                            //                   color:
+                                            //                       accentColor,
+                                            //                   fontSize: 12.0),
+                                            //             )))
+                                            //         .toList(),
+                                            //   ),
+                                            // )
                                           ],
                                         ),
                                       ],

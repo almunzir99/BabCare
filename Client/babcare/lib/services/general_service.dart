@@ -58,4 +58,36 @@ class GeneralService {
       rethrow;
     }
   }
+
+  Future<List<Product>> getProducts(String? search) async {
+    try {
+      var params = {"title": search};
+      var response = await dio.get(ApiConstants.productsBaseRoute,
+          queryParameters: params);
+      if (response.statusCode == 200) {
+        var data = response.data['data'] as List;
+        var products = <Product>[];
+        products = data.map((e) => Product.fromJson(e)).toList();
+        return products;
+      } else {
+        throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Product> getProduct(int id) async {
+    try {
+      var response = await dio.get("${ApiConstants.productsBaseRoute}/$id");
+      if (response.statusCode == 200) {
+        var product = Product.fromJson(response.data['data']);
+        return product;
+      } else {
+        throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

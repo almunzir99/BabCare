@@ -319,7 +319,8 @@ class DiscoverPage extends StatelessWidget {
                                 padding: const EdgeInsets.only(left: 20.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Get.toNamed("/product_details");
+                                    Get.toNamed("/product_details",
+                                        parameters: {"id": "${product.id}"});
                                   },
                                   child: ProductCard(
                                       title: product.title!,

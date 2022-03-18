@@ -2,7 +2,7 @@ import 'package:babcare/controllers/auth_controller.dart';
 import 'package:babcare/models/customer.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:babcare/views/components/custom_text_form_field.dart';
-import 'package:babcare/views/components/customer_button.dart';
+import 'package:babcare/views/components/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
@@ -100,7 +100,7 @@ class SignupPage extends StatelessWidget {
                                 username: _nameController.value.text,
                                 phone: _phoneController.value.text,
                                 password: _passwordController.value.text,
-                                email: _phoneController.value.text,
+                                location: _locationController.value.text,
                               );
                               var result = await _controller.register(customer);
                               await Alert(

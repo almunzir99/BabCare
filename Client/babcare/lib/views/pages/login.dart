@@ -1,7 +1,7 @@
 import 'package:babcare/controllers/auth_controller.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:babcare/views/components/custom_text_form_field.dart';
-import 'package:babcare/views/components/customer_button.dart';
+import 'package:babcare/views/components/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';

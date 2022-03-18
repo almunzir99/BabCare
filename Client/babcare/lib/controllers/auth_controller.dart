@@ -36,4 +36,17 @@ class AuthController extends GetxController {
       rethrow;
     }
   }
+
+  Future<Customer> updateProfile(int id, Customer customer) async {
+    try {
+      isButtonLoading.value = true;
+      var result = await _authService.updateProfile(id, customer);
+      isButtonLoading.value = false;
+      currentCustomer.value = result;
+      return result;
+    } catch (e) {
+      isButtonLoading.value = false;
+      rethrow;
+    }
+  }
 }

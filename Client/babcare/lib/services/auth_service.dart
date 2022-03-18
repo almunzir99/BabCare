@@ -46,4 +46,20 @@ class AuthService {
       rethrow;
     }
   }
+
+  Future<Customer> updateProfile(int id, Customer customer) async {
+    try {
+      var response = await dio.put("${ApiConstants.baseCustomerRoute}/$id",
+          data: customer.toJson(),
+          options: Options(headers: {"requiresToken": true}));
+      if (response.statusCode == 200) {
+        var customer = Customer.fromJson(response.data['data']);
+        return customer;
+      } else {
+        throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
