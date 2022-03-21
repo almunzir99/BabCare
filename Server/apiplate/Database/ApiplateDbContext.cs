@@ -57,6 +57,7 @@ namespace apiplate.DataBase{
             public DbSet<OrderedAddon> OrderedAddons { get; set; }
             public DbSet<Offer> Offers { get; set; }
             public DbSet<Image> Image { get; set; }
+            public DbSet<Notification> Notifications { get; set; }
 
 
 
