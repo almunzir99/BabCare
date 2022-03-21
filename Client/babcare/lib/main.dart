@@ -4,9 +4,11 @@ import 'package:babcare/theme/main_theme.dart';
 import 'package:babcare/views/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+
+import 'controllers/cart_controller.dart';
 
 void main() {
+  Get.put(CartController());
   Get.put<CustomDrawerController>(CustomDrawerController());
   runApp(const MyApp());
 }

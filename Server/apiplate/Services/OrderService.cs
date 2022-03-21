@@ -127,7 +127,7 @@ namespace apiplate.Services
                 var nearestBranch = await FindNearestBranchAsync(order.Lat, order.Long);
                 var distance = CalculateMapDistance(order.Lat, order.Long, nearestBranch.Lat, nearestBranch.Long);
                 distance = distance / 1000.0;
-                var deliveryCost = distance * 500.0;
+                var deliveryCost = distance * nearestBranch.PricePerMeter;
                 deliveryCost = Math.Round(deliveryCost);
                 var newOrder = _mapper.Map<OrderRequestResource, Order>(order);
                 newOrder.BranchId = nearestBranch.Id;
@@ -322,7 +322,7 @@ namespace apiplate.Services
             return orderedList;
 
         }
-        private async Task<Branch> FindNearestBranchAsync(double lat, double lng)
+        public async Task<Branch> FindNearestBranchAsync(double lat, double lng)
         {
             var branches = await _context.Branches.ToListAsync();
             if (branches.Count == 0)
@@ -341,7 +341,7 @@ namespace apiplate.Services
             }
             return closestBranch;
         }
-        private double CalculateMapDistance(double p1Lat, double p1Long, double p2Lat, double p2Long)
+        public double CalculateMapDistance(double p1Lat, double p1Long, double p2Lat, double p2Long)
         {
             var R = 6378137; // Earth’s mean radius in meter
             var dLat = GetRad(p2Lat - p1Lat);

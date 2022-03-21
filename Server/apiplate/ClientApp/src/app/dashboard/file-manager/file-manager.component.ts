@@ -2,7 +2,7 @@ import { HttpEventType } from '@angular/common/http';
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FuiModalService, ModalSize } from 'ngx-fomantic-ui';
 import { DirectoryModel } from 'src/app/core/models/directory.model';
-import { FileModel } from 'src/app/core/models/File.Model';
+import { FileModel } from 'src/app/core/models/file.Model';
 import { FilesManagerService } from 'src/app/core/services/files-manager.service';
 import { ControlTypes } from 'src/app/shared/form-builder/models/control-type.enum';
 import { FormBuilderModal } from 'src/app/shared/modals/form-builder-modal/form-builder-modal.component';

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output, Renderer2 } from '@angular/core';
 import { FuiModalService } from 'ngx-fomantic-ui';
-import { FileModel } from 'src/app/core/models/File.Model';
+import { FileModel } from 'src/app/core/models/file.Model';
 import { FileManagerModal } from 'src/app/dashboard/file-manager/file-manager-modal/file-manager-modal.component';
 import { PickingMode } from 'src/app/dashboard/file-manager/file-manager.component';
 declare var $: any;

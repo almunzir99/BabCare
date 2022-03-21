@@ -1,4 +1,4 @@
-import { FileModel } from "./File.Model";
+import { FileModel } from "./file.Model";
 
 export class DirectoryModel {
     title: string;

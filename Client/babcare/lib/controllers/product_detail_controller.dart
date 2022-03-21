@@ -85,6 +85,8 @@ class ProductDetailController extends GetxController {
       options.add(OrderedOption(optionIndex: index, optionValueIndex: 0));
     }
     orderedProduct.value!.orderedOptions = options;
+    orderedProduct.value!.productId = product.id!;
+    orderedProduct.value!.product = product;
     _calculateProductTotal();
   }
 

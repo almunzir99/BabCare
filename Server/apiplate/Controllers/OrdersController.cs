@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using apiplate.Domain.Models;
 using apiplate.Domain.Services;
@@ -9,6 +10,7 @@ using apiplate.Resources;
 using apiplate.Resources.Wrappers.Filters;
 using apiplate.Utils.URI;
 using apiplate.Wrappers;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,11 +22,13 @@ namespace apiplate.Controllers
     {
         private readonly IOrderService _service;
         private readonly IUriService _uriService;
+        private readonly IMapper _mapper;
 
-        public OrdersController(IOrderService service, IUriService uriService)
+        public OrdersController(IOrderService service, IUriService uriService, IMapper mapper)
         {
             _service = service;
             _uriService = uriService;
+            _mapper = mapper;
         }
         [Authorize(Roles = "CUSTOMER")]
         [HttpPost]
@@ -193,6 +197,28 @@ namespace apiplate.Controllers
             }
             catch (System.Exception e)
             {
+                var response =
+                new Response<string>(success: false, message: "failed to complete operation,see errors below",
+                errors: new List<string>() { e.Message });
+                return BadRequest(response);
+            }
+        }
+        public async Task<IActionResult> GetNearestBranchInfoAsync([Required][FromQuery] double lat,[Required][FromQuery] double lng){
+            try
+            {
+                var branch = await _service.FindNearestBranchAsync(lat,lng);
+                var mappedBranch = _mapper.Map<Branch,BranchResource>(branch);
+                var distance = _service.CalculateMapDistance(lat,lng,branch.Lat,branch.Long);
+                var result = new NearestBranchLocationInfo(){
+                    nearestBranch = mappedBranch,
+                    Distance = distance,
+                };
+                var response = new Response<NearestBranchLocationInfo>(data:result);
+                return Ok(response);
+            }
+            catch (System.Exception e)
+            {
+                
                 var response =
                 new Response<string>(success: false, message: "failed to complete operation,see errors below",
                 errors: new List<string>() { e.Message });

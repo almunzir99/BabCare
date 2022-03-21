@@ -6,5 +6,6 @@ namespace apiplate.Domain.Models
         public string Location { get; set; }
         public double Lat { get; set; }
         public double  Long { get; set; }
+        public double PricePerMeter { get; set; }
     }
 }
