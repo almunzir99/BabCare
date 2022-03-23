@@ -192,10 +192,10 @@ export class OptionsComponent implements OnInit {
                 ],
               }
             ],
-            validators: [
-              Validators.required,
-              Validators.maxLength(25),
-            ]
+            // validators: [
+            //   Validators.required,
+            //   Validators.maxLength(25),
+            // ]
           },
 
 

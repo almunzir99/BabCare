@@ -20,19 +20,23 @@ namespace apiplate.StartupTasks
 
         public async Task ExecuteAsync(CancellationToken cancellationToken = default)
         {
-            using(var scope =  _serviceProvider.CreateScope()){
+            using (var scope = _serviceProvider.CreateScope())
+            {
                 var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
                 var replaceBaseUrl = configuration.GetValue<bool>("autoReplaceBaseUrlOfImages");
-                if(replaceBaseUrl == false)
-                return;
+                if (replaceBaseUrl == false)
+                    return;
                 var baseUrl = configuration.GetValue<string>("baseUrl");
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApiplateDbContext>();
                 var images = await dbContext.Image.ToListAsync();
                 foreach (var image in images)
                 {
-                    var uri = new Uri(image.Path);
-                    var oldBaseUrl = uri.GetLeftPart(System.UriPartial.Authority);
-                    image.Path = image.Path.Replace(oldBaseUrl,baseUrl);
+                    if (image.Path != null)
+                    {
+                        var uri = new Uri(image.Path);
+                        var oldBaseUrl = uri.GetLeftPart(System.UriPartial.Authority);
+                        image.Path = image.Path.Replace(oldBaseUrl, baseUrl);
+                    }
                 }
                 await dbContext.SaveChangesAsync();
 

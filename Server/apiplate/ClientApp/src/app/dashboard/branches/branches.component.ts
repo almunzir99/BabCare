@@ -79,6 +79,13 @@ export class BranchesComponent implements OnInit {
         sortable: true
 
       },
+      {
+        prop: "pricePerMeter",
+        title: "قيمة التوصيل",
+        show: true,
+        sortable: true
+
+      },
 
 
       {
@@ -178,11 +185,22 @@ export class BranchesComponent implements OnInit {
             ]
           },
           {
+            title: "قيمة التوصيل للمتر",
+            name: "pricePerMeter",
+            icon: "dollar sign icon",
+            controlType: ControlTypes.TextInput,
+            width: "100%",
+            value: branch ? branch.pricePerMeter : undefined,
+            validators: [
+              Validators.required,
+            ]
+          },
+          {
             title: "عنوان الفرع على الخريطة",
             name: "map_location",
             controlType: ControlTypes.MapPicker,
             width: "100%",
-            value: branch ? {lat:branch.lat,long:branch.long} : undefined,
+            value: branch ? {lat:branch.lat,long:branch.long} : {lat:0.0,long:0.0},
             validators: [
               Validators.required,
               Validators.maxLength(25),
@@ -227,7 +245,6 @@ export class BranchesComponent implements OnInit {
   update(branch: Branch) {
     this.DimLoading = true;
     this._service.put(branch).subscribe(res => {
-      this.initData();
       this.DimLoading = false;
       this.modalService.open(new MessageModal({
         title: "نجاج",

@@ -30,7 +30,7 @@ export class FileManagerComponent implements OnInit {
   CurrentDirectory: DirectoryModel;
   currentPath: string = "";
   isLoading = false;
-  DimLoading = false;
+  DimLoading = false; 
   DimUploading = false;
   progress = 0;
   selectedFiles: FileModel[] = [];

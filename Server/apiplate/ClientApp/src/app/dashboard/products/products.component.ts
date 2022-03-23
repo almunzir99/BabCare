@@ -227,7 +227,6 @@ export class ProductsComponent implements OnInit {
               value: product ? product.description : undefined,
               validators: [
                 Validators.required,
-                Validators.maxLength(25),
               ]
             },
             {

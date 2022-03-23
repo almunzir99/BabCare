@@ -29,7 +29,10 @@
     <data-table (sortChange)="onSortChange($event)" [(pageIndex)]="pageIndex" [total-items]="totalRecords" [page-size]="pageSize" (pageIndexChanged)="pageIndexChanged($event)" [cell-template]="cellTemplate" [loading]="isDataLoading" [cols]="cols" [rows]="branches">
         <ng-template #cellTemplate let-rowData="rowData" let-data="cellData" let-col="colIndex" let-row="rowIndex">
             <ng-container [ngSwitch]="col">
-                <ng-container *ngSwitchCase="5">
+                <ng-container *ngSwitchCase="3">
+                    {{data}} ج/متر
+                </ng-container>
+                <ng-container *ngSwitchCase="6">
                     <div class="actions-cell">
                         <div fuiPopup popupText="update" (click)="openFormModal(rowData)" class="cell-btn edit-btn">
                             <i class="edit outline icon"></i>

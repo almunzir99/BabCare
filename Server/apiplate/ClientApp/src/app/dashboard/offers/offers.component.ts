@@ -72,7 +72,7 @@ export class OffersComponent implements OnInit {
 
       {
         prop: "title",
-        title: "اسم الصنف",
+        title: "اسم العرض",
         show: true,
         sortable: true
 
@@ -171,7 +171,7 @@ export class OffersComponent implements OnInit {
             value: offer ? offer.id : undefined
           },
           {
-            title: "اسم الصنف",
+            title: "اسم العرض",
             name: "title",
             icon: "tags icon",
             controlType: ControlTypes.TextInput,
@@ -224,7 +224,7 @@ export class OffersComponent implements OnInit {
     ];
     this.modalService.open(new FormBuilderModal(
       {
-        title: offer ? "تعديل بيانات صنف" : "صنف جديد",
+        title: offer ? "تعديل بيانات عرض" : "عرض جديد",
         controlGroups: form
       },
       ModalSize.Normal

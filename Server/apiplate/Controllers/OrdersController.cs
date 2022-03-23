@@ -203,6 +203,7 @@ namespace apiplate.Controllers
                 return BadRequest(response);
             }
         }
+        [HttpGet("nearest-branch")]
         public async Task<IActionResult> GetNearestBranchInfoAsync([Required][FromQuery] double lat,[Required][FromQuery] double lng){
             try
             {

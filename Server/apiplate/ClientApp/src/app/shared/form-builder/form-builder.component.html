@@ -129,8 +129,8 @@
                     <div class="field" *ngIf="control.controlType ==  controlTypes.MapPicker">
                         <label>{{control.title}}</label>
                         <div class="map-container">
-                            <agm-map (mapClick)="changeMarkCoords($event,control)" [latitude]="control.value['lat']" [longitude]="control.value['long']" [zoom]="zoom">
-                                <agm-marker [latitude]="control.value['lat']" [longitude]="control.value['long']"></agm-marker>
+                            <agm-map (mapClick)="changeMarkCoords($event,control)" [latitude]="lat" [longitude]="long" [zoom]="zoom">
+                                <agm-marker [latitude]="lat" [longitude]="long"></agm-marker>
                             </agm-map>
                         </div>
                     </div>

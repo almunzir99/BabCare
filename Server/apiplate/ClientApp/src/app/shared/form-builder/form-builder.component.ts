@@ -25,18 +25,20 @@ export class FormBuilderComponent implements OnInit {
   long = 0.0;
   zoom = 15;
   constructor(private cdr: ChangeDetectorRef) {
+
   }
 
   initResult() {
-
     this.ControlsGroups.forEach(group => {
       group.controls.forEach(control => {
 
-        if (control.controlType == ControlTypes.MapPicker && control.value == null && control.value == undefined) {
-          control.value = {
-            lat: this.lat,
-            long: this.long
-          }
+        if (control.controlType == ControlTypes.MapPicker && control.value['lat'] == 0.0 && control.value['long'] == 0.0) {
+          control.value['lat'] = this.lat;
+          control.value['long'] = this.long;
+        }
+        else if (control.controlType == ControlTypes.MapPicker && control.value['lat'] != 0.0 && control.value['long'] != 0.0){
+          this.lat = control.value['lat'];
+          this.long = control.value['long'];
 
         }
         this.resultObject[control.name] = control.value;
@@ -108,8 +110,12 @@ export class FormBuilderComponent implements OnInit {
 
   }
   changeMarkCoords(event, control) {
+    this.lat =  event.coords.lat;
+    this.long =  event.coords.lng;
     control.value['lat'] = event.coords.lat;
     control.value['long'] = event.coords.lng;
-    console.log(control.value);
+    console.log(this.lat);
+    console.log(this.long);
+
   }
 }
