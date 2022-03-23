@@ -1,6 +1,7 @@
 import 'package:babcare/constants/api_constants.dart';
 import 'package:babcare/interceptors/app_interceptors.dart';
 import 'package:babcare/models/category.dart';
+import 'package:babcare/models/nearest_branch_info.dart';
 import 'package:babcare/models/offer.dart';
 import 'package:babcare/models/product.dart';
 import 'package:dio/dio.dart';
@@ -83,6 +84,22 @@ class GeneralService {
       if (response.statusCode == 200) {
         var product = Product.fromJson(response.data['data']);
         return product;
+      } else {
+        throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<NearestBranchInfo> getNearestBranchInfo(
+      double lat, double long) async {
+    try {
+      var response = await dio.get(
+          "${ApiConstants.ordersBaseRoute}/nearest-branch?lat=$lat&lng=$long");
+      if (response.statusCode == 200) {
+        var result = NearestBranchInfo.fromJson(response.data['data']);
+        return result;
       } else {
         throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
       }

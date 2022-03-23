@@ -11,6 +11,7 @@ class CustomButton extends StatelessWidget {
   final void Function()? onTap;
   final double fontSize;
   final double iconSize;
+  final double height;
   const CustomButton(
       {Key? key,
       required this.text,
@@ -21,6 +22,7 @@ class CustomButton extends StatelessWidget {
       this.onTap,
       this.fontSize = 17.0,
       this.iconSize = 24.0,
+      this.height = 50.0,
       this.color})
       : super(key: key);
 
@@ -36,9 +38,9 @@ class CustomButton extends StatelessWidget {
                 ? color!.withOpacity(isLoading ? .6 : 1)
                 : primaryColor.withOpacity(isLoading ? .6 : 1),
             borderRadius: BorderRadius.circular(borderRadius)),
-        child: Container(
+        child: SizedBox(
           width: width,
-          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          height: height,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

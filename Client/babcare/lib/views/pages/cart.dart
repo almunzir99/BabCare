@@ -1,5 +1,4 @@
 import 'package:babcare/controllers/cart_controller.dart';
-import 'package:babcare/models/product.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -296,14 +295,23 @@ class CartPage extends StatelessWidget {
                             fontSize: 14.0,
                             color: Colors.black),
                       ),
-                      // ignore: prefer_const_constructors
-                      Text(
-                        "200 ج.س",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.0,
-                            color: accentColor),
-                      ),
+                      (controller.deliveryPrice.value == 0.0)
+                          ? Text(
+                              "الرجاء تحديد العنوان اولا",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14.0,
+                                  color: accentColor),
+                            )
+                          : Obx(() {
+                              return Text(
+                                "${controller.deliveryPrice.value} ج.س",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.0,
+                                    color: accentColor),
+                              );
+                            }),
                     ],
                   ),
                   const SizedBox(
@@ -341,8 +349,10 @@ class CartPage extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: GestureDetector(
-                          onTap: () {
-                            Get.toNamed("/checkout");
+                          onTap: () async {
+                            await Get.toNamed("/location_picker");
+                            controller.deliveryPrice.refresh();
+                            // Get.toNamed("/checkout");
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(
@@ -358,13 +368,13 @@ class CartPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Text(
-                                  "متابعة",
+                                  "تحديد العنوان",
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 SizedBox(
                                   width: 5.0,
                                 ),
-                                Icon(LineIcons.arrowLeft, color: Colors.white),
+                                Icon(LineIcons.mapAlt, color: Colors.white),
                               ],
                             ),
                           ),

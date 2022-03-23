@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:babcare/controllers/auth_controller.dart';
 import 'package:babcare/controllers/discover_controller.dart';
-import 'package:babcare/models/category.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:babcare/views/components/horizontal_product_card.dart';
 import 'package:babcare/views/components/placeholders/discover_page_shimmer.dart';

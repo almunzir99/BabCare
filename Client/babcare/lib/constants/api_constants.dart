@@ -6,4 +6,5 @@ class ApiConstants {
   static const String offersBaseRoute = "/api/offers";
   static const String categoriesBaseRoute = "/api/categories";
   static const String productsBaseRoute = "/api/products";
+  static const String ordersBaseRoute = "/api/orders";
 }

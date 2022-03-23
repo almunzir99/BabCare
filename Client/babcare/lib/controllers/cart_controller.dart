@@ -5,6 +5,8 @@ class CartController extends GetxController {
   final RxList<OrderedProduct?> _cart = RxList([]);
   RxList<OrderedProduct?> get cart => _cart;
   final Rx<double> total = 0.0.obs;
+  Rx<double> lat = 0.0.obs, long = 0.0.obs, deliveryPrice = 0.0.obs;
+
   void addToCart(OrderedProduct product) {
     if (_cart.contains(product)) return;
     _cart.add(product);
