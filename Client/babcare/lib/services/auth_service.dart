@@ -18,7 +18,7 @@ class AuthService {
           data: jsonEncode(body));
 
       if (response.statusCode == 200) {
-        var customer = Customer.fromJson(response.data['data']);
+        var customer = Customer().fromJson(response.data['data']);
         return customer;
       } else {
         throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
@@ -35,7 +35,7 @@ class AuthService {
       var response =
           await dio.post(ApiConstants.registerRoute, data: customer.toJson());
       if (response.statusCode == 200) {
-        var customer = Customer.fromJson(response.data['data']);
+        var customer = Customer().fromJson(response.data['data']);
         return customer;
       } else {
         throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
@@ -53,7 +53,7 @@ class AuthService {
           data: customer.toJson(),
           options: Options(headers: {"requiresToken": true}));
       if (response.statusCode == 200) {
-        var customer = Customer.fromJson(response.data['data']);
+        var customer = Customer().fromJson(response.data['data']);
         return customer;
       } else {
         throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
