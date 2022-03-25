@@ -26,48 +26,50 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (onTap != null && !isLoading) onTap!();
-      },
-      child: Ink(
-        decoration: BoxDecoration(
-            color: color != null
-                ? color!.withOpacity(isLoading ? .6 : 1)
-                : primaryColor.withOpacity(isLoading ? .6 : 1),
-            borderRadius: BorderRadius.circular(borderRadius)),
-        child: Container(
-          width: width,
-          padding: const EdgeInsets.symmetric(vertical: 15.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                isLoading ? "الرجاء الانتظار ..." : text,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: fontSize),
-              ),
-              SizedBox(
-                width: isLoading || icon != null ? 10.0 : 0,
-              ),
-              Visibility(
-                visible: isLoading,
-                child: const SizedBox(
-                  height: 20.0,
-                  width: 20.0,
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                    strokeWidth: 2.0,
+    return Material(
+      child: InkWell(
+        onTap: () {
+          if (onTap != null && !isLoading) onTap!();
+        },
+        child: Ink(
+          decoration: BoxDecoration(
+              color: color != null
+                  ? color!.withOpacity(isLoading ? .6 : 1)
+                  : primaryColor.withOpacity(isLoading ? .6 : 1),
+              borderRadius: BorderRadius.circular(borderRadius)),
+          child: Container(
+            width: width,
+            padding: const EdgeInsets.symmetric(vertical: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  isLoading ? "الرجاء الانتظار ..." : text,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: fontSize),
+                ),
+                SizedBox(
+                  width: isLoading || icon != null ? 10.0 : 0,
+                ),
+                Visibility(
+                  visible: isLoading,
+                  child: const SizedBox(
+                    height: 20.0,
+                    width: 20.0,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2.0,
+                    ),
                   ),
                 ),
-              ),
-              Visibility(
-                visible: !isLoading && icon != null,
-                child: Icon(icon, color: Colors.white, size: iconSize),
-              ),
-            ],
+                Visibility(
+                  visible: !isLoading && icon != null,
+                  child: Icon(icon, color: Colors.white, size: iconSize),
+                ),
+              ],
+            ),
           ),
         ),
       ),

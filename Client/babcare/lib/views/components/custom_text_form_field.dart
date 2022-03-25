@@ -12,19 +12,22 @@ class CustomTextFormField extends StatelessWidget {
   final bool isObscure;
   final EdgeInsets padding;
   final TextInputType inputType;
-  const CustomTextFormField({
-    Key? key,
-    @required this.label,
-    this.icon,
-    this.controller,
-    this.fillColor,
-    this.value,
-    this.validator,
-    this.onChange,
-    this.isObscure = false,
-    this.inputType = TextInputType.text,
-    this.padding = const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
-  }) : super(key: key);
+  final int? maxLines;
+  const CustomTextFormField(
+      {Key? key,
+      @required this.label,
+      this.icon,
+      this.controller,
+      this.fillColor,
+      this.value,
+      this.validator,
+      this.onChange,
+      this.isObscure = false,
+      this.inputType = TextInputType.text,
+      this.padding =
+          const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+      this.maxLines = 1})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +36,7 @@ class CustomTextFormField extends StatelessWidget {
       child: TextFormField(
           obscureText: isObscure,
           controller: controller,
+          maxLines: maxLines,
           initialValue: value,
           keyboardType: inputType,
           decoration: InputDecoration(

@@ -16,11 +16,14 @@ class ProductDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.put(ProductDetailController());
     var _cartController = Get.put(CartController());
-    var id = int.parse(Get.parameters['id']!);
+    var id = (controller.currentProductId != null)
+        ? controller.currentProductId
+        : int.parse(Get.parameters['id']!);
+    controller.currentProductId = id;
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder(
-            future: controller.getProduct(id),
+            future: controller.getProduct(id!),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const ProductDetailShimmer();

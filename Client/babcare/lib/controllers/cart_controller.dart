@@ -1,4 +1,6 @@
+import 'package:babcare/models/order.dart';
 import 'package:babcare/models/ordered_product.dart';
+import 'package:babcare/services/general_service.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController {
@@ -6,7 +8,10 @@ class CartController extends GetxController {
   RxList<OrderedProduct?> get cart => _cart;
   final Rx<double> total = 0.0.obs;
   Rx<double> lat = 0.0.obs, long = 0.0.obs, deliveryPrice = 0.0.obs;
-
+  Rx<String> location = ''.obs;
+  Rx<int> paymentType = 0.obs; // 0 for cash & 1 for online payment
+  final isButtonLoading = false.obs;
+  final _service = GeneralService.instance;
   void addToCart(OrderedProduct product) {
     if (_cart.contains(product)) return;
     _cart.add(product);
@@ -50,6 +55,24 @@ class CartController extends GetxController {
     for (var element in cart) {
       _calculateProductTotal(element!);
       total.value += element.total!;
+    }
+  }
+
+  Future<Order> createOrder() async {
+    try {
+      isButtonLoading.value = true;
+      var order = Order(
+          lat: lat.value,
+          long: long.value,
+          location: location.value,
+          paymentType: paymentType.value,
+          products: cart);
+      var result = await _service.postOrder(order);
+      isButtonLoading.value = false;
+      return result;
+    } catch (e) {
+      isButtonLoading.value = false;
+      rethrow;
     }
   }
 

@@ -3,6 +3,7 @@ import 'package:babcare/interceptors/app_interceptors.dart';
 import 'package:babcare/models/category.dart';
 import 'package:babcare/models/nearest_branch_info.dart';
 import 'package:babcare/models/offer.dart';
+import 'package:babcare/models/order.dart';
 import 'package:babcare/models/product.dart';
 import 'package:dio/dio.dart';
 
@@ -104,6 +105,23 @@ class GeneralService {
         throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
       }
     } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Order> postOrder(Order order) async {
+    try {
+      var response = await dio.post(ApiConstants.ordersBaseRoute,
+          data: order, options: Options(headers: {"requiresToken": true}));
+      if (response.statusCode == 200) {
+        var result = Order.fromJson(response.data['data']);
+        return result;
+      } else {
+        throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
+      }
+    } catch (e, st) {
+      print(e);
+      print(st);
       rethrow;
     }
   }

@@ -14,7 +14,7 @@ class ProductDetailController extends GetxController {
   set currentCarouselIndex(value) => _currentCarouselIndex.value = value;
   final RxList<int> _optionsIds = <int>[].obs;
   List<int> get optionsList => _optionsIds;
-
+  int? currentProductId;
   Future getProduct(int id) async {
     try {
       product.value = await _service.getProduct(id);
