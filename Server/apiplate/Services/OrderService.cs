@@ -202,7 +202,7 @@ namespace apiplate.Services
                 : new PaginationFilter(filter.PageIndex, filter.PageSize);
                 orders = orders.Where(c => (status) == null ? true : c.Status == status).Skip((validFilter.PageIndex - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize).ToList();
-                orders = orders.OrderBy(c => c.LastUpdate).ToList();
+                orders = orders.OrderByDescending(c => c.LastUpdate).ToList();
                 var mappedResult = _mapper.Map<List<Order>, List<OrderResource>>(orders);
                 return mappedResult;
 
@@ -357,7 +357,7 @@ namespace apiplate.Services
         protected virtual IQueryable<Order> GetDbSet()
         {
             return _context.Orders.Include(c => c.Branch)
-            .Include(c => c.Customer).Include(c => c.Delivery)
+            .Include(c => c.Customer).Include(c => c.Delivery).Include(c => c.Products).ThenInclude(c => c.Product).ThenInclude(c => c.Images)
             .Include(c => c.Products).ThenInclude(c => c.Product).ThenInclude(c => c.AddOns)
             .Include(c => c.Products).ThenInclude(c => c.Product).ThenInclude(c => c.Options).ThenInclude(c => c.Values)
             .Include(c => c.Products).ThenInclude(c => c.OrderedOptions)

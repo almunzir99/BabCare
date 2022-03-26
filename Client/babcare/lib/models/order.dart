@@ -12,12 +12,14 @@ class Order {
   List<OrderedProduct?>? products;
   int? deliveryId;
   Delivery? delivery;
-  int? total;
+  double? total;
   String? createdAt;
   int? customerId;
   Customer? customer;
   int? branchId;
   Branch? branch;
+  double? deliveryAmount;
+  int? status;
   Order(
       {this.lat,
       this.long,
@@ -32,6 +34,8 @@ class Order {
       this.delivery,
       this.id,
       this.deliveryId,
+      this.deliveryAmount,
+      this.status,
       this.total});
 
   Order.fromJson(Map<String, dynamic> json) {
@@ -46,8 +50,10 @@ class Order {
         ? null
         : Customer().fromJson(json['customer']);
     customerId = json['customerId'];
+    deliveryAmount = json['deliveryAmount'];
+    createdAt = (json['createdAt'] as String).replaceAll("T ", "");
     total = json['total'];
-    createdAt = json['createdAt'];
+    status = json['status'];
     if (json['products'] != null) {
       products = <OrderedProduct>[];
       json['products'].forEach((v) {

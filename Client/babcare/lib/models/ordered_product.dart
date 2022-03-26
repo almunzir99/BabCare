@@ -19,6 +19,8 @@ class OrderedProduct {
 
   OrderedProduct.fromJson(Map<String, dynamic> json) {
     productId = json['productId'];
+    amount = json['quantity'];
+    total = json['total'];
     if (json['orderedOptions'] != null) {
       orderedOptions = <OrderedOption>[];
       json['orderedOptions'].forEach((v) {
@@ -39,6 +41,7 @@ class OrderedProduct {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['productId'] = productId;
+    data['quantity'] = amount;
     if (orderedOptions != null) {
       data['orderedOptions'] = orderedOptions!.map((v) => v.toJson()).toList();
     }

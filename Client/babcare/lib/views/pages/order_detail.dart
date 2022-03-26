@@ -1,16 +1,24 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:babcare/controllers/orders_controller.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
+import '../../constants/general_constant.dart';
 
 class OrderDetailPage extends StatelessWidget {
   const OrderDetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(OrdersController());
+    var date = DateTime.parse(controller.currentOrder!.createdAt!);
+    timeago.setLocaleMessages('ar', timeago.ArMessages());
+    var orderAgoDate = timeago.format(date, locale: "ar");
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -47,8 +55,7 @@ class OrderDetailPage extends StatelessWidget {
                           ),
                           child: Center(
                             child: AutoSizeText(
-                              // ignore: unnecessary_string_interpolations
-                              "17 #",
+                              "${controller.currentOrder!.id} #",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 26.0,
@@ -71,7 +78,7 @@ class OrderDetailPage extends StatelessWidget {
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.bold)),
                                 TextSpan(
-                                    text: " # 17 ",
+                                    text: " # ${controller.currentOrder!.id} ",
                                     style: TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.bold,
@@ -90,7 +97,7 @@ class OrderDetailPage extends StatelessWidget {
                                   const SizedBox(
                                     width: 5.0,
                                   ),
-                                  Text("23 ديسمبر 2021",
+                                  Text(orderAgoDate,
                                       style: TextStyle(fontSize: 12.0)),
                                 ],
                               ),
@@ -104,7 +111,8 @@ class OrderDetailPage extends StatelessWidget {
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.bold)),
                                 TextSpan(
-                                    text: "2600 ج.س",
+                                    text:
+                                        "${controller.currentOrder!.total! + controller.currentOrder!.deliveryAmount!} ج.س",
                                     style: TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.bold,
@@ -127,8 +135,9 @@ class OrderDetailPage extends StatelessWidget {
                       const TextSpan(
                           text: "اسم المستلم : ",
                           style: TextStyle(color: Colors.grey)),
-                      const TextSpan(
-                          text: " المنزر الحسن ابراهيم ",
+                      TextSpan(
+                          text:
+                              " ${controller.currentOrder!.customer!.username} ",
                           style: TextStyle(color: Colors.black)),
                     ])),
                   ),
@@ -142,8 +151,8 @@ class OrderDetailPage extends StatelessWidget {
                       const TextSpan(
                           text: " رقم الهاتف : ",
                           style: TextStyle(color: Colors.grey)),
-                      const TextSpan(
-                          text: " +249 128 64 7019 ",
+                      TextSpan(
+                          text: " ${controller.currentOrder!.customer!.phone} ",
                           style: TextStyle(color: Colors.black)),
                     ])),
                   ),
@@ -157,8 +166,8 @@ class OrderDetailPage extends StatelessWidget {
                       const TextSpan(
                           text: " سعر الطلبات  : ",
                           style: TextStyle(color: Colors.grey)),
-                      const TextSpan(
-                          text: " 2300 ج.س ",
+                      TextSpan(
+                          text: " ${controller.currentOrder!.total} ج.س ",
                           style: TextStyle(color: Colors.black)),
                     ])),
                   ),
@@ -172,8 +181,9 @@ class OrderDetailPage extends StatelessWidget {
                       const TextSpan(
                           text: " سعر التوصيل  : ",
                           style: TextStyle(color: Colors.grey)),
-                      const TextSpan(
-                          text: " 300 ج.س ",
+                      TextSpan(
+                          text:
+                              " ${controller.currentOrder!.deliveryAmount} ج.س ",
                           style: TextStyle(color: Colors.black)),
                     ])),
                   ),
@@ -187,8 +197,8 @@ class OrderDetailPage extends StatelessWidget {
                       const TextSpan(
                           text: " موقع الاستلام  : ",
                           style: TextStyle(color: Colors.grey)),
-                      const TextSpan(
-                          text: " الحاج, يوسف , شرق النيل ",
+                      TextSpan(
+                          text: " ${controller.currentOrder!.location} ",
                           style: TextStyle(color: Colors.black)),
                     ])),
                   ),
@@ -202,8 +212,40 @@ class OrderDetailPage extends StatelessWidget {
                       const TextSpan(
                           text: " 'طريقة الدفع  : ",
                           style: TextStyle(color: Colors.grey)),
+                      TextSpan(
+                          text:
+                              " ${controller.currentOrder!.paymentType == 0 ? 'كاش' : 'دفع اونلاين'} ",
+                          style: TextStyle(color: Colors.black)),
+                    ])),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      LineIcons.store,
+                      color: primaryColor,
+                    ),
+                    // ignore: prefer_const_literals_to_create_immutables
+                    title: AutoSizeText.rich(TextSpan(children: [
                       const TextSpan(
-                          text: " كاش ", style: TextStyle(color: Colors.black)),
+                          text: " الفرع  : ",
+                          style: TextStyle(color: Colors.grey)),
+                      TextSpan(
+                          text: "${controller.currentOrder!.branch!.title} ",
+                          style: TextStyle(color: Colors.black)),
+                    ])),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      LineIcons.mapMarked,
+                      color: primaryColor,
+                    ),
+                    // ignore: prefer_const_literals_to_create_immutables
+                    title: AutoSizeText.rich(TextSpan(children: [
+                      const TextSpan(
+                          text: " عنوان الفرع  : ",
+                          style: TextStyle(color: Colors.grey)),
+                      TextSpan(
+                          text: "${controller.currentOrder!.branch!.location} ",
+                          style: TextStyle(color: Colors.black)),
                     ])),
                   ),
                   ListTile(
@@ -217,7 +259,8 @@ class OrderDetailPage extends StatelessWidget {
                           text: " حالة الطلب  : ",
                           style: TextStyle(color: Colors.grey)),
                       TextSpan(
-                          text: " قيد التوصيل ",
+                          text:
+                              " ${GeneralConstant.ArabicOrderStatuses[controller.currentOrder!.status!]} ",
                           style: TextStyle(color: accentColor)),
                     ])),
                     trailing: GestureDetector(
@@ -254,8 +297,8 @@ class OrderDetailPage extends StatelessWidget {
               height: 80.0,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: [1, 2, 3, 4]
-                    .map((e) => Container(
+                children: controller.currentOrder!.products!
+                    .map((product) => Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 7.0, horizontal: 12.0),
                         margin: const EdgeInsets.only(left: 10.0),
@@ -265,21 +308,33 @@ class OrderDetailPage extends StatelessWidget {
                         child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            // ignore: prefer_const_literals_to_create_immutables
                             children: [
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(100.0),
-                                    child: Image(
-                                      image: const AssetImage(
-                                        "assets/temp/food/image-4.png",
-                                      ),
-                                      height: 60.0,
-                                      width: 60.0,
-                                      fit: BoxFit.fill,
-                                    ),
+                                    child: (product!.product!.images == null ||
+                                            product.product!.images!.isEmpty)
+                                        ? Container(
+                                            height: 40.0,
+                                            width: 40.0,
+                                            color: Colors.grey.shade200,
+                                            child: const Center(
+                                                child: Icon(
+                                              LineIcons.image,
+                                              color: Colors.grey,
+                                              size: 22.0,
+                                            )),
+                                          )
+                                        : Image(
+                                            image: NetworkImage(
+                                              "${product.product!.images![0].path}",
+                                            ),
+                                            height: 60.0,
+                                            width: 60.0,
+                                            fit: BoxFit.fill,
+                                          ),
                                   ),
                                   const SizedBox(
                                     width: 20.0,
@@ -289,7 +344,7 @@ class OrderDetailPage extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "بيتزا خضار",
+                                        "${product.product!.title}",
                                         style: const TextStyle(
                                             color: Colors.black),
                                       ),
@@ -298,12 +353,13 @@ class OrderDetailPage extends StatelessWidget {
                                       ),
                                       Text.rich(TextSpan(children: [
                                         TextSpan(
-                                            text: "2300 ج.س",
+                                            text:
+                                                "${product.product!.price} ج.س",
                                             style: TextStyle(
                                                 color: primaryColor,
                                                 fontWeight: FontWeight.bold)),
                                         TextSpan(
-                                            text: "  2x  ",
+                                            text: "  ${product.amount}x  ",
                                             style: const TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 12.0))

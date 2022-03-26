@@ -119,9 +119,26 @@ class GeneralService {
       } else {
         throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
       }
-    } catch (e, st) {
-      print(e);
-      print(st);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<Order>> getMyOrder() async {
+    try {
+      var response = await dio.get("${ApiConstants.ordersBaseRoute}/me",
+          options: Options(headers: {"requiresToken": true}));
+      if (response.statusCode == 200) {
+        var orders = <Order>[];
+        var jsonOrders = response.data['data'] as List;
+        for (var order in jsonOrders) {
+          orders.add(Order.fromJson(order));
+        }
+        return orders;
+      } else {
+        throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
+      }
+    } catch (e) {
       rethrow;
     }
   }

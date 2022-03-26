@@ -1,6 +1,8 @@
+import 'package:babcare/controllers/orders_controller.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:babcare/views/components/dashed_separator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 
 class OrderTrackingPage extends StatelessWidget {
@@ -8,6 +10,7 @@ class OrderTrackingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(OrdersController());
     return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -41,7 +44,7 @@ class OrderTrackingPage extends StatelessWidget {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 17.0)),
                         TextSpan(
-                            text: "  171 # ",
+                            text: "  ${controller.currentOrder!.id} # ",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: accentColor,
@@ -66,7 +69,11 @@ class OrderTrackingPage extends StatelessWidget {
                                     height: 35.0,
                                     width: 35.0,
                                     decoration: BoxDecoration(
-                                        color: accentColor,
+                                        color:
+                                            (controller.currentOrder!.status! >
+                                                    0)
+                                                ? accentColor
+                                                : accentColor.withOpacity(0.2),
                                         borderRadius:
                                             BorderRadius.circular(17.5)),
                                     padding: const EdgeInsets.all(5.0),
@@ -74,7 +81,10 @@ class OrderTrackingPage extends StatelessWidget {
                                     child: Icon(
                                       Icons.check,
                                       size: 18.0,
-                                      color: Colors.white,
+                                      color:
+                                          (controller.currentOrder!.status! > 0)
+                                              ? Colors.white
+                                              : accentColor,
                                     ),
                                   ),
                                   DashSeparator(
@@ -127,7 +137,11 @@ class OrderTrackingPage extends StatelessWidget {
                                     height: 35.0,
                                     width: 35.0,
                                     decoration: BoxDecoration(
-                                        color: accentColor,
+                                        color:
+                                            (controller.currentOrder!.status! >
+                                                    1)
+                                                ? accentColor
+                                                : accentColor.withOpacity(0.2),
                                         borderRadius:
                                             BorderRadius.circular(17.5)),
                                     padding: const EdgeInsets.all(5.0),
@@ -135,7 +149,10 @@ class OrderTrackingPage extends StatelessWidget {
                                     child: Icon(
                                       Icons.outdoor_grill,
                                       size: 18.0,
-                                      color: Colors.white,
+                                      color:
+                                          (controller.currentOrder!.status! > 1)
+                                              ? Colors.white
+                                              : accentColor,
                                     ),
                                   ),
                                   DashSeparator(
@@ -188,14 +205,21 @@ class OrderTrackingPage extends StatelessWidget {
                                     height: 35.0,
                                     width: 35.0,
                                     decoration: BoxDecoration(
-                                        color: accentColor.withOpacity(0.15),
+                                        color:
+                                            (controller.currentOrder!.status! >
+                                                    2)
+                                                ? accentColor
+                                                : accentColor.withOpacity(0.2),
                                         borderRadius:
                                             BorderRadius.circular(17.5)),
                                     padding: const EdgeInsets.all(5.0),
                                     child: Icon(
                                       Icons.delivery_dining,
                                       size: 18.0,
-                                      color: accentColor,
+                                      color:
+                                          (controller.currentOrder!.status! > 2)
+                                              ? Colors.white
+                                              : accentColor,
                                     ),
                                   ),
                                   DashSeparator(
@@ -248,14 +272,21 @@ class OrderTrackingPage extends StatelessWidget {
                                     height: 35.0,
                                     width: 35.0,
                                     decoration: BoxDecoration(
-                                        color: accentColor.withOpacity(0.15),
+                                        color:
+                                            (controller.currentOrder!.status! >
+                                                    3)
+                                                ? accentColor
+                                                : accentColor.withOpacity(0.15),
                                         borderRadius:
                                             BorderRadius.circular(17.5)),
                                     padding: const EdgeInsets.all(5.0),
                                     child: Icon(
                                       LineIcons.doubleCheck,
                                       size: 18.0,
-                                      color: accentColor,
+                                      color:
+                                          (controller.currentOrder!.status! > 3)
+                                              ? Colors.white
+                                              : accentColor,
                                     ),
                                   ),
                                 ],

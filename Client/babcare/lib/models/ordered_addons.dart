@@ -1,5 +1,3 @@
-import 'package:babcare/models/addon.dart';
-
 class OrderedAddon {
   int? id;
   int? addonIndex;

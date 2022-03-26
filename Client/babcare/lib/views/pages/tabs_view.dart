@@ -18,6 +18,9 @@ class TabsView extends StatefulWidget {
 
 class _TabsViewState extends State<TabsView> {
   int _selectedIndex = 0;
+  final ordersPage = const OrdersPage(
+    hideAppBar: true,
+  );
   @override
   Widget build(BuildContext context) {
     var drawerController = Get.put(CustomDrawerController());
@@ -71,10 +74,8 @@ class _TabsViewState extends State<TabsView> {
         children: [
           DiscoverPage(),
           const FavouritesPage(),
-          const OrdersPage(
-            hideAppBar: true,
-          ),
-          AccountPage()
+          ordersPage,
+          AccountPage(),
         ],
       ),
       bottomNavigationBar: Container(
@@ -122,6 +123,7 @@ class _TabsViewState extends State<TabsView> {
               onTabChange: (index) {
                 setState(() {
                   _selectedIndex = index;
+                  if (index == 2) ordersPage.refresh();
                 });
               },
             ),
