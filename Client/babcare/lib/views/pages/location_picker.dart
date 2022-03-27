@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:babcare/controllers/cart_controller.dart';
 import 'package:babcare/models/nearest_branch_info.dart';
@@ -77,8 +75,6 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
                   child: Center(child: CircularProgressIndicator()),
                 );
               } else if (snapshot.hasError) {
-                print(snapshot.error);
-                print(snapshot.stackTrace);
                 return ErrorPlaceHolder(onTap: () {});
               } else {
                 return Stack(
