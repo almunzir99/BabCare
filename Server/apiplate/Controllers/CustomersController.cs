@@ -15,7 +15,7 @@ namespace apiplate.Controllers
     public class CustomersController : BaseUserController<Customer, CustomerResource, ICustomerService>
     {
         private readonly IRolesService _roleService;
-        public CustomersController(ICustomerService service, IUriService uriService, IRolesService roleService) : base(service, uriService)
+        public CustomersController(ICustomerService service, IUriService uriService, IRolesService roleService,INotificationService _notificationService) : base(service, uriService,_notificationService)
         {
             _roleService = roleService;
         }

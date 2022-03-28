@@ -23,12 +23,14 @@ namespace apiplate.Controllers
         private readonly IOrderService _service;
         private readonly IUriService _uriService;
         private readonly IMapper _mapper;
+        private readonly INotificationService _notificationService;
 
-        public OrdersController(IOrderService service, IUriService uriService, IMapper mapper)
+        public OrdersController(IOrderService service, IUriService uriService, IMapper mapper, INotificationService notificationService)
         {
             _service = service;
             _uriService = uriService;
             _mapper = mapper;
+            _notificationService = notificationService;
         }
         [Authorize(Roles = "CUSTOMER")]
         [HttpPost]
@@ -39,6 +41,15 @@ namespace apiplate.Controllers
                 var customerId = GetCurrentUserId();
                 var result = await _service.CreateOrderAsync(customerId, order);
                 var response = new Response<OrderResource>(data: result, message: "order created successfully");
+                // Push Notifications
+                var notification = new NotificationResource(){
+                    Title = "طلب جديد",
+                    Message = $"يوجد طلب جديد برقم {result.Id} , الرجاء تفقد صفحة الطلبات",
+                    Module = "ORDERS",
+                    Action = "CREATE",
+                    Url = $"orders/{result.Id}"
+                };
+                await _notificationService.BroadCastNotification(notification,"admin");
                 return Ok(response);
             }
             catch (System.Exception e)
@@ -57,6 +68,14 @@ namespace apiplate.Controllers
             {
                 var result = await _service.CancelOrderAsync(body.OrderId, false, body.feedBack);
                 var response = new Response<OrderResource>(data: result, message: "order canceled successfully");
+                var notification = new NotificationResource(){
+                    Title = "تم الغاء الطلب",
+                    Message = $"تم الغاء الطلب رقم ${result.Id} من قبل الادارة, الرجاء تفقد صفحة الطلبات",
+                    Module = "ORDERS",
+                    Action = "CANCEL",
+                    Url = $"orders"
+                };
+                await _notificationService.PushNotification(result.CustomerId,"customer",notification);
                 return Ok(response);
             }
             catch (System.Exception e)
@@ -75,6 +94,14 @@ namespace apiplate.Controllers
             {
                 var result = await _service.CancelOrderAsync(body.OrderId, true, body.feedBack);
                 var response = new Response<OrderResource>(data: result, message: "order canceled successfully");
+                 var notification = new NotificationResource(){
+                    Title = "طلب جديد",
+                    Message = $"تم الغاء الطلب رقم {result.Id} من قبل العميل",
+                    Module = "ORDERS",
+                    Action = "CANCEL",
+                    Url = $"orders"
+                };
+                await _notificationService.BroadCastNotification(notification,"admin");
                 return Ok(response);
             }
             catch (System.Exception e)
@@ -91,8 +118,17 @@ namespace apiplate.Controllers
         {
             try
             {
+                
                 var result = await _service.CompleteOrderAsync(body.OrderId, body.feedBack);
                 var response = new Response<OrderResource>(data: result, message: "order completed successfully");
+                  var notification = new NotificationResource(){
+                    Title = "تم اكمال الطلب",
+                    Message = $"تم توصيل الطلب رقم ${result.Id} بنجاح",
+                    Module = "ORDERS",
+                    Action = "COMPELETE",
+                    Url = $"orders"
+                };
+                await _notificationService.PushNotification(result.CustomerId,"customer",notification);
                 return Ok(response);
             }
             catch (System.Exception e)
@@ -157,6 +193,14 @@ namespace apiplate.Controllers
             {
                 var result = await _service.ConfirmOrderAsync(body.OrderId, body.feedBack);
                 var response = new Response<OrderResource>(data: result, message: "order confirmed  successfully");
+                  var notification = new NotificationResource(){
+                    Title = "تم قبول الطلب",
+                    Message = $"تم قبول الطلب رقم {result.Id}, سيتم تحضير الطلب بأسرع وقت",
+                    Module = "ORDERS",
+                    Action = "COMFIRM",
+                    Url = $"orders"
+                };
+                await _notificationService.PushNotification(result.CustomerId,"customer",notification);
                 return Ok(response);
             }
             catch (System.Exception e)
@@ -175,6 +219,14 @@ namespace apiplate.Controllers
             {
                 var result = await _service.PrepareOrderAsync(body.OrderId, body.feedBack);
                 var response = new Response<OrderResource>(data: result, message: "order prepared successfully");
+                  var notification = new NotificationResource(){
+                    Title = "تم تحضير الطلب",
+                    Message = $"تم تحضير الطلب رقم ${result.Id}, سيتم توصيل الطلب بأسرع وقت",
+                    Module = "ORDERS",
+                    Action = "PREPARE",
+                    Url = $"orders"
+                };
+                await _notificationService.PushNotification(result.CustomerId,"customer",notification);
                 return Ok(response);
             }
             catch (System.Exception e)
@@ -193,6 +245,14 @@ namespace apiplate.Controllers
             {
                 var result = await _service.AssignOrderToDeliveryAsync(body.deliveryId.Value, body.OrderId, body.feedBack);
                 var response = new Response<OrderResource>(data: result, message: "order assigned to delivery successfully");
+                  var notification = new NotificationResource(){
+                    Title = "الطلب حاليا قيد التوصيل",
+                    Message = $"الطلب رقم ${result.Id} قيد التوصيل, يمكنك متابعة الطلب من صفحة متابعة الطلب",
+                    Module = "ORDERS",
+                    Action = "DELIVERY",
+                    Url = $"orders"
+                };
+                await _notificationService.PushNotification(result.CustomerId,"customer",notification);
                 return Ok(response);
             }
             catch (System.Exception e)

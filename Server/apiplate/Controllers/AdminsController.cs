@@ -18,7 +18,7 @@ namespace apiplate.Controllers
     public class AdminsController : BaseUserController<Admin, AdminResource, IAdminService>
     {
         private readonly IRolesService _roleService;
-        public AdminsController(IAdminService service, IUriService uriService, IRolesService roleService) : base(service, uriService)
+        public AdminsController(IAdminService service, IUriService uriService, IRolesService roleService,INotificationService _notificationService) : base(service, uriService,_notificationService)
         {
             _roleService = roleService;
         }

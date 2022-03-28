@@ -2,6 +2,7 @@ using System.Text;
 using apiplate.DataBase;
 using apiplate.Domain.Services;
 using apiplate.Hubs;
+using apiplate.Hubs.Connections;
 using apiplate.Services;
 using apiplate.Services.ContentManagement;
 using apiplate.Services.FilesManager;
@@ -62,6 +63,8 @@ namespace apiplate
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IOffersService, OffersService>();
             services.AddScoped<IStatisticsService,StatisticsService>();
+            services.AddScoped<IConnectionsManager,ConnectionsManager>();
+            services.AddScoped<INotificationService,NotificationService>();
             services.AddStartupTask<ImagesStartupTask>();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddCors(options =>

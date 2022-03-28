@@ -10,7 +10,7 @@ namespace apiplate.Controllers
     public class DeliveryController : BaseUserController<DeliveryDriver, DeliveryDriverResource, IDeliveryService>
     {
         private readonly IRolesService _roleService;
-        public DeliveryController(IDeliveryService service, IUriService uriService, IRolesService roleService) : base(service, uriService)
+        public DeliveryController(IDeliveryService service, IUriService uriService, IRolesService roleService,INotificationService _notificationService) : base(service, uriService,_notificationService)
         {
             _roleService = roleService;
         }

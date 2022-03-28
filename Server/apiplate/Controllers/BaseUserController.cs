@@ -27,9 +27,11 @@ namespace apiplate.Controllers
         // private readonly INotificationService _notificationService;
         private readonly IUriService _uriService;
         protected abstract string type { get; }
-        public BaseUserController(TService service, IUriService uriService) : base(service, uriService)
+        private readonly INotificationService _notificationService;
+        public BaseUserController(TService service, IUriService uriService, INotificationService notificationService) : base(service, uriService)
         {
             _uriService = uriService;
+            _notificationService = notificationService;
         }
         [AllowAnonymous]
         [HttpPost("Authenticate")]
@@ -181,6 +183,81 @@ namespace apiplate.Controllers
                 var response = new Response<TResource>(data: result, message: "information fetched successfully", success: true);
                 return Ok(response);
 
+            }
+            catch (System.Exception e)
+            {
+                var response = new Response<TResource>(message: "operation failed, check errors below", success: false, errors: new[] { e.Message });
+                return BadRequest(response);
+
+            }
+        }
+         [HttpGet("notifications")]
+        public virtual async Task<IActionResult> GetNotificationAsync([FromQuery] PaginationFilter filter)
+        {
+            try
+            {
+                var userId = GetCurrentUserId();
+                if (filter == null)
+                    filter = new PaginationFilter();
+                var result = await _notificationService.ListNotificationsAsync(userId, type, filter);
+                var response = PaginationHelper.CreatePagedResponse<NotificationResource>(
+                    result, filter, _uriService, 0, Request.Path.Value
+                    );
+                return Ok(response);
+
+            }
+            catch (System.Exception e)
+            {
+
+                var response = new Response<TResource>(message: "Registeration failed, check errors below", success: false, errors: new[] { e.Message });
+                return BadRequest(response);
+            }
+        }
+        [HttpDelete("notifications/clear")]
+        public virtual async Task<IActionResult> ClearNotifications()
+        {
+            try
+            {
+                var userId = GetCurrentUserId();
+                await _notificationService.ClearNotificationAsync(userId, type);
+                var response = new Response<string>(message: "Notifications cleared successfully");
+                return Ok(response);
+            }
+            catch (System.Exception e)
+            {
+
+                var response = new Response<TResource>(message: "operation failed, check errors below", success: false, errors: new[] { e.Message });
+                return BadRequest(response);
+            }
+
+        }
+        [HttpDelete("notifications/{notificationId}")]
+        public virtual async Task<IActionResult> DeleteNotification(int notificationId)
+        {
+            try
+            {
+                var userId = GetCurrentUserId();
+                await _notificationService.DeleteNotificationAsync(notificationId);
+                var response = new Response<string>(message: "Notification deleted successfully");
+                return Ok(response);
+            }
+            catch (System.Exception e)
+            {
+
+                var response = new Response<TResource>(message: "operation failed, check errors below", success: false, errors: new[] { e.Message });
+                return BadRequest(response);
+            }
+
+        }
+        [HttpGet("notifications/unread")]
+        public virtual async Task<IActionResult> GetUnreadNotifications([FromQuery] bool autoRead = false)
+        {
+            try
+            {
+                var userId = GetCurrentUserId();
+                var result = await _notificationService.GetUnreadNotification(userId, type, autoRead);
+                var response = new Response<IList<NotificationResource>>(data: result, message: "notification fetch successfully");
+                return Ok(response);
             }
             catch (System.Exception e)
             {
