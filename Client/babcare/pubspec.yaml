@@ -82,6 +82,8 @@ flutter:
     - assets/temp/food/
     - assets/temp/categories/
     - assets/images/
+    - assets/json/
+
 
 
 

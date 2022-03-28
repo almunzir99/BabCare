@@ -13,6 +13,7 @@ namespace apiplate.Resources
         public string CategoryName { get; set; }
         [Required]
         public string Description { get; set; }
+        public bool isFavorite { get; set; }
         [Required]
         public IList<ImageResource> Images { get; set; } = new List<ImageResource>();
         public IList<OptionResource> Options { get; set; } = new List<OptionResource>();

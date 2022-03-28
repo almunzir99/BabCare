@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using apiplate.DataBase;
 using apiplate.Domain.Models;
+using apiplate.Extensions;
 using apiplate.Helpers;
 using apiplate.Resources;
 using apiplate.Services.FilesManager;
@@ -38,6 +40,68 @@ namespace apiplate.Services
             mappedUser.Notifications = mappedUser.Notifications.OrderByDescending(c => c.LastUpdate).ToList();
             return mappedUser;
         }
+
+        public async Task<IList<FavoriteResource>> GetFavoriteAsync(int customerId)
+        {
+            var customer = await _context.Customers.Include(c => c.Favorites)
+            .ThenInclude(c => c.Product).ThenInclude(c => c.Images)
+            .SingleAsync(c => c.Id == customerId);
+            if (customer == null)
+                throw new System.Exception("The target customer isn't available");
+            var mappedResult = _mapper.Map<IList<Favorite>, List<FavoriteResource>>(customer.Favorites);
+            return mappedResult;
+        }
+
+        public async Task AddFavoriteAsync(int customerId, int productId)
+        {
+            try
+            {
+                var customer = await _context.Customers.Include(c => c.Favorites)
+            .SingleAsync(c => c.Id == customerId);
+                if (customer == null)
+                    throw new System.Exception("The target customer isn't available");
+                var product = await _context.Products.SingleAsync(c => c.Id == productId);
+                if (product == null)
+                    throw new System.Exception("The target product isn't available");
+                var fav = new Favorite()
+                {
+                    ProductId = productId
+                };
+                customer.Favorites.Add(fav);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException exception)
+            {
+                throw new System.Exception(exception.Decode());
+            }
+            catch (System.Exception e)
+            {
+
+                throw e;
+            }
+
+        }
+        public async Task RemoveFavoriteAsync(int id)
+        {
+            try
+            {
+                var target = await _context.Favorites.SingleOrDefaultAsync(c => c.Id == id);
+                if(target == null)
+                throw new System.Exception("the target item isn't available");
+                _context.Favorites.Remove(target);
+                await _context.SaveChangesAsync();
+            }   
+            catch (DbUpdateException exception)
+            {
+                throw new System.Exception(exception.Decode());
+            }
+            catch (System.Exception e)
+            {
+
+                throw e;
+            }
+        }
+
         protected override string type => "CUSTOMER";
 
     }

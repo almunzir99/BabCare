@@ -88,9 +88,12 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
                         target: currentLocation,
                         zoom: 15,
                       ),
-                      onMapCreated: (controller) {
+                      onMapCreated: (controller) async {
+                        var style = await DefaultAssetBundle.of(context)
+                            .loadString("assets/json/map_gray_style.json");
                         setState(() {
                           mapController = controller;
+                          mapController!.setMapStyle(style);
                         });
                       },
                       onCameraMove: (CameraPosition cm) {

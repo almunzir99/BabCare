@@ -9,6 +9,7 @@ namespace apiplate.Domain.Services
         Task RemoveOption(int productId,int optionId);
         Task AddAddon(int productId,int addonId);
         Task RemoveAddon(int productId,int addonId);
+        Task<bool> CheckIfProductIsFavAsync(int customerId,int productId);
     }
 
 

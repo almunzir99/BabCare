@@ -75,14 +75,20 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
         await getBytesFromAsset('assets/images/target-2.png', 160);
 
     _addMarker(
-        LatLng(controller.currentOrder!.branch!.lat!,
-            controller.currentOrder!.branch!.long!),
+        LatLng(
+          controller.currentOrder!.branch!.lat!,
+          controller.currentOrder!.branch!.long!,
+        ),
         "branch",
-        BitmapDescriptor.fromBytes(branchIcon));
+        BitmapDescriptor.fromBytes(branchIcon),
+        infoWindow: InfoWindow(
+            title: "الفرع", snippet: controller.currentOrder!.branch!.title!));
     _addMarker(
         LatLng(controller.currentOrder!.lat!, controller.currentOrder!.long!),
         "userLocation",
-        BitmapDescriptor.fromBytes(flagIcon));
+        BitmapDescriptor.fromBytes(flagIcon),
+        infoWindow: InfoWindow(
+            title: "موقعي", snippet: controller.currentOrder!.location));
     _getPolyline(
         LatLng(controller.currentOrder!.branch!.lat!,
             controller.currentOrder!.branch!.long!),
@@ -168,8 +174,12 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                               controller.currentOrder!.long!),
                           zoom: 15.0,
                         ),
-                        onMapCreated: (controller) {
+                        onMapCreated: (controller) async {
                           mapController = controller;
+                          // load style from the assets
+                          var style = await DefaultAssetBundle.of(context)
+                              .loadString("assets/json/map_gray_style.json");
+                          mapController!.setMapStyle(style);
                           var bound = getBounds(markers.values.toList());
                           CameraUpdate u2 =
                               CameraUpdate.newLatLngBounds(bound, 50);

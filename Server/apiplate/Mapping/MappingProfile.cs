@@ -31,6 +31,7 @@ namespace apiplate.Mapping
             this.CreateMap<OrderedAddonResource, OrderedAddon>();
             this.CreateMap<OrderRequestResource, Order>();
             this.CreateMap<OfferResource, Offer>();
+            this.CreateMap<FavoriteResource,Favorite>();
 
 
 

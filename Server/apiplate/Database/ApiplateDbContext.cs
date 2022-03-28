@@ -58,6 +58,7 @@ namespace apiplate.DataBase{
             public DbSet<Offer> Offers { get; set; }
             public DbSet<Image> Image { get; set; }
             public DbSet<Notification> Notifications { get; set; }
+            public DbSet<Favorite> Favorites { get; set; }
 
 
 

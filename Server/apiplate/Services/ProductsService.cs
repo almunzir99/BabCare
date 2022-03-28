@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using apiplate.DataBase;
@@ -5,6 +7,7 @@ using apiplate.Domain.Models;
 using apiplate.Domain.Services;
 using apiplate.Extensions;
 using apiplate.Resources;
+using apiplate.Resources.Wrappers.Filters;
 using apiplate.Utils.URI;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +19,6 @@ namespace apiplate.Services
         public ProductsService(IMapper mapper, ApiplateDbContext context, IUriService uriSerivce) : base(mapper, context, uriSerivce)
         {
         }
-
         public async Task AddAddon(int productId, int addonId)
         {
             try
@@ -108,7 +110,14 @@ namespace apiplate.Services
                 throw e;
             }
         }
-
+        public async Task<bool> CheckIfProductIsFavAsync(int customerId,int productId)
+        {
+            var customer = await _context.Customers.Include(c => c.Favorites).SingleOrDefaultAsync(c => c.Id == customerId);
+            if(customer == null)
+            throw new System.Exception("Invalid customer information");
+            var item = customer.Favorites.SingleOrDefault(c => c.ProductId == productId);
+            return item != null;
+        }
         protected override IQueryable<Product> GetDbSet()
         {
             return base.GetDbSet()

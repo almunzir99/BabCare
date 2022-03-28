@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using apiplate.Domain.Models;
 using apiplate.Domain.Services;
 using apiplate.Resources;
+using apiplate.Resources.Wrappers.Filters;
 using apiplate.Utils.URI;
 using apiplate.Wrappers;
 using Microsoft.AspNetCore.Authorization;
@@ -19,6 +21,26 @@ namespace apiplate.Controllers
         public ProductsController(IProductsService service, IUriService uriSerivce, IRolesService roleService) : base(service, uriSerivce)
         {
             _roleService = roleService;
+        }
+        [Authorize(Roles ="ADMIN,CUSTOMER")]
+        [HttpGet]
+        public override async Task<IActionResult> GetAsync([FromQuery] PaginationFilter filter = null, [FromQuery] string title = "", [FromQuery] string orderBy = "LastUpdate", Boolean ascending = true){
+            var type = GetCurrentUserType();
+            var actionResult = await base.GetAsync(filter,title,orderBy,ascending);
+            if(type == "CUSTOMER")
+            {
+                var customerId = GetCurrentUserId();
+                var okActionResult = actionResult as OkObjectResult;
+                var response = okActionResult.Value as Response<IList<ProductResource>>;
+                var products = response.Data;
+                foreach (var product  in products)
+                {
+                    product.isFavorite = await _service.CheckIfProductIsFavAsync(customerId,product.Id.Value);
+                }
+                return okActionResult;
+            }
+            return actionResult;
+
         }
         [Authorize(Roles ="ADMIN")]
         [HttpPost("options/add")]
