@@ -23,6 +23,23 @@ namespace apiplate.Controllers
             _roleService = roleService;
         }
         [Authorize(Roles ="ADMIN,CUSTOMER")]
+        [HttpGet("{id}")]
+        public override async  Task<IActionResult> SingleAsync(int id){
+            var type = GetCurrentUserType();
+            var actionResult = await base.SingleAsync(id);
+            if(type == "CUSTOMER")
+            {
+                var customerId = GetCurrentUserId();
+                var okActionResult = actionResult as OkObjectResult;
+                var response = okActionResult.Value as Response<ProductResource>;
+                var product = response.Data;
+                    product.isFavorite = await _service.CheckIfProductIsFavAsync(customerId,product.Id.Value);
+                return okActionResult;
+            }
+            return actionResult;
+
+        }
+        [Authorize(Roles ="ADMIN,CUSTOMER")]
         [HttpGet]
         public override async Task<IActionResult> GetAsync([FromQuery] PaginationFilter filter = null, [FromQuery] string title = "", [FromQuery] string orderBy = "LastUpdate", Boolean ascending = true){
             var type = GetCurrentUserType();
@@ -106,6 +123,40 @@ namespace apiplate.Controllers
             catch (System.Exception e)
             {
                 var response = new Response<string>(message: "failed to remove addon, see error below", success: false, errors: new List<string>() { e.Message });
+                return BadRequest(response);
+
+            }
+        }
+        [Authorize(Roles ="ADMIN")]
+        [HttpPost("images/add")]
+        public async Task<ActionResult> AddImage([Required][FromQuery] int productId, [Required][FromQuery] string path)
+        {
+            try
+            {
+                await _service.addImage(productId, path);
+                var response = new Response<string>(message: "image added successfully");
+                return Ok(response);
+            }
+            catch (System.Exception e)
+            {
+                var response = new Response<string>(message: "failed to add image option, see error below", success: false, errors: new List<string>() { e.Message });
+                return BadRequest(response);
+
+            }
+        }
+        [Authorize(Roles ="ADMIN")]
+        [HttpDelete("images/remove")]
+        public async Task<ActionResult> removeImage([Required][FromQuery] int productId, [Required][FromQuery] int imageId)
+        {
+            try
+            {
+                await _service.removeImage(productId, imageId);
+                var response = new Response<string>(message: "image removed successfully");
+                return Ok(response);
+            }
+            catch (System.Exception e)
+            {
+                var response = new Response<string>(message: "failed to remove image option, see error below", success: false, errors: new List<string>() { e.Message });
                 return BadRequest(response);
 
             }

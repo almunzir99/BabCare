@@ -1,8 +1,10 @@
 import 'package:babcare/controllers/custom_drawer_controller.dart';
+import 'package:babcare/controllers/dimmer_controller.dart';
 import 'package:babcare/theme/style.dart';
+import 'package:babcare/views/components/placeholders/dimmer.dart';
 import 'package:babcare/views/pages/account.dart';
 import 'package:babcare/views/pages/discover.dart';
-import 'package:babcare/views/pages/favourite.dart';
+import 'package:babcare/views/pages/favorites.dart';
 import 'package:babcare/views/pages/orders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,9 +23,11 @@ class _TabsViewState extends State<TabsView> {
   final ordersPage = const OrdersPage(
     hideAppBar: true,
   );
+  final favoritePage = const FavoritesPage();
   @override
   Widget build(BuildContext context) {
     var drawerController = Get.put(CustomDrawerController());
+    var dimmerController = Get.put(DimmerController());
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -69,13 +73,24 @@ class _TabsViewState extends State<TabsView> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: IndexedStack(
-        index: _selectedIndex,
+      body: Stack(
         children: [
-          DiscoverPage(),
-          const FavouritesPage(),
-          ordersPage,
-          AccountPage(),
+          IndexedStack(
+            index: _selectedIndex,
+            children: [
+              DiscoverPage(),
+              favoritePage,
+              ordersPage,
+              AccountPage(),
+            ],
+          ),
+          Obx(() {
+            return Center(
+              child: Dimmer(
+                show: dimmerController.showDimmer.value,
+              ),
+            );
+          })
         ],
       ),
       bottomNavigationBar: Container(
@@ -123,6 +138,7 @@ class _TabsViewState extends State<TabsView> {
               onTabChange: (index) {
                 setState(() {
                   _selectedIndex = index;
+                  if (index == 1) favoritePage.refresh();
                   if (index == 2) ordersPage.refresh();
                 });
               },

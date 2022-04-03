@@ -46,3 +46,61 @@
         }
     }
 }
+.images-section{
+    margin: 20px 0px;
+    h3{
+        margin: 20px 0pc;
+        
+    }
+    .images{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        .image{
+            height: 150px;
+            width: 150px;
+            margin: 5px;
+            position: relative;
+
+            img{
+             height: 145px;
+             width: 145px;
+            border-radius: 15px;
+            position: absolute;
+            bottom: 0;
+            }
+            .icon-button{
+                height: 30px;
+                width: 30px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: $primary-color;
+                cursor: pointer;
+                i{
+                    color: white;
+                    font-size: 20px;
+                }
+            }
+        }
+        .add-button{
+            height: 145px;
+             width: 145px;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+            border-radius: 15px;
+             background-color: rgba($accent-color,0.3);
+             border: 2px dashed $accent-color;
+             cursor: pointer;
+             i{
+             color: $accent-color;
+                 font-size: 75px;
+             }
+        }
+    }
+}

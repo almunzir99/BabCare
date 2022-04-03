@@ -10,7 +10,7 @@ namespace Studious.Domain.Services
     {
         Task<IList<FavoriteResource>> GetFavoriteAsync(int customerId);
         Task AddFavoriteAsync(int customerId,int productId);
-        Task RemoveFavoriteAsync(int id);
+        Task RemoveFavoriteAsync(int productId);
     }
     
 }

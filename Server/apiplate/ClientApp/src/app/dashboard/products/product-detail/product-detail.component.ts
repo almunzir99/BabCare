@@ -9,6 +9,10 @@ import { AddonsService } from 'src/app/core/services/addons.service';
 import { OptionsService } from 'src/app/core/services/options.service';
 import { FuiModalService } from 'ngx-fomantic-ui';
 import { MessageModal, MessageTypes } from 'src/app/shared/modals/message-modal/message-modal.component';
+import { Image } from 'src/app/core/models/image.model';
+import { FileManagerModal } from '../../file-manager/file-manager-modal/file-manager-modal.component';
+import { PickingMode } from '../../file-manager/file-manager.component';
+import { FileModel } from 'src/app/core/models/file.Model';
 
 @Component({
   selector: 'app-product-detail',
@@ -85,7 +89,7 @@ export class ProductDetailComponent implements OnInit {
     }
   ]
 
-  constructor(private _service:ProductsService,private _optionService:OptionsService,private _addOnsService:AddonsService,private activatedRoute:ActivatedRoute,private modalService: FuiModalService) {
+  constructor(private _service:ProductsService,private _optionService:OptionsService,private _addOnsService:AddonsService,private activatedRoute:ActivatedRoute,private modalService: FuiModalService,) {
       this.activatedRoute.params.subscribe(res => {
         this.getProduct(res['id']);
       });
@@ -155,6 +159,40 @@ export class ProductDetailComponent implements OnInit {
       this.dimLoading = false;
     })
    }
+   addImage(path?:string)
+   {
+    this.dimLoading = true;
+    this._service.addImage(this.product.id,path).subscribe(res =>{
+        this.product.images.push({path:path});
+        this.dimLoading = true;
+        this.modalService.open(new MessageModal({
+          title: "نجاح",
+          content: "تم اضافة الصورة بنجاح", isConfirm: false, messageType: MessageTypes.Success
+        }))
+      this.dimLoading = false;
+
+    },err =>{
+      this.dimLoading = false;
+    })
+   }
+   removeImage(image:Image)
+   {
+    this.dimLoading = true;
+    this._service.removeImage(this.product.id,image.id).subscribe(res =>{
+        
+        var imageIndex = this.product.images.indexOf(image);
+        this.product.images.splice(imageIndex,1);
+        this.modalService.open(new MessageModal({
+          title: "نجاح",
+          content: "تم حذف الصورة بنجاح", isConfirm: false, messageType: MessageTypes.Success
+        }))
+      this.dimLoading = false;
+
+        
+    },err =>{
+      this.dimLoading = false;
+    })
+   }
    getOptions(){
       this._optionService.get().subscribe(res =>{
         this.options = res.data; 
@@ -180,7 +218,14 @@ export class ProductDetailComponent implements OnInit {
         this.isLoading = false;
       });
    }
-
+   openFMModal(){
+    this.modalService.open(new FileManagerModal({ title: "Pick Image", pickingMode: PickingMode.Files })).onApprove((result: FileModel[]) => {
+       if(result.length > 0)
+       {
+         this.addImage(result[0].uri);
+       }
+    });
+   }
   ngOnInit(): void {
   }
 

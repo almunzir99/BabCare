@@ -1,6 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:babcare/controllers/auth_controller.dart';
+import 'package:babcare/controllers/dimmer_controller.dart';
 import 'package:babcare/controllers/discover_controller.dart';
+import 'package:babcare/controllers/favorites_controller.dart';
+import 'package:babcare/models/product.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:babcare/views/components/horizontal_product_card.dart';
 import 'package:babcare/views/components/placeholders/discover_page_shimmer.dart';
@@ -11,13 +14,49 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class DiscoverPage extends StatelessWidget {
   DiscoverPage({Key? key}) : super(key: key);
   var controller = Get.put(DiscoverController());
+  final dimmerController = Get.put(DimmerController());
+  final favController = Get.put(FavoritesController());
   final _authController = Get.put(AuthController());
   Future? _loadItemsAsync;
+  Future switchFavButton(Product product, BuildContext context) async {
+    try {
+      dimmerController.showDimmer.value = true;
+      await Future.delayed(const Duration(seconds: 1));
+      if (!product.isFavorite!) {
+        await favController.addToFavorite(product.id!);
+      } else {
+        await favController.removeFromFavorite(product.id!);
+      }
+      product.isFavorite = !product.isFavorite!;
+      dimmerController.showDimmer.value = false;
+    } catch (e) {
+      dimmerController.showDimmer.value = false;
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: "خطأ",
+        desc: "فشلت العملية الرجاء اعاة المحاولة",
+        buttons: [
+          DialogButton(
+            color: primaryColor,
+            child: const Text(
+              "تمام",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _loadItemsAsync = controller.loadItems();
@@ -322,21 +361,27 @@ class DiscoverPage extends StatelessWidget {
                                         parameters: {"id": "${product.id}"});
                                   },
                                   child: ProductCard(
-                                      title: product.title!,
-                                      subtitle: product.categoryName!,
-                                      price: (product.price! -
-                                              product.price! *
-                                                  (product.discount! / 100))
-                                          .roundToDouble(),
-                                      discount: product.discount == 0.0 ||
-                                              product.discount == null
-                                          ? null
-                                          : product.discount,
-                                      oldPrice: product.discount == 0.0 ||
-                                              product.discount == null
-                                          ? null
-                                          : product.price,
-                                      image: product.images![0].path!),
+                                    title: "${product.title}",
+                                    isFavorite: product.isFavorite!,
+                                    subtitle: product.categoryName!,
+                                    price: (product.price! -
+                                            product.price! *
+                                                (product.discount! / 100))
+                                        .roundToDouble(),
+                                    discount: product.discount == 0.0 ||
+                                            product.discount == null
+                                        ? null
+                                        : product.discount,
+                                    oldPrice: product.discount == 0.0 ||
+                                            product.discount == null
+                                        ? null
+                                        : product.price,
+                                    image: product.images![0].path!,
+                                    onFavTap: () async {
+                                      await switchFavButton(product, context);
+                                      controller.categories.refresh();
+                                    },
+                                  ),
                                 ),
                               );
                             }))
@@ -365,24 +410,31 @@ class DiscoverPage extends StatelessWidget {
           const SizedBox(
             height: 20.0,
           ),
-          Column(
-            children: controller.products.map((product) {
-              return HorizontalProductCard(
-                title: product.title!,
-                subtitle: product.categoryName!,
-                price: (product.price! -
-                        product.price! * (product.discount! / 100))
-                    .roundToDouble(),
-                discount: product.discount == 0.0 || product.discount == null
-                    ? null
-                    : product.discount,
-                oldPrice: product.discount == 0.0 || product.discount == null
-                    ? null
-                    : product.price,
-                image: product.images![0].path!,
-              );
-            }).toList(),
-          ),
+          Obx(() {
+            return Column(
+              children: controller.products.map((product) {
+                return HorizontalProductCard(
+                  title: product.title!,
+                  subtitle: product.categoryName!,
+                  price: (product.price! -
+                          product.price! * (product.discount! / 100))
+                      .roundToDouble(),
+                  discount: product.discount == 0.0 || product.discount == null
+                      ? null
+                      : product.discount,
+                  oldPrice: product.discount == 0.0 || product.discount == null
+                      ? null
+                      : product.price,
+                  image: product.images![0].path!,
+                  isFavorite: product.isFavorite!,
+                  onFavTap: () async {
+                    await switchFavButton(product, context);
+                    controller.products.refresh();
+                  },
+                );
+              }).toList(),
+            );
+          }),
         ],
       );
     }

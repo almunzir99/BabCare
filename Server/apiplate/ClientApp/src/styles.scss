@@ -175,3 +175,6 @@ code {
 .ar {
     text-align: right;
 }
+.dimmed.dimmable>.ui.animating.dimmer, .dimmed.dimmable>.ui.visible.dimmer, .ui.active.dimmer{
+    z-index: 1003;
+}

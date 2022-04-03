@@ -10,6 +10,7 @@ class HorizontalProductCard extends StatelessWidget {
   final int? discount;
   final double? oldPrice;
   final String image;
+  final bool isFavorite;
   final void Function()? onTap;
   final void Function()? onFavTap;
   const HorizontalProductCard({
@@ -21,6 +22,7 @@ class HorizontalProductCard extends StatelessWidget {
     this.onFavTap,
     this.onTap,
     this.discount,
+    this.isFavorite = false,
     Key? key,
   }) : super(key: key);
 
@@ -118,19 +120,16 @@ class HorizontalProductCard extends StatelessWidget {
             right: 20.0,
             child: Visibility(
               visible: discount != null,
-              child: GestureDetector(
-                onTap: onFavTap,
-                child: Container(
-                  padding: const EdgeInsets.all(7.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0),
-                      color: accentColor),
-                  child: Center(
-                    child: Text(
-                      "$discount%",
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.white),
-                    ),
+              child: Container(
+                padding: const EdgeInsets.all(7.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: accentColor),
+                child: Center(
+                  child: Text(
+                    "$discount%",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                 ),
               ),
@@ -140,16 +139,19 @@ class HorizontalProductCard extends StatelessWidget {
           Positioned(
             bottom: 10.0,
             left: 10.0,
-            child: Container(
-              padding: const EdgeInsets.all(7.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: primaryColor),
-              child: const Center(
-                child: Icon(
-                  LineIcons.heart,
-                  color: Colors.white,
-                  size: 18.0,
+            child: GestureDetector(
+              onTap: onFavTap,
+              child: Container(
+                padding: const EdgeInsets.all(7.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: (!isFavorite) ? Colors.grey.shade400 : primaryColor),
+                child: const Center(
+                  child: Icon(
+                    LineIcons.heart,
+                    color: Colors.white,
+                    size: 18.0,
+                  ),
                 ),
               ),
             ),

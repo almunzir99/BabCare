@@ -45,10 +45,17 @@ namespace apiplate.Services
         {
             var customer = await _context.Customers.Include(c => c.Favorites)
             .ThenInclude(c => c.Product).ThenInclude(c => c.Images)
+            .Include(c => c.Favorites).ThenInclude(c => c.Product)
+            .ThenInclude(c => c.Category)
             .SingleAsync(c => c.Id == customerId);
+           
             if (customer == null)
                 throw new System.Exception("The target customer isn't available");
             var mappedResult = _mapper.Map<IList<Favorite>, List<FavoriteResource>>(customer.Favorites);
+             foreach (var fav in mappedResult)
+            {
+                 fav.Product.isFavorite = true;
+            }
             return mappedResult;
         }
 
@@ -63,6 +70,9 @@ namespace apiplate.Services
                 var product = await _context.Products.SingleAsync(c => c.Id == productId);
                 if (product == null)
                     throw new System.Exception("The target product isn't available");
+                var favProd =  customer.Favorites.SingleOrDefault(c => c.ProductId == productId);
+                if(favProd != null)
+                return;
                 var fav = new Favorite()
                 {
                     ProductId = productId
@@ -81,11 +91,11 @@ namespace apiplate.Services
             }
 
         }
-        public async Task RemoveFavoriteAsync(int id)
+        public async Task RemoveFavoriteAsync(int productId)
         {
             try
             {
-                var target = await _context.Favorites.SingleOrDefaultAsync(c => c.Id == id);
+                var target = await _context.Favorites.SingleOrDefaultAsync(c => c.ProductId == productId);
                 if(target == null)
                 throw new System.Exception("the target item isn't available");
                 _context.Favorites.Remove(target);

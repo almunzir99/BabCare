@@ -43,6 +43,14 @@ export class ProductsService {
   {
       return this.http.delete(`${this.baseUrl}api/products/addons/remove?productId=${productId}&addonId=${addonId}`,{});
   }
+  addImage(productId?:number,path?:string)
+  {
+      return this.http.post(`${this.baseUrl}api/products/images/add?productId=${productId}&path=${path}`,{});
+  }
+  removeImage(productId?:number,imageId?:number)
+  {
+      return this.http.delete(`${this.baseUrl}api/products/images/remove?productId=${productId}&imageId=${imageId}`,{});
+  }
   downloadCSV() {
     this.http.get(`${this.baseUrl}api/products/export/csv`, { responseType: 'blob' }).subscribe(res => {
       let blob = new Blob([res], { type: 'text/plain' });

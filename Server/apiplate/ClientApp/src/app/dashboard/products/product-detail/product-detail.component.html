@@ -90,6 +90,21 @@
                 </ng-template>
             </data-table>
         </div>
+        <div class="images-section">
+            <h3>صور المنتج :</h3>
+            <div class="images">
+                <div *ngFor="let image of product.images" class="image">
+                   
+                    <img [src]="image!.path" alt="صورة منتج" srcset="">
+                    <div (click)="removeImage(image)" class="icon-button">
+                        <i  class="las la-times"></i>
+                    </div>
+                </div>
+                <div (click)="openFMModal()" class="add-button">
+                    <i class="las la-plus"></i>
+                </div>
+            </div>
+        </div>
     </div>
 
 

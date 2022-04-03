@@ -10,6 +10,8 @@ namespace apiplate.Domain.Services
         Task AddAddon(int productId,int addonId);
         Task RemoveAddon(int productId,int addonId);
         Task<bool> CheckIfProductIsFavAsync(int customerId,int productId);
+        Task addImage(int productId, string path);
+        Task removeImage(int productId, int imageId);
     }
 
 

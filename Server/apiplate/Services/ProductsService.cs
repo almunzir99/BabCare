@@ -110,6 +110,50 @@ namespace apiplate.Services
                 throw e;
             }
         }
+        public async Task addImage(int productId, string path)
+        {
+            try
+            {
+                var product = await GetDbSet().SingleAsync(c => c.Id == productId);
+                if (product == null)
+                    throw new System.Exception("target product isn't available");
+                var image = new Image(){
+                    Path = path
+                };
+                product.Images.Add(image);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException exception)
+            {
+                throw new System.Exception(exception.Decode());
+            }
+            catch (System.Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task removeImage(int productId, int imageId)
+        {
+            try
+            {
+                var product = await GetDbSet().SingleAsync(c => c.Id == productId);
+                if (product == null)
+                    throw new System.Exception("target product isn't available");
+                var image = product.Images.SingleOrDefault(c => c.Id == imageId);
+                if(image != null)
+                product.Images.Remove(image);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException exception)
+            {
+                throw new System.Exception(exception.Decode());
+            }
+            catch (System.Exception e)
+            {
+                throw e;
+            }
+        }
+        
         public async Task<bool> CheckIfProductIsFavAsync(int customerId,int productId)
         {
             var customer = await _context.Customers.Include(c => c.Favorites).SingleOrDefaultAsync(c => c.Id == customerId);

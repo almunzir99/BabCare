@@ -31,7 +31,8 @@ class GeneralService {
 
   Future<List<Category>> getCategories() async {
     try {
-      var response = await dio.get(ApiConstants.categoriesBaseRoute);
+      var response = await dio.get(ApiConstants.categoriesBaseRoute,
+          options: Options(headers: {"requiresToken": true}));
       if (response.statusCode == 200) {
         var data = response.data['data'] as List;
         var categories = <Category>[];
@@ -47,7 +48,8 @@ class GeneralService {
 
   Future<List<Product>> getTopProducts() async {
     try {
-      var response = await dio.get(ApiConstants.productsBaseRoute);
+      var response = await dio.get(ApiConstants.productsBaseRoute,
+          options: Options(headers: {"requiresToken": true}));
       if (response.statusCode == 200) {
         var data = response.data['data'] as List;
         var products = <Product>[];
@@ -65,7 +67,8 @@ class GeneralService {
     try {
       var params = {"title": search};
       var response = await dio.get(ApiConstants.productsBaseRoute,
-          queryParameters: params);
+          queryParameters: params,
+          options: Options(headers: {"requiresToken": true}));
       if (response.statusCode == 200) {
         var data = response.data['data'] as List;
         var products = <Product>[];
@@ -81,7 +84,8 @@ class GeneralService {
 
   Future<Product> getProduct(int id) async {
     try {
-      var response = await dio.get("${ApiConstants.productsBaseRoute}/$id");
+      var response = await dio.get("${ApiConstants.productsBaseRoute}/$id",
+          options: Options(headers: {"requiresToken": true}));
       if (response.statusCode == 200) {
         var product = Product.fromJson(response.data['data']);
         return product;
@@ -139,6 +143,52 @@ class GeneralService {
         throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
       }
     } catch (e) {
+      rethrow;
+    }
+  }
+
+  // Favorites operations
+  Future<List<Product>> getFavorites() async {
+    try {
+      var response = await dio.get(ApiConstants.favroitesBaseRoute,
+          options: Options(headers: {"requiresToken": true}));
+      if (response.statusCode == 200) {
+        var list = response.data['data'] as List;
+        var prods = <Product>[];
+        for (var item in list) {
+          prods.add(Product.fromJson(item['product']));
+        }
+        return prods;
+      } else {
+        throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future addToFavorites(int productId) async {
+    try {
+      var response = await dio.get(
+          "${ApiConstants.favroitesBaseRoute}/add?productId=$productId",
+          options: Options(headers: {"requiresToken": true}));
+      if (response.statusCode != 200) {
+        throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future removeFromFavorites(int id) async {
+    try {
+      var response = await dio.delete(
+          "${ApiConstants.favroitesBaseRoute}/remove?productId=$id",
+          options: Options(headers: {"requiresToken": true}));
+      if (response.statusCode != 200) {
+        throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
+      }
+    } catch (e, st) {
       rethrow;
     }
   }

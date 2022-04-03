@@ -14,19 +14,20 @@ class Product {
   List<AddOn>? addOns;
   late int? id;
   DateTime? createdBy;
+  bool? isFavorite;
 
-  Product({
-    this.title,
-    this.price,
-    this.discount,
-    this.categoryId,
-    this.categoryName,
-    this.description,
-    this.images,
-    this.options,
-    this.addOns,
-    this.id,
-  });
+  Product(
+      {this.title,
+      this.price,
+      this.discount,
+      this.categoryId,
+      this.categoryName,
+      this.description,
+      this.images,
+      this.options,
+      this.addOns,
+      this.id,
+      this.isFavorite});
 
   Product.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -35,6 +36,7 @@ class Product {
     categoryId = json['categoryId'];
     categoryName = json['categoryName'];
     description = json['description'];
+    isFavorite = json['isFavorite'];
     if (json['images'] != null) {
       images = <Image>[];
       json['images'].forEach((v) {

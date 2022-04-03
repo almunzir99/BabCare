@@ -10,6 +10,7 @@ class ProductCard extends StatelessWidget {
   final int? discount;
   final double? oldPrice;
   final String image;
+  final bool isFavorite;
   final void Function()? onTap;
   final void Function()? onFavTap;
   const ProductCard(
@@ -18,6 +19,7 @@ class ProductCard extends StatelessWidget {
       required this.subtitle,
       required this.price,
       required this.image,
+      this.isFavorite = false,
       this.oldPrice,
       this.onFavTap,
       this.onTap,
@@ -125,7 +127,6 @@ class ProductCard extends StatelessWidget {
             child: Visibility(
               visible: discount != null,
               child: GestureDetector(
-                onTap: onFavTap,
                 child: Container(
                   padding: const EdgeInsets.all(7.0),
                   decoration: BoxDecoration(
@@ -146,16 +147,19 @@ class ProductCard extends StatelessWidget {
           Positioned(
             bottom: 10.0,
             left: 10.0,
-            child: Container(
-              padding: const EdgeInsets.all(7.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: primaryColor),
-              child: const Center(
-                child: Icon(
-                  LineIcons.heart,
-                  color: Colors.white,
-                  size: 18.0,
+            child: GestureDetector(
+              onTap: onFavTap,
+              child: Container(
+                padding: const EdgeInsets.all(7.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: (!isFavorite) ? Colors.grey.shade400 : primaryColor),
+                child: const Center(
+                  child: Icon(
+                    LineIcons.heart,
+                    color: Colors.white,
+                    size: 18.0,
+                  ),
                 ),
               ),
             ),

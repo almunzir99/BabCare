@@ -64,13 +64,13 @@ namespace apiplate.Controllers
             }
         }
         [Authorize(Roles = "CUSTOMER")]
-        [HttpDelete("favorites/{id}")]
+        [HttpDelete("favorites/remove")]
 
-        public async Task<IActionResult> RemoveFavoriteAsync(int id){
+        public async Task<IActionResult> RemoveFavoriteAsync([Required][FromQuery] int productId){
             try
             {
                 var customerId = GetCurrentUserId();
-                await _service.RemoveFavoriteAsync(id);
+                await _service.RemoveFavoriteAsync(productId);
                 var response = new Response<string>(message:"item removed successfully");
                 return Ok(response);
                 
