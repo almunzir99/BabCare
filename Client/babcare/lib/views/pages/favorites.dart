@@ -60,6 +60,7 @@ class FavoritesPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15.0, vertical: 10.0),
                       child: ListView(
+                        physics: const BouncingScrollPhysics(),
                         children: controller.favList
                             .map((e) => Container(
                                   height: 130.0,

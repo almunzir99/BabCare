@@ -144,6 +144,7 @@ namespace apiplate
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapHub<SignalRHub>("/signalRHub");
+                endpoints.MapHub<NotificationsHub>("/notification-hub");
             });
 
             app.UseSpa(spa =>

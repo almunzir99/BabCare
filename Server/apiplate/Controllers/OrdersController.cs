@@ -70,7 +70,7 @@ namespace apiplate.Controllers
                 var response = new Response<OrderResource>(data: result, message: "order canceled successfully");
                 var notification = new NotificationResource(){
                     Title = "تم الغاء الطلب",
-                    Message = $"تم الغاء الطلب رقم ${result.Id} من قبل الادارة, الرجاء تفقد صفحة الطلبات",
+                    Message = $"تم الغاء الطلب رقم {result.Id} من قبل الادارة, الرجاء تفقد صفحة الطلبات",
                     Module = "ORDERS",
                     Action = "CANCEL",
                     Url = $"orders"
@@ -123,7 +123,7 @@ namespace apiplate.Controllers
                 var response = new Response<OrderResource>(data: result, message: "order completed successfully");
                   var notification = new NotificationResource(){
                     Title = "تم اكمال الطلب",
-                    Message = $"تم توصيل الطلب رقم ${result.Id} بنجاح",
+                    Message = $"تم توصيل الطلب رقم {result.Id} بنجاح",
                     Module = "ORDERS",
                     Action = "COMPELETE",
                     Url = $"orders"
@@ -221,7 +221,7 @@ namespace apiplate.Controllers
                 var response = new Response<OrderResource>(data: result, message: "order prepared successfully");
                   var notification = new NotificationResource(){
                     Title = "تم تحضير الطلب",
-                    Message = $"تم تحضير الطلب رقم ${result.Id}, سيتم توصيل الطلب بأسرع وقت",
+                    Message = $"تم تحضير الطلب رقم {result.Id}, سيتم توصيل الطلب بأسرع وقت",
                     Module = "ORDERS",
                     Action = "PREPARE",
                     Url = $"orders"
@@ -247,7 +247,7 @@ namespace apiplate.Controllers
                 var response = new Response<OrderResource>(data: result, message: "order assigned to delivery successfully");
                   var notification = new NotificationResource(){
                     Title = "الطلب حاليا قيد التوصيل",
-                    Message = $"الطلب رقم ${result.Id} قيد التوصيل, يمكنك متابعة الطلب من صفحة متابعة الطلب",
+                    Message = $"الطلب رقم {result.Id} قيد التوصيل, يمكنك متابعة الطلب من صفحة متابعة الطلب",
                     Module = "ORDERS",
                     Action = "DELIVERY",
                     Url = $"orders"

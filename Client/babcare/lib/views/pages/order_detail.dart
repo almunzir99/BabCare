@@ -260,7 +260,7 @@ class OrderDetailPage extends StatelessWidget {
                           style: TextStyle(color: Colors.grey)),
                       TextSpan(
                           text:
-                              " ${GeneralConstant.ArabicOrderStatuses[controller.currentOrder!.status!]} ",
+                              " ${GeneralConstant.arabicOrderStatuses[controller.currentOrder!.status!]} ",
                           style: TextStyle(color: accentColor)),
                     ])),
                     trailing: GestureDetector(

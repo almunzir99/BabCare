@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:babcare/constants/api_constants.dart';
 import 'package:babcare/interceptors/app_interceptors.dart';
 import 'package:babcare/models/customer.dart';
+import 'package:babcare/models/notification.dart';
 import 'package:dio/dio.dart';
 
 class AuthService {
@@ -23,9 +24,7 @@ class AuthService {
       } else {
         throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
       }
-    } catch (e, st) {
-      print(e);
-      print(st);
+    } catch (e) {
       rethrow;
     }
   }
@@ -40,9 +39,7 @@ class AuthService {
       } else {
         throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
       }
-    } catch (e, st) {
-      print(e);
-      print(st);
+    } catch (e) {
       rethrow;
     }
   }
@@ -55,6 +52,39 @@ class AuthService {
       if (response.statusCode == 200) {
         var customer = Customer().fromJson(response.data['data']);
         return customer;
+      } else {
+        throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<Notification>> getNotifications() async {
+    try {
+      var response = await dio.get(ApiConstants.notificationBaseRoute,
+          options: Options(headers: {"requiresToken": true}));
+      if (response.statusCode == 200) {
+        var data = response.data['data'] as List;
+        var notifications = data.map((e) => Notification.fromJson(e)).toList();
+        return notifications;
+      } else {
+        throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<Notification>> readNotification() async {
+    try {
+      var response = await dio.get(
+          "${ApiConstants.notificationBaseRoute}/unread?autoRead=true",
+          options: Options(headers: {"requiresToken": true}));
+      if (response.statusCode == 200) {
+        var data = response.data['data'] as List;
+        var notifications = data.map((e) => Notification.fromJson(e)).toList();
+        return notifications;
       } else {
         throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
       }

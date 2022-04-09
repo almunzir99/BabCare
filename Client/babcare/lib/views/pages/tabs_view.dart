@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:babcare/controllers/auth_controller.dart';
 import 'package:babcare/controllers/custom_drawer_controller.dart';
 import 'package:babcare/controllers/dimmer_controller.dart';
 import 'package:babcare/theme/style.dart';
@@ -28,6 +30,7 @@ class _TabsViewState extends State<TabsView> {
   Widget build(BuildContext context) {
     var drawerController = Get.put(CustomDrawerController());
     var dimmerController = Get.put(DimmerController());
+    var authController = Get.put(AuthController());
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -49,7 +52,9 @@ class _TabsViewState extends State<TabsView> {
                 children: [
                   //icon
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed("/notifications");
+                      },
                       icon: const Icon(
                         LineIcons.bell,
                         color: Colors.black,
@@ -59,13 +64,28 @@ class _TabsViewState extends State<TabsView> {
                   Positioned(
                     top: 10.0,
                     left: 10.0,
-                    child: Container(
-                      height: 10.0,
-                      width: 10.0,
-                      decoration: BoxDecoration(
-                          color: primaryColor,
-                          borderRadius: BorderRadius.circular(5.0)),
-                    ),
+                    child: Obx(() {
+                      return Visibility(
+                        visible: authController.notifications
+                            .where((p0) => !p0.read!)
+                            .isNotEmpty,
+                        child: Container(
+                          height: 15.0,
+                          width: 15.0,
+                          decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Center(
+                            child: AutoSizeText(
+                              "${authController.notifications.where((p0) => !p0.read!).length}",
+                              minFontSize: 10.0,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
                   ),
                 ],
               ))

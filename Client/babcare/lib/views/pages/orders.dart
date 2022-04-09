@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:babcare/constants/general_constant.dart';
 import 'package:babcare/controllers/custom_drawer_controller.dart';
 import 'package:babcare/controllers/orders_controller.dart';
+import 'package:babcare/services/signalr_service.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:babcare/views/components/placeholders/error_placeholder.dart';
 import 'package:babcare/views/components/placeholders/orders_page_shimmer.dart';
@@ -24,6 +25,12 @@ class OrdersPage extends StatelessWidget {
     var drawerController = Get.put(CustomDrawerController());
     var ordersController = Get.put(OrdersController());
     ordersController.getOrderAsync.value = ordersController.getOrders();
+    var signalRService = SignalRService.instance;
+    signalRService.onNotificationRecieved((notification) {
+      if (notification.module == "ORDERS") {
+        refresh();
+      }
+    });
     return Scaffold(
         appBar: hideAppBar
             ? null
@@ -90,6 +97,7 @@ class OrdersPage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15.0, vertical: 10.0),
                         child: ListView(
+                          physics: const BouncingScrollPhysics(),
                           children: ordersController.orders.map((order) {
                             var date = DateTime.parse(order.createdAt!);
 
@@ -250,7 +258,7 @@ class OrdersPage extends StatelessWidget {
                                                   fontWeight: FontWeight.bold)),
                                           TextSpan(
                                               text:
-                                                  " ${GeneralConstant.ArabicOrderStatuses[order.status!]} ",
+                                                  " ${GeneralConstant.arabicOrderStatuses[order.status!]} ",
                                               style: TextStyle(
                                                   fontSize: 16.0,
                                                   fontWeight: FontWeight.bold,
