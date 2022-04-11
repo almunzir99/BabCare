@@ -3,13 +3,13 @@
 
 /* Provide sufficient contrast against white background */
 
-@import "../node_modules/semantic-ui-css/semantic.min.css";
+@import "../semantic/dist/semantic.rtl.css";
 @import "../node_modules/eva-icons/style/eva-icons.css";
 @import "~line-awesome/dist/line-awesome/css/line-awesome.min.css";
 @import 'variables';
 @font-face {
     src: url("assets/fonts/rb.ttf");
-    font-family: "rb";
+    font-family: "rb"; 
 }
 
 * {

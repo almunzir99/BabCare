@@ -1,0 +1,7 @@
+/*******************************
+     User Global Variables
+*******************************/
+@importGoogleFonts : false;
+@inputFont:'rb';
+@googleFontFamily : 'rb';
+@pageFont : 'rb';
