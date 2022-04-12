@@ -1,7 +1,8 @@
-<div [style.width]="width" class="ui action input">
+<div style="direction: rtl;" [style.width]="width" class="ui left action input">
+  <button (click)="pick()" class="ui yellow  labeled icon button">
+    اختيار
+    <i class="folder icon"></i>
+  </button>
     <input [attr.name]="name" type="text" placeholder="عنوان الصورة" [(ngModel)]="fileUrl">
-    <button (click)="pick()" class="ui yellow right labeled icon button">
-      <i class="folder icon"></i>
-      اختيار
-    </button>
+   
 </div>
