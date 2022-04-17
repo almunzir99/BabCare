@@ -1,4 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { AuthService } from '../core/services/auth.service';
+import { SignalrService } from '../core/services/signalr.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +11,7 @@ export class DashboardComponent implements OnInit {
 
   toggle:boolean = true;
   currentMenuItem:any;
-  constructor(@Inject("DIRECTION") public direction:string) { }
+  constructor(@Inject("DIRECTION") public direction:string,private signalRService:SignalrService,private authService:AuthService) { }
   toggleMenu(toggle:boolean){
     var dataTableBody = document.getElementById("data-table-body") as HTMLElement;
     if(dataTableBody){
@@ -24,7 +26,14 @@ export class DashboardComponent implements OnInit {
     this.toggle = toggle;
   }
   ngOnInit(): void {
+    this.signalRService.startConnection().then(_ => {
+      this.signalRService.onNotificationRecieved(notification => {
+        console.log(notification);
+          this.authService.$notifications.value.unshift(notification);
+      })
+    });
   }
+
   
   menuItemChange(event){
     setTimeout(() => {

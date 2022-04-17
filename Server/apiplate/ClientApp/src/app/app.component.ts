@@ -18,7 +18,13 @@ export class AppComponent {
     var id = parseInt(localStorage.getItem('apiplate_id'));
       this.authService.getById(id).subscribe(res =>{
         this.authService.$currentUser.next(res.data);
-        this.loading = false;
+        this.authService.getNotifications().subscribe(res => {
+          console.log(res);
+          this.loading = false;
+          this.authService.$notifications.next(res.data);
+        },err => {
+            throw err;
+        } );
       },err=>{
           this.router.navigate(['login']);
         this.loading = false;

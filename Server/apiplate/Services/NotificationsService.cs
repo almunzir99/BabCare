@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace apiplate.Services
 {
-      public class NotificationService : INotificationService
+    public class NotificationService : INotificationService
     {
         private readonly ApiplateDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -91,7 +91,8 @@ namespace apiplate.Services
         public async Task<IList<NotificationResource>> ListNotificationsAsync(int userId, string userType, PaginationFilter filter)
         {
             var user = await GetUser(userId, userType);
-            var mappedNotifications = _mapper.Map<IList<Notification>, IList<NotificationResource>>(user.Notifications);
+            var notifications = user.Notifications.OrderByDescending(c => c.CreatedAt).ToList();
+            var mappedNotifications = _mapper.Map<IList<Notification>, IList<NotificationResource>>(notifications);
             return mappedNotifications;
         }
 
@@ -104,7 +105,7 @@ namespace apiplate.Services
                 user.Notifications.Add(mappedNotification);
                 var result = _mapper.Map<Notification, NotificationResource>(mappedNotification);
                 await _dbContext.SaveChangesAsync();
-                await PushNotificationWithSignalR(userId,userType,result);
+                await PushNotificationWithSignalR(userId, userType, result);
             }
             catch (DbUpdateException exception)
             {
@@ -189,6 +190,11 @@ namespace apiplate.Services
                     user.Notifications.Add(mappedNotification);
                 }
                 await _dbContext.SaveChangesAsync();
+                foreach (var user in users)
+                {
+                    await PushNotificationWithSignalR(user.Id, userType, notification);
+
+                }
             }
             catch (DbUpdateException exception)
             {
@@ -201,12 +207,12 @@ namespace apiplate.Services
             }
 
         }
-        private async Task PushNotificationWithSignalR(int userId,string userType, NotificationResource notification)
+        private async Task PushNotificationWithSignalR(int userId, string userType, NotificationResource notification)
         {
-            var target = _connectionManager.GetUserConnections(userId,userType);
+            var target = _connectionManager.GetUserConnections(userId, userType);
             foreach (var id in target)
             {
-                await _hubContext.Clients.Client(id).SendAsync("recieveNotification",notification);
+                await _hubContext.Clients.Client(id).SendAsync("recieveNotification", notification);
             }
 
         }

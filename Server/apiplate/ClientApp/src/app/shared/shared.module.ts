@@ -11,7 +11,7 @@ import { CustomSummernoteEditorComponent } from './custom-summernote-editor/cust
 import { NgxSummernoteModule } from 'ngx-summernote';
 import { PreloaderComponent } from './preloader/preloader.component';
 import { AgmCoreModule } from '@agm/core';
-import { BrowserModule } from '@angular/platform-browser';
+
 
 
 
@@ -33,7 +33,7 @@ import { BrowserModule } from '@angular/platform-browser';
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCsE5KDJqjPpbTHsQFqSjnJHclQuCBw8c4'
-    })
+    }),
     
 
   ],

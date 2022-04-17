@@ -20,9 +20,13 @@ export class LoginComponent implements OnInit {
         console.log(res);
         this._authService.saveToken(res.data.token,res.data.id);
         this._authService.$currentUser.next(res.data);
-
-        this.isLoading = false;
-        this.router.navigate(['dashboard']);
+        this._authService.getNotifications().subscribe(res => {
+          this.isLoading = false;
+          this.router.navigate(['dashboard']);
+          this._authService.$notifications.next(res.data);
+        },err => {
+            throw err;
+        } );
       },err => {
         console.log(err);
         this.isLoading = false;

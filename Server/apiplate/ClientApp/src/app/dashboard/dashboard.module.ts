@@ -6,7 +6,8 @@ import { DashboardComponent } from './dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FomanticUIModule } from 'ngx-fomantic-ui';
 import { MenuComponent } from './components/menu/menu.component';
-
+import { MomentModule } from 'ngx-moment';
+import 'moment/locale/ar';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,8 @@ import { MenuComponent } from './components/menu/menu.component';
     CommonModule,
     DashboardRoutingModule,
     FomanticUIModule,
+    MomentModule 
+
   ]
 })
 export class DashboardModule { }

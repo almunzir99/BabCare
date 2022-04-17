@@ -6,13 +6,72 @@
         </div>
         <div>
             <div class="group-title">الرئيسية <span>
-                <i *ngIf="direction == 'ltr'" class="eva eva-arrow-forward"></i>
-                <i *ngIf="direction == 'rtl'" class="eva eva-arrow-back"></i>
+                    <i *ngIf="direction == 'ltr'" class="eva eva-arrow-forward"></i>
+                    <i *ngIf="direction == 'rtl'" class="eva eva-arrow-back"></i>
 
                 </span> {{group}}</div>
             <div class="page-title">{{page}}</div>
 
         </div>
     </div>
+    <div>
+        <div class="notifications-container ui dropdown" fuiDropdown>
+            <div class="notification">
+                <i class="las la-bell main"></i>
+                <div *ngIf="getUnreadNotifications() > 0 " class="badge">{{getUnreadNotifications()}} </div>
+            </div>
+            <div class="notification-menu menu" fuiDropdownMenu>
+                <div class="header">
+                    <div>
+                        <div class="title">
+                            الاشعارات
+                        </div>
+                        <div *ngIf="getUnreadNotifications() > 0 " class="subtitle">
+                            لديك {{getUnreadNotifications()}} اشعارات جديد
+                        </div>
+                        <div *ngIf="getUnreadNotifications() == 0 " class="subtitle">
+                            لا توجد اشعارات جديد
+                        </div>
+                    </div>
+                    <div (click)="readNotifications()" class="read-button">
+                        <i *ngIf="!isButtonLoading" class="las la-check-double"></i>
+                        <div *ngIf="isButtonLoading" class="ui small primary active loader"></div>
 
+                    </div>
+                </div>
+                <div class="notifications-list">
+                    <div [class.unread]="!notification.read" *ngFor="let notification of notifications"
+                        class="notification-item">
+                        <div class="icon">
+                            <i class="las la-bell"></i>
+                        </div>
+                        <div class="content">
+                            <div class="notification-title">{{notification.title}}</div>
+                            <div class="div notification-subtitle">{{notification.message}}</div>
+                            <div class="date">{{notification.createdAt | amLocal : 'ar' | amTimeAgo}}</div>
+                        </div>
+                        <div [class.unread]="!notification.read" class="new-badge"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div style="display: inline-block;" class="ui dropdown user-info-container" fuiDropdown>
+            <i class="las la-user-circle main"></i>
+
+            <div class="menu" fuiDropdownMenu>
+                <div class="item">
+                    <div class="Messages">
+                        <i class="envelope icon"></i> الرسائل
+                    </div>
+                </div>
+                <div class="item">
+                    <i class="cog icon"></i> الاعدادات
+                </div>
+                <div (click)="logout()" class="item">
+                    <i class="power off icon"></i> تسجيل خروج
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

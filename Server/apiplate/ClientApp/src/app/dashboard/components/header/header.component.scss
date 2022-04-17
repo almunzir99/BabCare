@@ -1,4 +1,5 @@
 @import 'variables';
+
 .header-container {
     width: 100%;
     background-color: white;
@@ -66,4 +67,141 @@
 .header-container.rtl .page-info .las.la-bars {
     margin-left: 20px;
     margin-right: 0px;
+}
+
+.notifications-container {
+    display: inline-block;
+    margin: 0px 15px;
+
+    .notification {
+        display: inline-block;
+        position: relative;
+        height: auto;
+        width: auto;
+
+        i.main {
+            font-size: 32px;
+        }
+
+        .badge {
+            background-color: $primary-color;
+            color: white;
+            position: absolute;
+            top: 0px;
+            right: 10px;
+            font-size: 9px;
+            border-radius: 100%;
+        }
+    }
+
+    .menu {
+        right: -300px;
+        width: 330px;
+        height: 500px;
+        box-shadow: $box-shadow;
+        border-radius: 20px;
+        border: none;
+        padding: 0;
+        overflow: hidden;
+        min-width: unset;
+
+        .header {
+            background-color: $primary-color;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            margin: 0;
+            .title{
+                font-size: 16px;
+                font-weight: bold;
+            }
+            .subtitle{
+                font-size: 12px;
+            }
+
+            .read-button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 45px;
+                width: 45px;
+                background-color: white;
+                border-radius: 50%;
+                position: relative;
+                cursor: pointer;
+                i {
+                    font-size: 26px;
+                    color: $primary-color;
+                }
+                .ui.primary.loader.loader.loader:after{
+                    color: $primary-color!important;
+                }
+
+            }
+
+        }
+        .notifications-list{
+            height: 80%;
+            overflow: auto;
+            .notification-item{
+                display: flex;
+                align-items: flex-start;
+                padding:  15px;
+                border-bottom: 1px solid #efeeee ;
+                .icon{
+                    height: 50px;
+                    width: 50px;
+                    border-radius: 50%;
+                    background-color: rgba($color: $primary-color, $alpha: 0.3);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    i{
+                        color: $primary-color;
+                        font-size: 32px;
+                    }
+                   
+                }
+                .content{
+                    margin: 0px 15px;
+                    width: 70%;
+                    .notification-title{
+                        font-weight: bold;
+                        color: #333;
+                        font-size: 16px;
+                    }
+                    .notification-subtitle{
+                        color: #444;
+                        font-size: 12px;
+                        white-space: normal;
+                    }
+                }
+            }
+            .notification-item.unread{
+                background-color: #f7f4f4;
+            }
+            .new-badge{
+                height: 10px;
+                width: 10px;
+                border-radius: 50%;
+                background-color: $accent-color;
+                align-self: center;
+            }
+        }
+       
+    }
+
+
+
+}
+.user-info-container{
+    margin: 0px 15px;
+    i.main{
+        font-size: 32px;
+    }
+    .menu{
+        right: -100px;
+    }
 }

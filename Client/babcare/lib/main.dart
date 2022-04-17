@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:babcare/controllers/custom_drawer_controller.dart';
 import 'package:babcare/routing.dart';
 import 'package:babcare/services/notifications_services.dart';
@@ -14,7 +15,7 @@ Future<void> main() async {
   Get.put(CartController());
   Get.put<CustomDrawerController>(CustomDrawerController());
   final _authController = Get.put(AuthController());
-
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
   var signalrService = SignalRService.instance;
   var notificationService = NotificationsService.instance;
@@ -25,6 +26,15 @@ Future<void> main() async {
     _authController.notifications.refresh();
     notificationService.pushNotification(notification);
   });
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }
 
 class MyApp extends StatelessWidget {

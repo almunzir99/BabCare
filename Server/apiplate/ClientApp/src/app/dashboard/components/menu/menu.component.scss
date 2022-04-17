@@ -47,22 +47,7 @@
     font-size: 20px;
 }
 
-.notification {
-    display: inline-block;
-    position: relative;
-    height: auto;
-    width: auto;
-}
 
-.notification .badge {
-    background-color: $primary-color;
-    color: white;
-    position: absolute;
-    top: 0px;
-    right: 10px;
-    font-size: 9px;
-    border-radius: 100%;
-}
 
 .user-image-container {
     display: flex;
