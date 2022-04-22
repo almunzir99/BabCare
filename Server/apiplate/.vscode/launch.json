@@ -24,7 +24,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/bin/Debug/netcoreapp3.1/apiplate.dll",
-            "args": ["--urls","https://192.168.43.242:5001"],
+            // "args": ["--urls","https://192.168.43.242:5001"],
             "cwd": "${workspaceRoot}",
             "stopAtEntry": false,
             "console": "internalConsole",

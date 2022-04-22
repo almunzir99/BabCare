@@ -66,6 +66,24 @@
         </div>
     </div>
 </div>
+<!---------------------------------- Charts  -------------------------------------- -->
+<div class="row">
+    <div class="chart-container  pie-chart">
+        <h2 class="title">الاصناف الاعلى طلبا</h2>
+        <div class="chart">
+            <ngx-charts-pie-chart style="direction:ltr" legendTitle="عناوين" [legend]="true" [labels]="true"
+                [results]="categoriesSampleData" [scheme]="colorScheme"></ngx-charts-pie-chart>
+        </div>
+    </div>
+    <div class="chart-container  line-chart">
+        <h2 class="title">الطلبات خلال الاسبوع</h2>
+        <div class="chart">
+            <ngx-charts-area-chart style="direction:ltr"  [xAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [yAxis]="true" [labels]="true"
+                [results]="ordersSampleData" [scheme]="colorScheme"></ngx-charts-area-chart>
+        </div>
+    </div>
+
+</div>
 <ng-template #loading>
     <div style="display: flex;align-items: center;flex-direction: column;" class="ui active loader">
         <p>الرجاء الانتظار</p>
