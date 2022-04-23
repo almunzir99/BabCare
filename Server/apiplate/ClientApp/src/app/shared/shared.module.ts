@@ -32,7 +32,7 @@ import { AgmCoreModule } from '@agm/core';
     NgxSummernoteModule,
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCsE5KDJqjPpbTHsQFqSjnJHclQuCBw8c4'
+      apiKey: 'AIzaSyDDkRc6lMOXlmRyWhv_2g0JbxJRQxKWsLc'
     }),
     
 

@@ -27,7 +27,7 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints = PolylinePoints();
-  String googleAPiKey = "AIzaSyCsE5KDJqjPpbTHsQFqSjnJHclQuCBw8c4";
+  String googleAPiKey = "AIzaSyDDkRc6lMOXlmRyWhv_2g0JbxJRQxKWsLc";
 
   _addMarker(LatLng position, String id, BitmapDescriptor descriptor,
       {InfoWindow infoWindow = InfoWindow.noText}) {

@@ -20,7 +20,7 @@ import { AgmCoreModule } from '@agm/core';
     FomanticUIModule,
     FormsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCsE5KDJqjPpbTHsQFqSjnJHclQuCBw8c4'
+      apiKey: 'AIzaSyDDkRc6lMOXlmRyWhv_2g0JbxJRQxKWsLc'
     })
 
   ]
