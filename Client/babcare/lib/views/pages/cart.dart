@@ -15,7 +15,7 @@ class CartPage extends StatelessWidget {
     controller.lat.value = 0.0;
     controller.long.value = 0.0;
     controller.deliveryPrice.value = 0.0;
-
+    var result = false; // location picker page navigation result
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -391,13 +391,14 @@ class CartPage extends StatelessWidget {
                               ).show();
                               return;
                             }
-                            if (controller.deliveryPrice.value == 0.0) {
-                              await Get.toNamed("/location_picker");
+
+                            if (controller.deliveryPrice.value == 0.0 ||
+                                result != true) {
+                              result = await Get.toNamed("/location_picker");
                             } else {
                               await Get.toNamed("/checkout");
                             }
                             controller.deliveryPrice.refresh();
-                            // Get.toNamed("/checkout");
                           },
                           child: Obx(() {
                             return Container(
@@ -408,7 +409,8 @@ class CartPage extends StatelessWidget {
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 5.0),
                               decoration: BoxDecoration(
-                                color: (controller.deliveryPrice.value == 0.0)
+                                color: (controller.deliveryPrice.value == 0.0 ||
+                                        result != true)
                                     ? accentColor
                                     : primaryColor,
                                 borderRadius: BorderRadius.circular(20.0),
@@ -417,7 +419,8 @@ class CartPage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    (controller.deliveryPrice.value != 0.0)
+                                    (controller.deliveryPrice.value != 0.0 &&
+                                            result)
                                         ? "متابعة"
                                         : "تحديد العنوان",
                                     style: const TextStyle(color: Colors.white),

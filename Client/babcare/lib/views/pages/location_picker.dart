@@ -444,7 +444,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
                                         Material(
                                           child: CustomButton(
                                               onTap: () {
-                                                Get.back();
+                                                Get.back(result: true);
                                               },
                                               text: "تأكيد",
                                               fontSize: MediaQuery.of(context)
