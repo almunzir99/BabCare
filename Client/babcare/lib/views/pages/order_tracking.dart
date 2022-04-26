@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:babcare/controllers/orders_controller.dart';
+import 'package:babcare/models/status_history.dart';
 import 'package:babcare/theme/style.dart';
 import 'package:babcare/views/components/dashed_separator.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,10 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:intl/intl.dart';
 import 'dart:ui' as ui;
 
 class OrderTrackingPage extends StatefulWidget {
@@ -140,8 +144,42 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
     initMarkersAsync = initMarkers();
   }
 
+  StatusInfo getStatusInfo(int status) {
+    var history = controller.currentOrder!.history;
+
+    if (history!.isNotEmpty) {
+      for (var element in history) {
+        if (element.createdAt != null) {
+          var format = DateFormat.yMMMEd('ar');
+          var date = DateTime.parse(element.createdAt!);
+          element.formattedDate = format.format(date);
+        }
+      }
+      if (history.last.status == 6 || history.last.status == 5) {
+        if (history[history.length - 2].status == status) {
+          return StatusInfo(Colors.red, Colors.white, history.last);
+        } else if (history[history.length - 2].status! < status) {
+          return StatusInfo(
+              accentColor.withOpacity(0.3), accentColor, StatusHistory());
+        } else {
+          return StatusInfo(
+              accentColor, Colors.white, history[history.length - 2]);
+        }
+      } else {
+        if (history.last.status! >= status) {
+          return StatusInfo(accentColor, Colors.white, history.last);
+        } else {
+          return StatusInfo(
+              accentColor.withOpacity(0.3), accentColor, StatusHistory());
+        }
+      }
+    }
+    throw "history should not be empty";
+  }
+
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting("ar");
     return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -237,24 +275,22 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                                       height: 35.0,
                                       width: 35.0,
                                       decoration: BoxDecoration(
-                                          color: (controller
-                                                      .currentOrder!.status! >
-                                                  0)
-                                              ? accentColor
-                                              : accentColor.withOpacity(0.2),
+                                          color: getStatusInfo(1).background,
                                           borderRadius:
                                               BorderRadius.circular(17.5)),
                                       padding: const EdgeInsets.all(5.0),
                                       // ignore: prefer_const_constructors
                                       child: Icon(
-                                        Icons.check,
-                                        size: 18.0,
-                                        color:
-                                            (controller.currentOrder!.status! >
-                                                    0)
-                                                ? Colors.white
-                                                : accentColor,
-                                      ),
+                                          (getStatusInfo(1).history!.status ==
+                                                      6 ||
+                                                  getStatusInfo(1)
+                                                          .history!
+                                                          .status ==
+                                                      5)
+                                              ? LineIcons.times
+                                              : Icons.check,
+                                          size: 18.0,
+                                          color: getStatusInfo(1).foreground),
                                     ),
                                     DashSeparator(
                                       height:
@@ -273,26 +309,36 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text("تم استلام الطلب"),
-                                    Row(
-                                      // ignore: prefer_const_literals_to_create_immutables
-                                      children: [
-                                        Icon(
-                                          LineIcons.clock,
-                                          color: Colors.grey.shade500,
-                                          size: 17.0,
-                                        ),
-                                        const SizedBox(
-                                          width: 7.0,
-                                        ),
-                                        Text(
-                                          "09:08 AM, 9 Jan 2021",
-                                          style: TextStyle(
-                                              color: Colors.grey.shade500,
-                                              fontSize: 12.0),
-                                        )
-                                      ],
-                                    ),
+                                    Text((getStatusInfo(1).history!.status ==
+                                                6 ||
+                                            getStatusInfo(1).history!.status ==
+                                                5)
+                                        ? " تم الغاء الطلب "
+                                        : "تم استلام الطلب"),
+                                    (getStatusInfo(1).history!.createdAt ==
+                                            null)
+                                        ? Container()
+                                        : Row(
+                                            // ignore: prefer_const_literals_to_create_immutables
+                                            children: [
+                                              Icon(
+                                                LineIcons.clock,
+                                                color: Colors.grey.shade500,
+                                                size: 17.0,
+                                              ),
+                                              const SizedBox(
+                                                width: 7.0,
+                                              ),
+                                              Text(
+                                                getStatusInfo(1)
+                                                    .history!
+                                                    .formattedDate!,
+                                                style: TextStyle(
+                                                    color: Colors.grey.shade500,
+                                                    fontSize: 12.0),
+                                              )
+                                            ],
+                                          ),
                                   ],
                                 )
                               ],
@@ -306,23 +352,22 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                                       height: 35.0,
                                       width: 35.0,
                                       decoration: BoxDecoration(
-                                          color: (controller
-                                                      .currentOrder!.status! >
-                                                  1)
-                                              ? accentColor
-                                              : accentColor.withOpacity(0.2),
+                                          color: getStatusInfo(2).background,
                                           borderRadius:
                                               BorderRadius.circular(17.5)),
                                       padding: const EdgeInsets.all(5.0),
                                       // ignore: prefer_const_constructors
                                       child: Icon(
-                                        Icons.outdoor_grill,
+                                        (getStatusInfo(2).history!.status ==
+                                                    6 ||
+                                                getStatusInfo(2)
+                                                        .history!
+                                                        .status ==
+                                                    5)
+                                            ? LineIcons.times
+                                            : Icons.outdoor_grill,
                                         size: 18.0,
-                                        color:
-                                            (controller.currentOrder!.status! >
-                                                    1)
-                                                ? Colors.white
-                                                : accentColor,
+                                        color: getStatusInfo(2).foreground,
                                       ),
                                     ),
                                     DashSeparator(
@@ -342,26 +387,36 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text("تم تحضير الطلب"),
-                                    Row(
-                                      // ignore: prefer_const_literals_to_create_immutables
-                                      children: [
-                                        Icon(
-                                          LineIcons.clock,
-                                          color: Colors.grey.shade500,
-                                          size: 17.0,
-                                        ),
-                                        const SizedBox(
-                                          width: 7.0,
-                                        ),
-                                        Text(
-                                          "09:08 AM, 9 Jan 2021",
-                                          style: TextStyle(
-                                              color: Colors.grey.shade500,
-                                              fontSize: 12.0),
-                                        )
-                                      ],
-                                    ),
+                                    Text((getStatusInfo(2).history!.status ==
+                                                6 ||
+                                            getStatusInfo(2).history!.status ==
+                                                5)
+                                        ? " تم الغاء الطلب "
+                                        : "تم تحضير الطلب"),
+                                    (getStatusInfo(2).history!.createdAt ==
+                                            null)
+                                        ? Container()
+                                        : Row(
+                                            // ignore: prefer_const_literals_to_create_immutables
+                                            children: [
+                                              Icon(
+                                                LineIcons.clock,
+                                                color: Colors.grey.shade500,
+                                                size: 17.0,
+                                              ),
+                                              const SizedBox(
+                                                width: 7.0,
+                                              ),
+                                              Text(
+                                                getStatusInfo(2)
+                                                    .history!
+                                                    .formattedDate!,
+                                                style: TextStyle(
+                                                    color: Colors.grey.shade500,
+                                                    fontSize: 12.0),
+                                              )
+                                            ],
+                                          ),
                                   ],
                                 )
                               ],
@@ -375,22 +430,21 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                                       height: 35.0,
                                       width: 35.0,
                                       decoration: BoxDecoration(
-                                          color: (controller
-                                                      .currentOrder!.status! >
-                                                  2)
-                                              ? accentColor
-                                              : accentColor.withOpacity(0.2),
+                                          color: getStatusInfo(3).background,
                                           borderRadius:
                                               BorderRadius.circular(17.5)),
                                       padding: const EdgeInsets.all(5.0),
                                       child: Icon(
-                                        Icons.delivery_dining,
+                                        (getStatusInfo(3).history!.status ==
+                                                    6 ||
+                                                getStatusInfo(3)
+                                                        .history!
+                                                        .status ==
+                                                    5)
+                                            ? LineIcons.times
+                                            : Icons.delivery_dining,
                                         size: 18.0,
-                                        color:
-                                            (controller.currentOrder!.status! >
-                                                    2)
-                                                ? Colors.white
-                                                : accentColor,
+                                        color: getStatusInfo(3).foreground,
                                       ),
                                     ),
                                     DashSeparator(
@@ -410,26 +464,36 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text("قيد التوصيل"),
-                                    Row(
-                                      // ignore: prefer_const_literals_to_create_immutables
-                                      children: [
-                                        Icon(
-                                          LineIcons.clock,
-                                          color: Colors.grey.shade500,
-                                          size: 17.0,
-                                        ),
-                                        const SizedBox(
-                                          width: 7.0,
-                                        ),
-                                        Text(
-                                          "09:08 AM, 9 Jan 2021",
-                                          style: TextStyle(
-                                              color: Colors.grey.shade500,
-                                              fontSize: 12.0),
-                                        )
-                                      ],
-                                    ),
+                                    Text((getStatusInfo(3).history!.status ==
+                                                6 ||
+                                            getStatusInfo(3).history!.status ==
+                                                5)
+                                        ? " تم الغاء الطلب "
+                                        : "قيد التوصيل"),
+                                    (getStatusInfo(3).history!.createdAt ==
+                                            null)
+                                        ? Container()
+                                        : Row(
+                                            // ignore: prefer_const_literals_to_create_immutables
+                                            children: [
+                                              Icon(
+                                                LineIcons.clock,
+                                                color: Colors.grey.shade500,
+                                                size: 17.0,
+                                              ),
+                                              const SizedBox(
+                                                width: 7.0,
+                                              ),
+                                              Text(
+                                                getStatusInfo(3)
+                                                    .history!
+                                                    .formattedDate!,
+                                                style: TextStyle(
+                                                    color: Colors.grey.shade500,
+                                                    fontSize: 12.0),
+                                              )
+                                            ],
+                                          ),
                                   ],
                                 )
                               ],
@@ -443,23 +507,21 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                                       height: 35.0,
                                       width: 35.0,
                                       decoration: BoxDecoration(
-                                          color: (controller
-                                                      .currentOrder!.status! >
-                                                  3)
-                                              ? accentColor
-                                              : accentColor.withOpacity(0.15),
+                                          color: getStatusInfo(4).background,
                                           borderRadius:
                                               BorderRadius.circular(17.5)),
                                       padding: const EdgeInsets.all(5.0),
                                       child: Icon(
-                                        LineIcons.doubleCheck,
-                                        size: 18.0,
-                                        color:
-                                            (controller.currentOrder!.status! >
-                                                    3)
-                                                ? Colors.white
-                                                : accentColor,
-                                      ),
+                                          (getStatusInfo(4).history!.status ==
+                                                      6 ||
+                                                  getStatusInfo(4)
+                                                          .history!
+                                                          .status ==
+                                                      5)
+                                              ? LineIcons.times
+                                              : LineIcons.doubleCheck,
+                                          size: 18.0,
+                                          color: getStatusInfo(4).foreground),
                                     ),
                                   ],
                                 ),
@@ -469,26 +531,36 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text("تم اكمال الطلب"),
-                                    Row(
-                                      // ignore: prefer_const_literals_to_create_immutables
-                                      children: [
-                                        Icon(
-                                          LineIcons.clock,
-                                          color: Colors.grey.shade500,
-                                          size: 17.0,
-                                        ),
-                                        const SizedBox(
-                                          width: 7.0,
-                                        ),
-                                        Text(
-                                          "09:08 AM, 9 Jan 2021",
-                                          style: TextStyle(
-                                              color: Colors.grey.shade500,
-                                              fontSize: 12.0),
-                                        )
-                                      ],
-                                    ),
+                                    Text((getStatusInfo(4).history!.status ==
+                                                6 ||
+                                            getStatusInfo(4).history!.status ==
+                                                5)
+                                        ? " تم الغاء الطلب "
+                                        : "تم اكمال الطلب"),
+                                    (getStatusInfo(4).history!.createdAt ==
+                                            null)
+                                        ? Container()
+                                        : Row(
+                                            // ignore: prefer_const_literals_to_create_immutables
+                                            children: [
+                                              Icon(
+                                                LineIcons.clock,
+                                                color: Colors.grey.shade500,
+                                                size: 17.0,
+                                              ),
+                                              const SizedBox(
+                                                width: 7.0,
+                                              ),
+                                              Text(
+                                                getStatusInfo(4)
+                                                    .history!
+                                                    .formattedDate!,
+                                                style: TextStyle(
+                                                    color: Colors.grey.shade500,
+                                                    fontSize: 12.0),
+                                              )
+                                            ],
+                                          ),
                                   ],
                                 )
                               ],
@@ -504,4 +576,11 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
           ),
         ));
   }
+}
+
+class StatusInfo {
+  StatusHistory? history;
+  Color? background;
+  Color? foreground;
+  StatusInfo(this.background, this.foreground, this.history);
 }

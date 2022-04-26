@@ -1,5 +1,6 @@
 import 'package:babcare/models/branch.dart';
 import 'package:babcare/models/ordered_product.dart';
+import 'package:babcare/models/status_history.dart';
 import 'customer.dart';
 import 'delivery.dart';
 
@@ -20,6 +21,7 @@ class Order {
   Branch? branch;
   double? deliveryAmount;
   int? status;
+  List<StatusHistory>? history;
   Order(
       {this.lat,
       this.long,
@@ -36,7 +38,8 @@ class Order {
       this.deliveryId,
       this.deliveryAmount,
       this.status,
-      this.total});
+      this.total,
+      this.history});
 
   Order.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -58,6 +61,12 @@ class Order {
       products = <OrderedProduct>[];
       json['products'].forEach((v) {
         products!.add(OrderedProduct.fromJson(v));
+      });
+    }
+    if (json['history'] != null) {
+      history = <StatusHistory>[];
+      json['history'].forEach((v) {
+        history!.add(StatusHistory.fromJson(v));
       });
     }
   }

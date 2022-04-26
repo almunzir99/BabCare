@@ -7,6 +7,8 @@ import 'package:babcare/theme/main_theme.dart';
 import 'package:babcare/views/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_file.dart';
+import 'package:intl/intl.dart' as intl;
 
 import 'controllers/auth_controller.dart';
 import 'controllers/cart_controller.dart';
@@ -16,6 +18,7 @@ Future<void> main() async {
   Get.put<CustomDrawerController>(CustomDrawerController());
   final _authController = Get.put(AuthController());
   HttpOverrides.global = MyHttpOverrides();
+  intl.Intl.defaultLocale = 'en';
   runApp(const MyApp());
   var signalrService = SignalRService.instance;
   var notificationService = NotificationsService.instance;
