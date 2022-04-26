@@ -36,6 +36,12 @@ namespace apiplate.Services
                     throw new Exception("the target delivery driver isn't available");
                 order.DeliveryId = delivery.Id;
                 order.Status = OrderStatus.ON_DELIVERY;
+                order.History.Add(new StatusHistory
+                {
+                    CreatedAt = DateTime.Now,
+                    Status = OrderStatus.ON_DELIVERY,
+                    Comment = feedBack
+                });
                 await _context.SaveChangesAsync();
                 var result = _mapper.Map<Order, OrderResource>(order);
                 return result;
@@ -59,9 +65,25 @@ namespace apiplate.Services
                 if (order == null)
                     throw new Exception("the target order isn't available");
                 if (customerCancel)
+                {
                     order.Status = OrderStatus.CANCELLED_BY_USER;
+                    order.History.Add(new StatusHistory
+                    {
+                        CreatedAt = DateTime.Now,
+                        Status = OrderStatus.CANCELLED_BY_USER,
+                        Comment = feedBack
+                    });
+                }
                 else
+                {
                     order.Status = OrderStatus.CANCELLED_BY_RESTURANT;
+                    order.History.Add(new StatusHistory
+                    {
+                        CreatedAt = DateTime.Now,
+                        Status = OrderStatus.CANCELLED_BY_RESTURANT,
+                        Comment = feedBack
+                    });
+                }
                 await _context.SaveChangesAsync();
                 var result = _mapper.Map<Order, OrderResource>(order);
                 return result;
@@ -136,6 +158,11 @@ namespace apiplate.Services
                 newOrder.Total = totalPrice;
                 newOrder.CustomerId = customerId;
                 newOrder.IsPaid = false;
+                newOrder.History.Add(new StatusHistory
+                {
+                    CreatedAt = DateTime.Now,
+                    Status = OrderStatus.SENT,
+                });
                 _context.Orders.Add(newOrder);
                 await _context.SaveChangesAsync();
                 var createdOrder = await GetDbSet().SingleOrDefaultAsync(c => c.Id == newOrder.Id);
@@ -173,11 +200,11 @@ namespace apiplate.Services
                 }
                 orders = orders.Where(c => (status == null) ? true : c.Status == status).ToList();
                 orders = orders.Where(c => (id == null) ? true : c.Id == id).ToList();
+                orders = OrderBy(orders,orderBy,ascending);
                 orders = orders
                 .Skip((validFilter.PageIndex - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize).ToList();
                 var result = _mapper.Map<List<Order>, List<OrderResource>>(orders);
-                result = OrderBy(result, orderBy, ascending);
                 return result;
             }
 
@@ -197,12 +224,37 @@ namespace apiplate.Services
             try
             {
                 var orders = await GetDbSet().Where(c => c.CustomerId == customerId).ToListAsync();
+                orders = orders.OrderByDescending(c => c.LastUpdate).ToList();
                 var validFilter = (filter == null) ?
                 new PaginationFilter()
                 : new PaginationFilter(filter.PageIndex, filter.PageSize);
                 orders = orders.Where(c => (status) == null ? true : c.Status == status).Skip((validFilter.PageIndex - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize).ToList();
+                var mappedResult = _mapper.Map<List<Order>, List<OrderResource>>(orders);
+                return mappedResult;
+
+            }
+            catch (DbUpdateException exception)
+            {
+                throw new System.Exception(exception.Decode());
+            }
+            catch (System.Exception e)
+            {
+
+                throw e;
+            }
+        }
+        public async Task<IList<OrderResource>> DeliveryOrderListAsync(int deliveryId, PaginationFilter filter, OrderStatus? status = null)
+        {
+            try
+            {
+                var orders = await GetDbSet().Where(c => c.DeliveryId == deliveryId).ToListAsync();
                 orders = orders.OrderByDescending(c => c.LastUpdate).ToList();
+                var validFilter = (filter == null) ?
+                new PaginationFilter()
+                : new PaginationFilter(filter.PageIndex, filter.PageSize);
+                orders = orders.Where(c => (status) == null ? true : c.Status == status).Skip((validFilter.PageIndex - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize).ToList();
                 var mappedResult = _mapper.Map<List<Order>, List<OrderResource>>(orders);
                 return mappedResult;
 
@@ -244,8 +296,14 @@ namespace apiplate.Services
                 var order = await _context.Orders.SingleOrDefaultAsync(c => c.Id == orderId);
                 if (order == null)
                     throw new Exception("the target order isn't available");
-                order.OrderFeedback = feedBack;
+
                 order.Status = OrderStatus.ON_PREPARE;
+                 order.History.Add(new StatusHistory
+                    {
+                        CreatedAt = DateTime.Now,
+                        Status = OrderStatus.ON_PREPARE,
+                        Comment = feedBack
+                    });
                 await _context.SaveChangesAsync();
                 var result = _mapper.Map<Order, OrderResource>(order);
                 return result;
@@ -268,8 +326,14 @@ namespace apiplate.Services
                 var order = await _context.Orders.SingleOrDefaultAsync(c => c.Id == orderId);
                 if (order == null)
                     throw new Exception("the target order isn't available");
-                order.OrderFeedback = feedBack;
+
                 order.Status = OrderStatus.CONFIRMED;
+                 order.History.Add(new StatusHistory
+                    {
+                        CreatedAt = DateTime.Now,
+                        Status = OrderStatus.CONFIRMED,
+                        Comment = feedBack
+                    });
                 await _context.SaveChangesAsync();
                 var result = _mapper.Map<Order, OrderResource>(order);
                 return result;
@@ -291,8 +355,14 @@ namespace apiplate.Services
                 var order = await _context.Orders.SingleOrDefaultAsync(c => c.Id == orderId);
                 if (order == null)
                     throw new Exception("the target order isn't available");
-                order.OrderFeedback = feedBack;
+
                 order.Status = OrderStatus.DELIVERED;
+                 order.History.Add(new StatusHistory
+                    {
+                        CreatedAt = DateTime.Now,
+                        Status = OrderStatus.DELIVERED,
+                        Comment = feedBack
+                    });
                 await _context.SaveChangesAsync();
                 var result = _mapper.Map<Order, OrderResource>(order);
                 return result;
@@ -307,10 +377,10 @@ namespace apiplate.Services
                 throw e;
             }
         }
-        private List<OrderResource> OrderBy(IList<OrderResource> list, string prop, Boolean ascending)
+        private List<Order> OrderBy(IList<Order> list, string prop, Boolean ascending)
         {
             //Get ordering Prop
-            var type = typeof(OrderResource);
+            var type = typeof(Order);
             var orderedList = list.OrderBy(c => c.LastUpdate).ToList();
             var orderProp = type.GetProperties().SingleOrDefault(c => c.Name.ToLower() == prop.ToLower());
             if (orderProp == null)
@@ -361,7 +431,7 @@ namespace apiplate.Services
             .Include(c => c.Products).ThenInclude(c => c.Product).ThenInclude(c => c.AddOns)
             .Include(c => c.Products).ThenInclude(c => c.Product).ThenInclude(c => c.Options).ThenInclude(c => c.Values)
             .Include(c => c.Products).ThenInclude(c => c.OrderedOptions)
-            .Include(c => c.Products).ThenInclude(c => c.OrderedAddons);
+            .Include(c => c.Products).ThenInclude(c => c.OrderedAddons).Include(c => c.History);
         }
 
         public async Task<int> GetTotalRecords()

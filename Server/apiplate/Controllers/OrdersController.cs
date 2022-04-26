@@ -166,6 +166,20 @@ namespace apiplate.Controllers
             return Ok(PaginationHelper.CreatePagedResponse<OrderResource>(result,
             validFilter, _uriService, totalRecords, Request.Path.Value));
         }
+         [Authorize(Roles = "DELIVERY")]
+        [HttpGet("delivery/me")]
+        public async Task<IActionResult> DeliveryOrdersAsync([FromQuery] PaginationFilter filter = null, [FromQuery] OrderStatus? status = null)
+        {
+            var deliveryId = GetCurrentUserId();
+            var validFilter = (filter == null)
+           ? new PaginationFilter()
+           : new PaginationFilter(pageIndex: filter.PageIndex, pageSize: filter.PageSize);
+            int _currentUserId = int.Parse(HttpContext.User.GetClaimValue("id"));
+            var result = await _service.DeliveryOrderListAsync(deliveryId, filter, status);
+            var totalRecords = await _service.GetTotalRecords();
+            return Ok(PaginationHelper.CreatePagedResponse<OrderResource>(result,
+            validFilter, _uriService, totalRecords, Request.Path.Value));
+        }
         [Authorize]
         [HttpGet("{orderId}")]
         public async Task<IActionResult> GetAsync(int orderId)

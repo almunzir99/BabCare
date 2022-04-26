@@ -16,7 +16,7 @@ namespace apiplate.Domain.Models
         public double  Long { get; set; }
         public String Location { get; set; }
         public OrderStatus Status { get; set; }
-        public String OrderFeedback { get; set; }
+        public IList<StatusHistory> History { get; set; } = new List<StatusHistory>();
         public PaymentType PaymentType { get; set; }
         public bool IsPaid { get; set; }
         public double  Total { get; set; }

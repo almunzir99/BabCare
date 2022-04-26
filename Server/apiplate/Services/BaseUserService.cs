@@ -99,7 +99,35 @@ namespace apiplate.Services
 
             }
         }
-        
+        public override async Task<TResource> UpdateAsync(int id, TResource item)
+        {
+            try
+            {
+                var result = await _dbSet.SingleOrDefaultAsync(c => c.Id == id);
+                if (result == null)
+                    throw new Exception("item is not found");
+                _mapper.Map<TResource, TModel>(item, result);
+                result.LastUpdate = DateTime.Now;
+                byte[] pHash, pSalt;
+                HashingHelper.CreateHashPassword(item.Password, out pHash, out pSalt);
+                result.PasswordHash = pHash;
+                result.PasswordSalt = pSalt;
+                await _context.SaveChangesAsync();
+                var mappedResult = _mapper.Map<TModel, TResource>(result);
+                return mappedResult;
+            }
+            catch (DbUpdateException exception)
+            {
+
+                throw new System.Exception(exception.Decode());
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
         public async Task PasswordRecoveryRequest(string email)
         {
             var user = await _dbSet.SingleOrDefaultAsync(c => c.Email == email);
@@ -118,7 +146,7 @@ namespace apiplate.Services
         }
         public async Task<TResource> GetProfileAsync(int userId)
         {
-            var target =await  base.SingleAsync(userId);
+            var target = await base.SingleAsync(userId);
             return target;
         }
         public async Task PasswordRecovery(string key, string newPassword)
@@ -252,5 +280,5 @@ namespace apiplate.Services
         }
 
     }
-    
+
 }

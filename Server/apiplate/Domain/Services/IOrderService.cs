@@ -18,6 +18,7 @@ namespace apiplate.Domain.Services
 
         Task<IList<OrderResource>> ListAsync(PaginationFilter filter, IList<Func<Order, bool>> conditions = default, int? id = null, string orderBy = "LastUpdate", bool ascending = true, OrderStatus? status = null);
         Task<IList<OrderResource>> MyOrderListAsync(int customerId, PaginationFilter filter, OrderStatus? status = null);
+        Task<IList<OrderResource>> DeliveryOrderListAsync(int deliveryId, PaginationFilter filter, OrderStatus? status = null);
         Task<OrderResource> SingleAsync(int id);
         double CalculateMapDistance(double p1Lat, double p1Long, double p2Lat, double p2Long);
         Task<Branch> FindNearestBranchAsync(double lat, double lng);

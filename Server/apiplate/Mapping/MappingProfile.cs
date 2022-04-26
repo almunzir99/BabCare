@@ -32,6 +32,8 @@ namespace apiplate.Mapping
             this.CreateMap<OrderRequestResource, Order>();
             this.CreateMap<OfferResource, Offer>();
             this.CreateMap<FavoriteResource,Favorite>();
+            this.CreateMap<StatusHistoryResource,StatusHistory>();
+
 
 
 

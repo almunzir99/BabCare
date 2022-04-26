@@ -18,7 +18,7 @@ namespace apiplate.Resources
         public double Long { get; set; }
         public String Location { get; set; }
         public OrderStatus Status { get; set; }
-        public String OrderFeedback { get; set; }
+        public IList<StatusHistoryResource> History { get; set; }
         public PaymentType PaymentType { get; set; }
         public bool IsPaid { get; set; }
         public double Total { get; set; }
