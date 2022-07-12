@@ -4,7 +4,7 @@ import 'package:babcare/routing.dart';
 import 'package:babcare/services/notifications_services.dart';
 import 'package:babcare/services/signalr_service.dart';
 import 'package:babcare/theme/main_theme.dart';
-import 'package:babcare/views/pages/login.dart';
+import 'package:babcare/views/pages/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_file.dart';

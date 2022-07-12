@@ -1,21 +1,19 @@
-import 'package:babcare/models/notification.dart';
-import 'package:babcare/views/pages/bank_accounts_page.dart';
-import 'package:babcare/views/pages/checkout.dart';
-import 'package:babcare/views/pages/home.dart';
-import 'package:babcare/views/pages/account.dart';
-import 'package:babcare/views/pages/cart.dart';
-import 'package:babcare/views/pages/categories.dart';
-import 'package:babcare/views/pages/intro.dart';
-import 'package:babcare/views/pages/location_picker.dart';
-import 'package:babcare/views/pages/login.dart';
-import 'package:babcare/views/pages/notifications_page.dart';
-import 'package:babcare/views/pages/order_detail.dart';
-import 'package:babcare/views/pages/order_tracking.dart';
-import 'package:babcare/views/pages/orders.dart';
-import 'package:babcare/views/pages/product_detail.dart';
-import 'package:babcare/views/pages/search.dart';
-import 'package:babcare/views/pages/signup.dart';
-import 'package:babcare/views/pages/splash_screen.dart';
+import 'package:babcare/views/pages/checkout/checkout.dart';
+import 'package:babcare/views/pages/home/home.dart';
+import 'package:babcare/views/pages/account/account.dart';
+import 'package:babcare/views/pages/cart/cart.dart';
+import 'package:babcare/views/pages/categories/categories.dart';
+import 'package:babcare/views/pages/intro/intro.dart';
+import 'package:babcare/views/pages/location_picker/location_picker.dart';
+import 'package:babcare/views/pages/login/login.dart';
+import 'package:babcare/views/pages/notifications/notifications_page.dart';
+import 'package:babcare/views/pages/orders_details/order_detail.dart';
+import 'package:babcare/views/pages/order_tracking/order_tracking.dart';
+import 'package:babcare/views/pages/orders/orders.dart';
+import 'package:babcare/views/pages/product_detail/product_detail.dart';
+import 'package:babcare/views/pages/search/search.dart';
+import 'package:babcare/views/pages/signup/signup.dart';
+import 'package:babcare/views/pages/splash_screen/splash_screen.dart';
 import 'package:get/get.dart';
 
 final routes = [
@@ -31,7 +29,6 @@ final routes = [
   GetPage(name: "/search", page: () => SearchPage()),
   GetPage(name: "/cart", page: () => const CartPage()),
   GetPage(name: "/checkout", page: () => const CheckOutPage()),
-  GetPage(name: "/banks", page: () => const BankAccountsPage()),
   GetPage(name: "/order_detail", page: () => const OrderDetailPage()),
   GetPage(name: "/location_picker", page: () => const LocationPickerPage()),
   GetPage(name: "/order_tracking", page: () => const OrderTrackingPage()),

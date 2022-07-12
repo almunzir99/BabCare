@@ -1,7 +1,7 @@
-import 'package:babcare/views/pages/about.dart';
-import 'package:babcare/views/pages/orders.dart';
-import 'package:babcare/views/pages/policies.dart';
-import 'package:babcare/views/pages/tabs_view.dart';
+import 'package:babcare/views/pages/about/about.dart';
+import 'package:babcare/views/pages/orders/orders.dart';
+import 'package:babcare/views/pages/policies/policies.dart';
+import 'package:babcare/views/pages/tabs_view/tabs_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:line_icons/line_icons.dart';
 
