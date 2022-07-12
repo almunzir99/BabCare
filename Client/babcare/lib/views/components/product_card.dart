@@ -28,95 +28,103 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SizedBox(
-      width: 180.0,
-      height: 250.0,
+      width: size.width * .48,
+      height: size.width * .69,
       child: Stack(
         children: [
-          GestureDetector(
-            onTap: onTap,
-            child: Container(
-              height: 250.0,
-              width: 180.0,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
-                  color: Colors.white),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10.0,
-              ),
-              child: Column(
-                children: [
-                  //product image
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30.0),
-                      child: Image(
-                        height: 130.0,
-                        width: 160.0,
-                        image: NetworkImage(
-                          image,
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onTap,
+              borderRadius: BorderRadius.circular(30.0),
+              child: Ink(
+                width: size.width * .48,
+                height: size.width * .69,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30.0),
+                    color: Colors.white),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                ),
+                child: Column(
+                  children: [
+                    //product image
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30.0),
+                        child: Image(
+                          width: size.width * .48,
+                          height: size.width * .36,
+                          image: NetworkImage(
+                            image,
+                          ),
+                          fit: BoxFit.fill,
                         ),
-                        fit: BoxFit.fill,
                       ),
                     ),
-                  ),
 
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      //Product title
-                      AutoSizeText(
-                        title,
-                        style: const TextStyle(
-                            fontSize: 16.0, fontWeight: FontWeight.bold),
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        //Product title
+                        AutoSizeText(
+                          title,
+                          style: TextStyle(
+                              fontSize: size.width * .04,
+                              fontWeight: FontWeight.bold),
+                        ),
 
-                      AutoSizeText(
-                        subtitle,
-                        style:
-                            const TextStyle(fontSize: 13.0, color: Colors.grey),
-                      ),
-                      //Prices
-                      Column(
-                        children: [
-                          //Current Price
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              AutoSizeText(
-                                "$price",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                        AutoSizeText(
+                          subtitle,
+                          style: TextStyle(
+                              fontSize: size.width * .033, color: Colors.grey),
+                        ),
+                        //Prices
+                        Column(
+                          children: [
+                            //Current Price
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AutoSizeText(
+                                  "$price",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: size.width * .04,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 3.0,
-                              ),
-                              AutoSizeText(
-                                "ج.س",
+                                const SizedBox(
+                                  width: 3.0,
+                                ),
+                                AutoSizeText(
+                                  "ج.س",
+                                  style: TextStyle(
+                                    fontSize: size.width * .04,
+                                    color: primaryColor,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Visibility(
+                              visible: oldPrice != null,
+                              child: AutoSizeText(
+                                "$oldPrice ج.س",
                                 style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: primaryColor,
-                                ),
-                              )
-                            ],
-                          ),
-                          Visibility(
-                            visible: oldPrice != null,
-                            child: AutoSizeText(
-                              "$oldPrice ج.س",
-                              style: TextStyle(
                                   decoration: TextDecoration.lineThrough,
                                   color: Colors.grey.shade500,
-                                  fontSize: 11.0),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  )
-                ],
+                                  fontSize: size.width * .028,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -128,15 +136,18 @@ class ProductCard extends StatelessWidget {
               visible: discount != null,
               child: GestureDetector(
                 child: Container(
-                  padding: const EdgeInsets.all(7.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 7.0, vertical: 9.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20.0),
                       color: accentColor),
                   child: Center(
                     child: Text(
-                      "$discount%",
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.white),
+                      "$discount% ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: size.width * .038),
                     ),
                   ),
                 ),
@@ -154,11 +165,11 @@ class ProductCard extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
                     color: (!isFavorite) ? Colors.grey.shade400 : primaryColor),
-                child: const Center(
+                child: Center(
                   child: Icon(
                     LineIcons.heart,
                     color: Colors.white,
-                    size: 18.0,
+                    size: size.width * .05,
                   ),
                 ),
               ),

@@ -28,135 +28,158 @@ class HorizontalProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 130.0,
-      width: MediaQuery.of(context).size.width * 0.9,
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.0), color: Colors.white),
-      child: Stack(
-        children: [
-          SizedBox(
-            height: 130.0,
+    final size = MediaQuery.of(context).size;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(30.0),
+          child: Ink(
+            height: size.width * .34,
             width: MediaQuery.of(context).size.width * 0.9,
-            child: Row(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30.0), color: Colors.white),
+            child: Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25.0),
-                    child: Image(
-                      height: 110.0,
-                      width: 110.0,
-                      image: NetworkImage(
-                        image,
+                SizedBox(
+                  height: size.width * .34,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(25.0),
+                          child: Image(
+                            height: size.width * .3,
+                            width: size.width * .3,
+                            image: NetworkImage(
+                              image,
+                            ),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                       ),
-                      fit: BoxFit.fill,
+                      const SizedBox(
+                        width: 20.0,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          //Product title
+                          AutoSizeText(
+                            title,
+                            style: TextStyle(
+                                fontSize: size.width * .04,
+                                fontWeight: FontWeight.bold),
+                          ),
+
+                          AutoSizeText(
+                            subtitle,
+                            style: TextStyle(
+                                fontSize: size.width * .033,
+                                color: Colors.grey),
+                          ),
+                          //Prices
+                          Column(
+                            children: [
+                              //Current Price
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  AutoSizeText(
+                                    "$price",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: size.width * .04,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 3.0,
+                                  ),
+                                  AutoSizeText(
+                                    "ج.س",
+                                    style: TextStyle(
+                                      fontSize: size.width * .04,
+                                      color: primaryColor,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Visibility(
+                                visible: oldPrice != null,
+                                child: AutoSizeText(
+                                  "$oldPrice ج.س",
+                                  style: TextStyle(
+                                    decoration: TextDecoration.lineThrough,
+                                    color: Colors.grey.shade500,
+                                    fontSize: size.width * .028,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                //Discount Padge
+                Positioned(
+                  top: 20.0,
+                  right: 20.0,
+                  child: Visibility(
+                    visible: discount != null,
+                    child: GestureDetector(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 7.0, vertical: 9.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: accentColor),
+                        child: Center(
+                          child: Text(
+                            "$discount% ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: size.width * .038),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 20.0,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //Product title
-                    AutoSizeText(
-                      title,
-                      style: const TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.bold),
-                    ),
-
-                    AutoSizeText(
-                      subtitle,
-                      style:
-                          const TextStyle(fontSize: 13.0, color: Colors.grey),
-                    ),
-                    //Prices
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        //Current Price
-                        Row(
-                          children: [
-                            AutoSizeText(
-                              "$price",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 3.0,
-                            ),
-                            AutoSizeText(
-                              "ج.س",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: primaryColor,
-                              ),
-                            )
-                          ],
+                // Favourite
+                Positioned(
+                  bottom: 10.0,
+                  left: 10.0,
+                  child: GestureDetector(
+                    onTap: onFavTap,
+                    child: Container(
+                      padding: const EdgeInsets.all(7.0),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: (!isFavorite)
+                              ? Colors.grey.shade400
+                              : primaryColor),
+                      child: Center(
+                        child: Icon(
+                          LineIcons.heart,
+                          color: Colors.white,
+                          size: size.width * .05,
                         ),
-                        Visibility(
-                          visible: oldPrice != null,
-                          child: AutoSizeText(
-                            "$oldPrice ج.س",
-                            style: TextStyle(
-                                decoration: TextDecoration.lineThrough,
-                                color: Colors.grey.shade500,
-                                fontSize: 11.0),
-                          ),
-                        )
-                      ],
+                      ),
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
           ),
-          Positioned(
-            top: 20.0,
-            right: 20.0,
-            child: Visibility(
-              visible: discount != null,
-              child: Container(
-                padding: const EdgeInsets.all(7.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    color: accentColor),
-                child: Center(
-                  child: Text(
-                    "$discount%",
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          // Favourite
-          Positioned(
-            bottom: 10.0,
-            left: 10.0,
-            child: GestureDetector(
-              onTap: onFavTap,
-              child: Container(
-                padding: const EdgeInsets.all(7.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    color: (!isFavorite) ? Colors.grey.shade400 : primaryColor),
-                child: const Center(
-                  child: Icon(
-                    LineIcons.heart,
-                    color: Colors.white,
-                    size: 18.0,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

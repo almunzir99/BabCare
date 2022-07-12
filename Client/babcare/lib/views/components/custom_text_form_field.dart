@@ -44,7 +44,7 @@ class CustomTextFormField extends StatelessWidget {
             fillColor: (fillColor == null) ? Colors.grey.shade200 : fillColor,
             filled: true,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(15.0),
               borderSide: const BorderSide(
                 width: 0,
                 style: BorderStyle.none,
@@ -52,7 +52,12 @@ class CustomTextFormField extends StatelessWidget {
             ),
             labelText: "$label",
             hintText: "$label",
-            prefixIcon: Icon(icon),
+            labelStyle:
+                TextStyle(fontSize: MediaQuery.of(context).size.width * .04),
+            hintStyle:
+                TextStyle(fontSize: MediaQuery.of(context).size.width * .04),
+            alignLabelWithHint: true,
+            prefixIcon: icon == null ? null : Icon(icon),
           ),
           onChanged: onChange,
           validator: validator),

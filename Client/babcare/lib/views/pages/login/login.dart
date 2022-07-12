@@ -15,6 +15,8 @@ class LoginPage extends StatelessWidget {
   final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -59,6 +61,7 @@ class LoginPage extends StatelessWidget {
                             if (value == null || value == '') {
                               return "الرجاء ادخال كلمة المرور";
                             }
+                            return null;
                           },
                         ),
                       ),
@@ -69,6 +72,9 @@ class LoginPage extends StatelessWidget {
                     Obx(() {
                       return CustomButton(
                         onTap: () async {
+                          if (_formKey.currentState!.validate() == false) {
+                            return;
+                          }
                           try {
                             var phone = _phoneController.value.text;
                             var password = _passwordController.value.text;
@@ -96,6 +102,8 @@ class LoginPage extends StatelessWidget {
                           }
                         },
                         text: "دخول",
+                        fontSize: size.width * .045,
+                        iconSize: size.width * .065,
                         icon: LineIcons.alternateSignIn,
                         width: MediaQuery.of(context).size.width * .87,
                         isLoading: _controller.isButtonLoading.value,
@@ -105,8 +113,10 @@ class LoginPage extends StatelessWidget {
                       height: 30.0,
                     ),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      const Text(" ما عندك حساب ؟ ",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(" ما عندك حساب ؟ ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: size.width * .04)),
                       const SizedBox(
                         width: 10,
                       ),
@@ -117,7 +127,8 @@ class LoginPage extends StatelessWidget {
                           child: Text("سجل الان ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: primaryColor))),
+                                  color: primaryColor,
+                                  fontSize: size.width * .04))),
                     ])
                   ],
                 ),

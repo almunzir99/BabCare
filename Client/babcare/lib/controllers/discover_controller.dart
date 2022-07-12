@@ -14,9 +14,9 @@ class DiscoverController extends GetxController {
   final RxList<Offer> offers = <Offer>[].obs;
   final RxList<Category> categories = <Category>[].obs;
   final RxList<Product> products = <Product>[].obs;
-
   final isPageLoading = false.obs;
   final _service = GeneralService.instance;
+  Rx<Future?> loadItemsAsync = Rx(null);
   onCarouselSlide(int index) {
     _currentCarouselIndex.value = index;
   }

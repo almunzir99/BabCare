@@ -7,7 +7,7 @@ import 'package:babcare/views/pages/intro/intro.dart';
 import 'package:babcare/views/pages/location_picker/location_picker.dart';
 import 'package:babcare/views/pages/login/login.dart';
 import 'package:babcare/views/pages/notifications/notifications_page.dart';
-import 'package:babcare/views/pages/orders_details/order_detail.dart';
+import 'package:babcare/views/pages/order_detail/order_detail.dart';
 import 'package:babcare/views/pages/order_tracking/order_tracking.dart';
 import 'package:babcare/views/pages/orders/orders.dart';
 import 'package:babcare/views/pages/product_detail/product_detail.dart';
@@ -29,8 +29,8 @@ final routes = [
   GetPage(name: "/search", page: () => SearchPage()),
   GetPage(name: "/cart", page: () => const CartPage()),
   GetPage(name: "/checkout", page: () => const CheckOutPage()),
-  GetPage(name: "/order_detail", page: () => const OrderDetailPage()),
   GetPage(name: "/location_picker", page: () => const LocationPickerPage()),
   GetPage(name: "/order_tracking", page: () => const OrderTrackingPage()),
   GetPage(name: "/notifications", page: () => const NotificationsPage()),
+  GetPage(name: "/order_detail", page: () => const OrderDetailPage()),
 ];

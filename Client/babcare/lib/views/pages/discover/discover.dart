@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:babcare/constants/dimensions.dart';
 import 'package:babcare/controllers/auth_controller.dart';
 import 'package:babcare/controllers/dimmer_controller.dart';
 import 'package:babcare/controllers/discover_controller.dart';
@@ -18,13 +19,12 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class DiscoverPage extends StatelessWidget {
-  DiscoverPage({Key? key}) : super(key: key);
-  var controller = Get.put(DiscoverController());
-  final dimmerController = Get.put(DimmerController());
-  final favController = Get.put(FavoritesController());
-  final _authController = Get.put(AuthController());
-  Future? _loadItemsAsync;
+  const DiscoverPage({Key? key}) : super(key: key);
+
   Future switchFavButton(Product product, BuildContext context) async {
+    final dimmerController = Get.put(DimmerController());
+    final favController = Get.put(FavoritesController());
+    final size = MediaQuery.of(context).size;
     try {
       dimmerController.showDimmer.value = true;
       await Future.delayed(const Duration(seconds: 1));
@@ -45,9 +45,9 @@ class DiscoverPage extends StatelessWidget {
         buttons: [
           DialogButton(
             color: primaryColor,
-            child: const Text(
+            child: Text(
               "تمام",
-              style: TextStyle(color: Colors.white, fontSize: 20),
+              style: TextStyle(color: Colors.white, fontSize: size.width * .06),
             ),
             onPressed: () => Navigator.pop(context),
             width: 120,
@@ -59,7 +59,10 @@ class DiscoverPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _loadItemsAsync = controller.loadItems();
+    var controller = Get.put(DiscoverController());
+    final _authController = Get.put(AuthController());
+    final size = MediaQuery.of(context).size;
+    controller.loadItemsAsync.value = controller.loadItems();
     var currentCustomer = _authController.currentCustomer.value;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -78,10 +81,11 @@ class DiscoverPage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const AutoSizeText(
+                          AutoSizeText(
                             "إزيك يا",
                             style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
+                                fontSize: size.width * .06,
+                                fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             width: 5.0,
@@ -90,22 +94,24 @@ class DiscoverPage extends StatelessWidget {
                           AutoSizeText(
                             "${currentCustomer!.username}",
                             style: TextStyle(
-                                fontSize: 18.0,
+                                fontSize: size.width * .06,
                                 fontWeight: FontWeight.bold,
                                 color: primaryColor),
                           ),
                         ],
                       ),
-                      const AutoSizeText(
+                      AutoSizeText(
                         "أها عشاك الليلة شنو ؟",
                         style: TextStyle(
-                            fontSize: 27.0, fontWeight: FontWeight.bold),
+                            fontSize: size.width * .068,
+                            fontWeight: FontWeight.bold),
                       ),
-                      const AutoSizeText(
+                      AutoSizeText(
                         "يلا اطلب اشهى المؤكلات من بابكير",
                         maxLines: 2,
                         style: TextStyle(
-                            fontSize: 25.0, fontWeight: FontWeight.bold),
+                            fontSize: size.width * .065,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -125,8 +131,8 @@ class DiscoverPage extends StatelessWidget {
                           children: [
                             //filter
                             Container(
-                              height: 45.0,
-                              width: 45.0,
+                              height: size.width * .14,
+                              width: size.width * .14,
                               decoration: BoxDecoration(
                                   color: primaryColor,
                                   borderRadius: const BorderRadius.only(
@@ -141,33 +147,36 @@ class DiscoverPage extends StatelessWidget {
                             ),
                             // form Field
                             Expanded(
-                              child: TextFormField(
-                                onTap: () {
-                                  Get.toNamed("/search");
-                                },
-                                cursorColor: primaryColor,
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 3.0, horizontal: 15.0),
-                                  fillColor: Colors.grey.withOpacity(0.2),
-                                  filled: true,
-                                  hintText: "بفتش عن شنو ؟",
-                                  enabledBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        width: 0,
-                                        style: BorderStyle.none,
-                                      ),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10.0),
-                                          bottomLeft: Radius.circular(15.0))),
-                                  focusedBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        width: 0,
-                                        style: BorderStyle.none,
-                                      ),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10.0),
-                                          bottomLeft: Radius.circular(15.0))),
+                              child: SizedBox(
+                                height: size.width * .14,
+                                child: TextFormField(
+                                  onTap: () {
+                                    Get.toNamed("/search");
+                                  },
+                                  cursorColor: primaryColor,
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.grey.withOpacity(0.2),
+                                    filled: true,
+                                    hintText: "بفتش عن شنو ؟",
+                                    hintStyle:
+                                        TextStyle(fontSize: size.width * .047),
+                                    enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          width: 0,
+                                          style: BorderStyle.none,
+                                        ),
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(10.0),
+                                            bottomLeft: Radius.circular(15.0))),
+                                    focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          width: 0,
+                                          style: BorderStyle.none,
+                                        ),
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(10.0),
+                                            bottomLeft: Radius.circular(15.0))),
+                                  ),
                                 ),
                               ),
                             )
@@ -179,8 +188,11 @@ class DiscoverPage extends StatelessWidget {
                   const SizedBox(
                     height: 50.0,
                   ),
-                  FutureBuilder(
-                      future: _loadItemsAsync, builder: loadItemFutureBuilder)
+                  Obx(() {
+                    return FutureBuilder(
+                        future: controller.loadItemsAsync.value,
+                        builder: loadItemFutureBuilder);
+                  })
                 ],
               ),
             )
@@ -192,6 +204,8 @@ class DiscoverPage extends StatelessWidget {
 
   Widget loadItemFutureBuilder(
       BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+    var controller = Get.put(DiscoverController());
+    var size = MediaQuery.of(context).size;
     if (snapshot.connectionState == ConnectionState.waiting) {
       return const DiscoverPageShimmer();
     } else {
@@ -199,7 +213,7 @@ class DiscoverPage extends StatelessWidget {
         return SizedBox(
           height: MediaQuery.of(context).size.height * .4,
           child: ErrorPlaceHolder(onTap: () {
-            loadItemFutureBuilder(context, snapshot);
+            controller.loadItemsAsync.value = controller.loadItems();
           }),
         );
       }
@@ -221,7 +235,7 @@ class DiscoverPage extends StatelessWidget {
                 }).toList(),
                 options: CarouselOptions(
                     autoPlay: true,
-                    height: MediaQuery.of(context).size.height * 0.25,
+                    height: size.width * .55,
                     enlargeCenterPage: true,
                     viewportFraction: 1.0,
                     aspectRatio: 2.0,
@@ -252,9 +266,10 @@ class DiscoverPage extends StatelessWidget {
           ),
           //Categories Horizontal List
           SizedBox(
-            height: 90.0,
+            height: size.width * .25,
             child: ListView.builder(
                 itemCount: controller.categories.length,
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
@@ -266,7 +281,7 @@ class DiscoverPage extends StatelessWidget {
                       child: Obx(
                         () => AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
-                          height: 100.0,
+                          height: size.width * .25,
                           padding: const EdgeInsets.all(10.0),
                           margin: const EdgeInsets.symmetric(
                               horizontal: 05.0, vertical: 10.0),
@@ -280,8 +295,8 @@ class DiscoverPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Image(
-                                height: 60.0,
-                                width: 60.0,
+                                height: size.width * .22,
+                                width: size.width * .22,
                                 image: NetworkImage(
                                     controller.categories[index].image!.path!),
                                 fit: BoxFit.contain,
@@ -329,7 +344,8 @@ class DiscoverPage extends StatelessWidget {
                       ),
                       AutoSizeText(
                         "عرض الكل",
-                        style: TextStyle(fontSize: 16.0, color: primaryColor),
+                        style: TextStyle(
+                            fontSize: size.width * .05, color: primaryColor),
                       )
                     ],
                   ),
@@ -337,7 +353,7 @@ class DiscoverPage extends StatelessWidget {
 
                 //Products Horizontal List
                 Container(
-                    height: 250.0,
+                    height: size.width * .69,
                     margin: const EdgeInsets.symmetric(vertical: 20.0),
                     child: controller
                             .categories[controller.selectedCategoryIndex]
@@ -346,6 +362,7 @@ class DiscoverPage extends StatelessWidget {
                         ? const EmptyPlaceholder()
                         : ListView.builder(
                             scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
                             itemCount: controller
                                 .categories[controller.selectedCategoryIndex]
                                 .products!
@@ -356,33 +373,31 @@ class DiscoverPage extends StatelessWidget {
                                   .products![index];
                               return Padding(
                                 padding: const EdgeInsets.only(left: 20.0),
-                                child: GestureDetector(
+                                child: ProductCard(
                                   onTap: () {
                                     Get.toNamed("/product_details",
                                         parameters: {"id": "${product.id}"});
                                   },
-                                  child: ProductCard(
-                                    title: "${product.title}",
-                                    isFavorite: product.isFavorite!,
-                                    subtitle: product.categoryName!,
-                                    price: (product.price! -
-                                            product.price! *
-                                                (product.discount! / 100))
-                                        .roundToDouble(),
-                                    discount: product.discount == 0.0 ||
-                                            product.discount == null
-                                        ? null
-                                        : product.discount,
-                                    oldPrice: product.discount == 0.0 ||
-                                            product.discount == null
-                                        ? null
-                                        : product.price,
-                                    image: product.images![0].path!,
-                                    onFavTap: () async {
-                                      await switchFavButton(product, context);
-                                      controller.categories.refresh();
-                                    },
-                                  ),
+                                  title: "${product.title}",
+                                  isFavorite: product.isFavorite!,
+                                  subtitle: product.categoryName!,
+                                  price: (product.price! -
+                                          product.price! *
+                                              (product.discount! / 100))
+                                      .roundToDouble(),
+                                  discount: product.discount == 0.0 ||
+                                          product.discount == null
+                                      ? null
+                                      : product.discount,
+                                  oldPrice: product.discount == 0.0 ||
+                                          product.discount == null
+                                      ? null
+                                      : product.price,
+                                  image: product.images![0].path!,
+                                  onFavTap: () async {
+                                    await switchFavButton(product, context);
+                                    controller.categories.refresh();
+                                  },
                                 ),
                               );
                             }))
@@ -403,7 +418,8 @@ class DiscoverPage extends StatelessWidget {
                 ),
                 AutoSizeText(
                   "عرض الكل",
-                  style: TextStyle(fontSize: 16.0, color: primaryColor),
+                  style: TextStyle(
+                      fontSize: size.width * .05, color: primaryColor),
                 )
               ],
             ),
@@ -415,6 +431,10 @@ class DiscoverPage extends StatelessWidget {
             return Column(
               children: controller.products.map((product) {
                 return HorizontalProductCard(
+                  onTap: () {
+                    Get.toNamed("/product_details",
+                        parameters: {"id": "${product.id}"});
+                  },
                   title: product.title!,
                   subtitle: product.categoryName!,
                   price: (product.price! -

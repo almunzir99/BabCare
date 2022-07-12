@@ -6,22 +6,26 @@ class CustomButton extends StatelessWidget {
   final IconData? icon;
   final bool isLoading;
   final double width;
+  final double? height;
   final Color? color;
+  final Color? foreColor;
   final double borderRadius;
   final void Function()? onTap;
-  final double fontSize;
-  final double iconSize;
+  final double? fontSize;
+  final double? iconSize;
   const CustomButton(
       {Key? key,
       required this.text,
       this.icon,
       required this.width,
       this.isLoading = false,
-      this.borderRadius = 20.0,
+      this.borderRadius = 15.0,
       this.onTap,
       this.fontSize = 17.0,
       this.iconSize = 24.0,
-      this.color})
+      this.color,
+      this.height,
+      this.foreColor = Colors.white})
       : super(key: key);
 
   @override
@@ -34,11 +38,12 @@ class CustomButton extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
               color: color != null
-                  ? color!.withOpacity(isLoading ? .6 : 1)
+                  ? color!.withOpacity(isLoading ? .6 : color!.opacity)
                   : primaryColor.withOpacity(isLoading ? .6 : 1),
               borderRadius: BorderRadius.circular(borderRadius)),
           child: Container(
             width: width,
+            height: height,
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +52,7 @@ class CustomButton extends StatelessWidget {
                   isLoading ? "الرجاء الانتظار ..." : text,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: foreColor,
                       fontSize: fontSize),
                 ),
                 SizedBox(
@@ -55,18 +60,18 @@ class CustomButton extends StatelessWidget {
                 ),
                 Visibility(
                   visible: isLoading,
-                  child: const SizedBox(
+                  child: SizedBox(
                     height: 20.0,
                     width: 20.0,
                     child: CircularProgressIndicator(
-                      color: Colors.white,
+                      color: foreColor,
                       strokeWidth: 2.0,
                     ),
                   ),
                 ),
                 Visibility(
                   visible: !isLoading && icon != null,
-                  child: Icon(icon, color: Colors.white, size: iconSize),
+                  child: Icon(icon, color: foreColor, size: iconSize),
                 ),
               ],
             ),
