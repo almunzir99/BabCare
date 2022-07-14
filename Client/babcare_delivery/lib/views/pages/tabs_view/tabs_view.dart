@@ -1,47 +1,32 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:babcare/controllers/auth_controller.dart';
-import 'package:babcare/controllers/custom_drawer_controller.dart';
-import 'package:babcare/controllers/dimmer_controller.dart';
-import 'package:babcare/theme/style.dart';
-import 'package:babcare/views/components/placeholders/dimmer.dart';
-import 'package:babcare/views/pages/account/account.dart';
-import 'package:babcare/views/pages/discover/discover.dart';
-import 'package:babcare/views/pages/favorites/favorites.dart';
-import 'package:babcare/views/pages/orders/orders.dart';
+import 'package:babcare_delivery/controllers/auth_controller.dart';
+import 'package:babcare_delivery/controllers/dimmer_controller.dart';
+import 'package:babcare_delivery/controllers/tabs_view_controller.dart';
+import 'package:babcare_delivery/theme/style.dart';
+import 'package:babcare_delivery/views/components/dimmer.dart';
+import 'package:babcare_delivery/views/pages/about/about_page.dart';
+import 'package:babcare_delivery/views/pages/account/account_page.dart';
+import 'package:babcare_delivery/views/pages/home/home_page.dart';
+import 'package:babcare_delivery/views/pages/orders/orders_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
-class TabsView extends StatefulWidget {
+class TabsView extends StatelessWidget {
   const TabsView({Key? key}) : super(key: key);
 
   @override
-  State<TabsView> createState() => _TabsViewState();
-}
-
-class _TabsViewState extends State<TabsView> {
-  int _selectedIndex = 0;
-  final ordersPage = const OrdersPage(
-    hideAppBar: true,
-  );
-  final favoritePage = const FavoritesPage();
-  @override
   Widget build(BuildContext context) {
-    var drawerController = Get.put(CustomDrawerController());
     var dimmerController = Get.put(DimmerController());
     var authController = Get.put(AuthController());
+    var controller = Get.put(TabsViewController());
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            drawerController.toggleDrawer();
-          },
-          icon: const Icon(
-            LineIcons.bars,
-            color: Colors.black,
-          ),
+        title: Text(
+          "تطبيق بابكير للتوصيل",
+          style: TextStyle(
+              fontSize: size.width * .05, fontWeight: FontWeight.bold),
         ),
         actions: [
           Container(
@@ -78,9 +63,8 @@ class _TabsViewState extends State<TabsView> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           child: Center(
-                            child: AutoSizeText(
+                            child: Text(
                               "${authController.notifications.where((p0) => !p0.read!).length}",
-                              minFontSize: 10.0,
                               style: const TextStyle(color: Colors.white),
                             ),
                           ),
@@ -96,15 +80,17 @@ class _TabsViewState extends State<TabsView> {
       ),
       body: Stack(
         children: [
-          IndexedStack(
-            index: _selectedIndex,
-            children: [
-              const DiscoverPage(),
-              favoritePage,
-              ordersPage,
-              AccountPage(),
-            ],
-          ),
+          Obx(() {
+            return IndexedStack(
+              index: controller.selectedIndex,
+              children: const [
+                HomePage(),
+                OrdersPage(),
+                AccountPage(),
+                AboutPage()
+              ],
+            );
+          }),
           Obx(() {
             return Center(
               child: Dimmer(
@@ -139,29 +125,25 @@ class _TabsViewState extends State<TabsView> {
               color: Colors.black,
               tabs: const [
                 GButton(
-                  icon: LineIcons.compass,
-                  text: 'تصفح',
-                ),
-                GButton(
-                  icon: LineIcons.heart,
-                  text: 'المفضلة',
+                  icon: LineIcons.home,
+                  text: 'الرئيسية',
                 ),
                 GButton(
                   icon: LineIcons.clipboardList,
-                  text: 'طلباتي',
+                  text: 'الطلبات',
                 ),
                 GButton(
                   icon: LineIcons.user,
                   text: 'حسابي',
                 ),
+                GButton(
+                  icon: LineIcons.heart,
+                  text: 'عن التطبيق',
+                ),
               ],
-              selectedIndex: _selectedIndex,
+              selectedIndex: controller.selectedIndex,
               onTabChange: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                  if (index == 1) favoritePage.refresh();
-                  if (index == 2) ordersPage.refresh();
-                });
+                controller.selectedIndex = index;
               },
             ),
           ),
