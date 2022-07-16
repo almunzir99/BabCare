@@ -5,6 +5,7 @@ final mainTheme = ThemeData(
     primaryColor: primaryColor,
     backgroundColor: backgroundColor,
     accentColor: accentColor,
+    splashFactory: InkRipple.splashFactory,
     colorScheme: ColorScheme.fromSwatch()
         .copyWith(primary: primaryColor, secondary: accentColor),
     fontFamily: "RB");

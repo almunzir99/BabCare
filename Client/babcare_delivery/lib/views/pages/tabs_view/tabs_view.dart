@@ -28,6 +28,8 @@ class TabsView extends StatelessWidget {
           style: TextStyle(
               fontSize: size.width * .05, fontWeight: FontWeight.bold),
         ),
+        foregroundColor: Colors.black,
+        centerTitle: true,
         actions: [
           Container(
               height: size.width * .069,
