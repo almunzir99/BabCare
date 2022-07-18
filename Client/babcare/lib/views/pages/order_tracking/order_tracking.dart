@@ -174,7 +174,9 @@ class _OrderTrackingPageState extends State<OrderTrackingPage> {
         }
       }
     }
-    throw "history should not be empty";
+    // throw "history should not be empty";
+    return StatusInfo(
+        accentColor.withOpacity(0.3), accentColor, StatusHistory());
   }
 
   @override

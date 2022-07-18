@@ -6,10 +6,19 @@ class OrdersController extends GetxController {
   RxList<Order> orders = RxList([]);
   final _service = OrdersService.instance;
   Order? currentOrder;
-  Rx<Future?> getOrderAsync = Rx(null);
+  Rx<Future?> getOrdersAsync = Rx(null);
+  Rx<Future?> getSingleOrderAsync = Rx(null);
   Future getOrders(int status) async {
     try {
       orders.value = await _service.getMyOrder(status);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future singleOrder(int orderId) async {
+    try {
+      currentOrder = await _service.singleOrder(orderId);
     } catch (e) {
       rethrow;
     }

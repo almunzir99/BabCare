@@ -37,4 +37,15 @@ class OrdersService {
       throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
     }
   }
+
+  Future<Order> singleOrder(int orderId) async {
+    var response = await dio.get("${ApiConstants.ordersBaseRoute}/$orderId",
+        options: Options(headers: {"requiresToken": true}));
+    if (response.statusCode == 200) {
+      var order = Order.fromJson(response.data['data']);
+      return order;
+    } else {
+      throw "Request failed with statusCode ${response.statusCode} and message ${response.data}";
+    }
+  }
 }

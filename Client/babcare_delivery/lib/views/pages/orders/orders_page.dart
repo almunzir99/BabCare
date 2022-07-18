@@ -31,11 +31,11 @@ class _OrdersPageState extends State<OrdersPage>
     const tabs = {"جديد": 3, "مكتمل": 4, "تم الالغاء": 5};
     final controller = Get.put(OrdersController());
     final dimmerController = Get.put(DimmerController());
-    controller.getOrderAsync.value = controller.getOrders(currentTabStatus);
+    controller.getOrdersAsync.value = controller.getOrders(currentTabStatus);
     var size = MediaQuery.of(context).size;
     _tabController.addListener(() {
       currentTabStatus = tabs.values.toList()[_tabController.index];
-      controller.getOrderAsync.value = controller.getOrders(currentTabStatus);
+      controller.getOrdersAsync.value = controller.getOrders(currentTabStatus);
     });
     return Column(
       children: [
@@ -57,7 +57,7 @@ class _OrdersPageState extends State<OrdersPage>
               children: tabs.values
                   .map((tab) => Obx(() {
                         return FutureBuilder(
-                            future: controller.getOrderAsync.value,
+                            future: controller.getOrdersAsync.value,
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -65,7 +65,7 @@ class _OrdersPageState extends State<OrdersPage>
                               }
                               if (snapshot.hasError) {
                                 return ErrorPlaceHolder(onTap: () {
-                                  controller.getOrderAsync.value =
+                                  controller.getOrdersAsync.value =
                                       controller.getOrders(currentTabStatus);
                                 });
                               } else {
@@ -85,7 +85,12 @@ class _OrdersPageState extends State<OrdersPage>
                                           child: InkWell(
                                             borderRadius:
                                                 BorderRadius.circular(15.0),
-                                            onTap: () {},
+                                            onTap: () {
+                                              Get.toNamed("/order_detail",
+                                                  arguments: {
+                                                    "orderId": order.id
+                                                  });
+                                            },
                                             child: Ink(
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -317,7 +322,7 @@ class _OrdersPageState extends State<OrdersPage>
                                                                               .showDimmer
                                                                               .value = false;
                                                                           controller
-                                                                              .getOrderAsync
+                                                                              .getOrdersAsync
                                                                               .value = controller.getOrders(currentTabStatus);
                                                                         },
                                                                         width: size.width *

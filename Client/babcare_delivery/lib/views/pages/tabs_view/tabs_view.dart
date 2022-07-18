@@ -30,6 +30,7 @@ class TabsView extends StatelessWidget {
         ),
         foregroundColor: Colors.black,
         centerTitle: true,
+        leading: Container(),
         actions: [
           Container(
               height: size.width * .069,
@@ -139,7 +140,7 @@ class TabsView extends StatelessWidget {
                   text: 'حسابي',
                 ),
                 GButton(
-                  icon: LineIcons.heart,
+                  icon: LineIcons.infoCircle,
                   text: 'عن التطبيق',
                 ),
               ],
