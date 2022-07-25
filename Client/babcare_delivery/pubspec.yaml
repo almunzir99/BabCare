@@ -47,6 +47,8 @@ dependencies:
   rflutter_alert: ^2.0.4
   shimmer: ^2.0.0
   flutter_polyline_points: ^1.0.0
+  carousel_slider: ^4.1.1
+  location: ^4.4.0
 
 dev_dependencies:
   flutter_test:

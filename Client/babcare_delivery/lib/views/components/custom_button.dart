@@ -13,6 +13,7 @@ class CustomButton extends StatelessWidget {
   final void Function()? onTap;
   final double? fontSize;
   final double? iconSize;
+  final EdgeInsets padding;
   const CustomButton(
       {Key? key,
       required this.text,
@@ -25,6 +26,7 @@ class CustomButton extends StatelessWidget {
       this.iconSize = 24.0,
       this.color,
       this.height,
+      this.padding = const EdgeInsets.symmetric(vertical: 15.0),
       this.foreColor = Colors.white})
       : super(key: key);
 
@@ -33,6 +35,7 @@ class CustomButton extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
+        borderRadius: BorderRadius.circular(borderRadius),
         onTap: () {
           if (onTap != null && !isLoading) onTap!();
         },
@@ -45,7 +48,7 @@ class CustomButton extends StatelessWidget {
           child: Container(
             width: width,
             height: height,
-            padding: const EdgeInsets.symmetric(vertical: 15.0),
+            padding: padding,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
