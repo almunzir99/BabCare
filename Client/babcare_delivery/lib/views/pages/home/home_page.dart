@@ -195,6 +195,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    mapController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return FutureBuilder(
